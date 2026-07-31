@@ -1,0 +1,32 @@
+[workspace]
+members = [
+    "crates/aurora-tokens",
+    "crates/aurora-typography",
+    "crates/aurora-color",
+    "crates/aurora-motion",
+    "crates/aurora-icons",
+    "crates/aurora-sound",
+    "crates/aurora-a11y",
+    "crates/aurora-core",
+    "crates/aurora-gtk",
+    "crates/aurora-qt",
+    "crates/aurora-web",
+]
+
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Georgi Mammen Mullassery <mullassery@gmail.com>"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/Mullassery/aurora"
+homepage = "https://aurora.rs"
+
+[workspace.dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_yaml = "0.9"
+thiserror = "1.0"
+tracing = "0.1"
+tracing-subscriber = "0.3"
