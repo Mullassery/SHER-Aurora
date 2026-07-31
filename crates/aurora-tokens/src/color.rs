@@ -67,9 +67,9 @@ impl Color {
 
     /// Calculate perceived luminance (relative luminance) for contrast ratio
     fn relative_luminance(&self) -> f32 {
-        let r = (self.r as f32 / 255.0).pow(2.2);
-        let g = (self.g as f32 / 255.0).pow(2.2);
-        let b = (self.b as f32 / 255.0).pow(2.2);
+        let r = (self.r as f32 / 255.0).powf(2.2);
+        let g = (self.g as f32 / 255.0).powf(2.2);
+        let b = (self.b as f32 / 255.0).powf(2.2);
         0.2126 * r + 0.7152 * g + 0.0722 * b
     }
 
