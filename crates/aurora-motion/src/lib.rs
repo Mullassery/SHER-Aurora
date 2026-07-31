@@ -11,11 +11,13 @@ pub mod errors;
 pub mod spring;
 pub mod easing;
 pub mod animation;
+pub mod window;
 
 pub use errors::{MotionError, MotionResult};
 pub use spring::{SpringConfig, SpringState, SpringAnimator};
 pub use easing::EasingFunction;
 pub use animation::{Animation, AnimationType, AnimationState};
+pub use window::{WindowAnimation, WindowAnimationConfig, WindowEvent, WindowState};
 
 /// Motion engine — manages all animations
 #[derive(Debug)]
