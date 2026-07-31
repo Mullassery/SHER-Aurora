@@ -2,9 +2,9 @@
 
 ## Overview
 
-This roadmap translates Aurora's product vision into concrete development phases, with specific deliverables, timelines, and success metrics for each phase.
+This roadmap translates Aurora's GNOME enhancement vision into concrete development phases, with specific deliverables, timelines, and success metrics.
 
-**Total Timeline**: ~24 months to v1.0, with ongoing development beyond.
+**Total Timeline**: ~12-15 months to v1.0, with ongoing community-driven development beyond.
 
 ---
 
@@ -149,21 +149,20 @@ This roadmap translates Aurora's product vision into concrete development phases
 
 ---
 
-## Phase 3: Color Engine & Multi-Toolkit
+## Phase 3: Color System & GNOME App Porting
 
-**Timeline**: 12–14 weeks (Nov 2026–Jan 2027)  
-**Effort**: 6–8 engineers  
-**Focus**: Color system, Qt6 renderer, Web renderer
+**Timeline**: 8–10 weeks (Nov–Dec 2026)  
+**Effort**: 4–6 engineers  
+**Focus**: Color system, porting GNOME applications
 
-### 3.1 Color Engine (ACE)
+### 3.1 Color Engine
 
 **Deliverables**:
 - Semantic color tokens (surfaces, backgrounds, actions, status)
 - Layered surface model (depth 0–5 with auto-adjustments)
-- Adaptive intelligence (time, ambient light, display type)
-- HDR support (HDR10, extended color gamut)
-- OLED mode (true black, battery optimization)
-- Accent system (user-selected, dynamic, wallpaper-derived)
+- Light, Dark, OLED theme support
+- HDR support (HDR10, extended color gamut for future displays)
+- Accent system (user-selected, system accent, adaptive)
 - Accessibility validation (WCAG AAA, color blindness modes)
 
 **Testing**:
@@ -173,64 +172,45 @@ This roadmap translates Aurora's product vision into concrete development phases
 - Multi-monitor consistency
 - 100+ tests
 
-### 3.2 Qt6 Renderer
+### 3.2 GNOME Application Porting
 
 **Deliverables**:
-- C++ FFI bindings to Rust core
-- QSS (Qt Style Sheets) generator from tokens
-- Widget implementations (Button, Card, Input, Dialog, etc.)
-- Qt Quick integration
-- Platform-specific integrations (KDE, Cosmic)
-- Qt accessibility integration
+- Port core GNOME applications (Files, Settings, Calendar, Music)
+- Implement using aurora-gtk components
+- Test with real user workflows
+- Gather feedback for refinement
 
 **Testing**:
-- Pixel-perfect comparison with GTK4
-- All 10 components working
-- 50+ tests per component
-- KDE Plasma 5.27+ compatibility
+- Full application testing
+- Accessibility validation
+- Performance profiling
+- Community feedback integration
 
-### 3.3 Web/WASM Renderer
+### 3.3 Sound Design System
 
 **Deliverables**:
-- Core Aurora compiled to WASM
-- React component library (aurora-react)
-- Vue component library (aurora-vue)
-- Svelte component library (aurora-svelte)
-- CSS custom properties output
-- Storybook integration
-
-**Testing**:
-- All modern browsers supported
-- 50+ tests per framework
-- Performance targets met
+- Semantic sounds (success, error, warning, notification)
+- Audio file production
+- Integration guidelines
+- Accessibility alternatives
 
 ### 3.4 Phase 3 Success Metrics
 
-- ✅ GTK4, Qt6, Web render identically
-- ✅ Semantic colors used everywhere (0% hardcoded)
-- ✅ HDR/OLED working on test hardware
-- ✅ >90% contrast compliance
-- ✅ 50+ tests per toolkit
+- ✅ Color system production-ready
+- ✅ GNOME apps visually consistent with Aurora
+- ✅ >90% contrast compliance everywhere
+- ✅ Semantic colors used (0% hardcoded)
+- ✅ Sound system complete
 
 ---
 
-## Phase 4: Intelligence & Accessibility
+## Phase 4: Accessibility & Refinement
 
-**Timeline**: 12–16 weeks (Feb–May 2027)  
-**Effort**: 8–10 engineers  
-**Focus**: Sound system, accessibility layer, desktop intelligence
+**Timeline**: 6–8 weeks (Jan–Feb 2027)  
+**Effort**: 2–4 engineers  
+**Focus**: Accessibility layer, final refinement
 
-### 4.1 Sound System (ASS)
-
-**Deliverables**:
-- Semantic sound taxonomy (Confirmation, Warning, Error, Notification, Environmental)
-- Spatial audio support (stereo, multi-speaker, positional)
-- Adaptive audio (headphones, speakers, meeting mode)
-- Sound themes (Minimal, Professional, Expressive)
-- Accessibility integration (visual alternatives, haptic)
-- Developer SDK
-
-### 4.2 Accessibility Layer (AAL)
+### 4.1 Accessibility Layer
 
 **Deliverables**:
 - WCAG AAA infrastructure (contrast, focus, motion)
@@ -238,162 +218,71 @@ This roadmap translates Aurora's product vision into concrete development phases
 - Large text mode (system-wide scaling)
 - Screen reader integration (Linux accessibility bus)
 - Keyboard navigation (100% of UI)
+- Reduced motion support (respect prefers-reduced-motion)
 - Assistive technology support
-- Automatic compliance scoring
 
-### 4.3 Window Intelligence Layer
-
-**Deliverables**:
-- Smart placement algorithm (predict best window location)
-- Focus prediction (understand user workflows)
-- Window lifecycle management
-- Adaptive window behavior
-
-### 4.4 Notifications Intelligence
+### 4.2 Quality Assurance
 
 **Deliverables**:
-- Notification classification (Critical/Important/Batch/Background)
-- Smart batching and grouping
-- Do Not Disturb intelligence
-- Focus mode integration
+- Accessibility audit across all components
+- Performance optimization
+- Bug fixes and refinement
+- Documentation completion
+- Community feedback integration
 
-### 4.5 Phase 4 Success Metrics
+### 4.3 Phase 4 Success Metrics
 
 - ✅ WCAG AAA compliance throughout
 - ✅ Keyboard navigation 100%
 - ✅ Screen reader support verified
 - ✅ Accessibility score >95/100
-- ✅ Zero accessibility regressions in new components
+- ✅ Zero accessibility regressions
 
 ---
 
-## Phase 5: System Intelligence
+## Phase 5: Polish & v1.0 Release
 
-**Timeline**: 12–16 weeks (June–Sep 2027)  
-**Effort**: 10–12 engineers  
-**Focus**: AI, context awareness, power management
+**Timeline**: 4–6 weeks (Mar–Apr 2027)  
+**Effort**: 2–4 engineers  
+**Focus**: Final polish, v1.0 release
 
-### 5.1 AI Runtime
-
-**Deliverables**:
-- Local AI models (no cloud required)
-- Semantic search and understanding
-- Workflow assistance
-- Desktop automation
-- LLM integration (privacy-first)
-
-### 5.2 Context Engine
+### 5.1 Final Refinement
 
 **Deliverables**:
-- Project understanding (detect open projects)
-- Activity awareness (track current task)
-- Workflow detection (understand user patterns)
-- Adaptive suggestions
+- Performance optimization
+- Bug fixes and edge case handling
+- Community feedback integration
+- Documentation finalization
+- Release preparation
 
-### 5.3 Power Engine
-
-**Deliverables**:
-- Adaptive frame rates
-- Motion scaling (reduce motion on battery)
-- GPU budgeting
-- Intelligent background process control
-- Target: MacBook-like battery life
-
-### 5.4 Compositor Integration
+### 5.2 v1.0 Release
 
 **Deliverables**:
-- Wayland-native animation execution
-- Frame scheduling optimization
-- Multi-monitor synchronization
-- VRR support (Variable Refresh Rate)
-- HDR rendering
+- Production-ready Aurora for GNOME
+- Comprehensive documentation
+- Component library release
+- Developer guidelines (AHIG)
+- Example applications
+- Migration guide for GNOME app developers
 
-### 5.5 Phase 5 Success Metrics
+### 5.3 Phase 5 Success Metrics
 
-- ✅ Battery life comparable to macOS
-- ✅ All animations GPU-accelerated
-- ✅ Context detection >85% accurate
-- ✅ AI suggestions >75% helpful
-- ✅ Zero cloud dependency
+- ✅ v1.0 released and stable
+- ✅ >90% component test coverage
+- ✅ Documentation complete
+- ✅ Community feedback loop established
+- ✅ Ready for GNOME app adoption
 
 ---
 
-## Phase 6: Ecosystem & Maturity
+## Beyond v1.0: Ongoing Community Development
 
-**Timeline**: 16–24 weeks (Oct 2027–Mar 2028)  
-**Effort**: 12–16 engineers  
-**Focus**: Developer tools, third-party adoption
-
-### 6.1 Consistency Validator
-
-**Deliverables**:
-- Automatic app compliance scoring (Lighthouse-style)
-- Design token validation
-- Motion compliance checking
-- Accessibility audit
-- Performance profiling
-- Aurora Score (0–100)
-
-### 6.2 Aurora Human Interface Guidelines (AHIG)
-
-**Deliverables**:
-- Motion principles and patterns
-- Typography principles
-- Layout principles
-- Component behavior standards
-- Accessibility standards
-- Window behavior guidelines
-- Search behavior guidelines
-- Navigation patterns
-
-### 6.3 Application Framework
-
-**Deliverables**:
-- aurora.window()
-- aurora.sidebar()
-- aurora.search()
-- aurora.settings()
-- aurora.table()
-- aurora.form()
-- Complete SDK with auto-styling, motion, accessibility
-
-### 6.4 Third-Party App Porting
-
-**Deliverables**:
-- Port major Linux applications to Aurora
-  - Firefox (Electron version)
-  - Thunderbird
-  - GNOME apps (Calendar, Photos, etc.)
-  - KDE Plasma apps
-  - Terminal emulator
-  - Text editor
-  - File manager
-
-### 6.5 Phase 6 Success Metrics
-
-- ✅ 10+ major applications using Aurora
-- ✅ >70% of new Linux apps adopt Aurora
-- ✅ Developer satisfaction >85%
-- ✅ <1% accessibility regressions
-- ✅ AHIG followed by >80% developers
-
----
-
-## Beyond v1.0: Phase 7+
-
-### Long-term Research
-- Eye tracking integration
-- Brain-computer interface readiness
-- Spatial computing (AR/VR)
-- Multi-modal interfaces
-- Adaptive personalization (AI-driven UI)
-- Real-time accessibility customization
-
-### Ecosystem Expansion
-- Mobile Linux support (PinePhone, Librem)
-- Embedded Linux optimization
-- Cloud desktop optimization
-- Future desktop environment support
+### Post-v1.0 Roadmap
+- GNOME app adoption measurement and support
+- Developer feedback and iteration
+- Performance optimization
+- Feature enhancements based on community
+- Compatibility with future GNOME releases
 
 ---
 
@@ -424,17 +313,19 @@ This roadmap translates Aurora's product vision into concrete development phases
 
 ## Resource Planning
 
-| Phase | Engineers | Designers | QA | Weeks | Total Effort |
-|-------|-----------|-----------|-----|-------|--------------|
-| 1 ✅ | Volunteers | Volunteers | Volunteers | 12 | ~60 hours |
-| 2 | 4–6 | 1–2 | 2 | 12–16 | 480–576 hours |
-| 3 | 6–8 | 2 | 2 | 12–14 | 576–672 hours |
-| 4 | 8–10 | 1 | 2 | 12–16 | 576–640 hours |
-| 5 | 10–12 | 1 | 2 | 12–16 | 640–704 hours |
-| 6 | 12–16 | 2 | 3 | 16–24 | 768–1152 hours |
-| **Total** | — | — | — | **77–102 weeks** | **3.68–3.80K hours** |
+| Phase | Engineers | Designers | QA | Weeks | Notes |
+|-------|-----------|-----------|-----|-------|-------|
+| 1 ✅ | Volunteers | Volunteers | Volunteers | 12 | Complete |
+| 2 | 4–6 | 1 | 1 | 12–16 | GTK4 components, motion |
+| 3 | 4–6 | 1 | 1 | 8–10 | Color system, app porting |
+| 4 | 2–4 | — | 1 | 6–8 | Accessibility, refinement |
+| 5 | 2–4 | — | 1 | 4–6 | Polish, v1.0 release |
+| **Total** | — | — | — | **12–15 months** | **Achievable with 4–6 core team** |
 
-**Note**: Phases can overlap (parallel development). Total calendar time ~24 months.
+**Notes**: 
+- Phases can overlap (parallel development)
+- Total calendar time ~12-15 months
+- Community contributions can accelerate timeline
 
 ---
 
@@ -488,30 +379,32 @@ This roadmap translates Aurora's product vision into concrete development phases
 
 ### Track Quarterly
 - Code quality (test coverage, bugs, regressions)
-- Adoption (apps using Aurora, developers)
+- GNOME app adoption (number of apps using Aurora)
+- Developer sentiment (satisfaction, ease of use)
 - Performance (frame rates, latency, memory)
 - Accessibility (WCAG compliance score)
-- Community (contributors, activity, satisfaction)
+- Community (contributors, activity, feedback)
 
-### Track Annually
-- Market share (Linux desktop %)
+### Track Post-v1.0
+- GNOME application adoption rate
 - User perception (surveys, NPS)
 - Developer satisfaction
-- Enterprise adoption
-- Educational institution adoption
+- Enterprise/educational GNOME adoption
+- Community contribution velocity
 
 ---
 
 ## Conclusion
 
-Aurora's 24-month roadmap is ambitious but achievable with:
-- Clear vision and priorities
+Aurora's 12-15 month roadmap is ambitious but achievable with:
+- Clear GNOME-focused vision
 - Modular architecture (parallel development)
-- Community collaboration
+- Deep GNOME community collaboration
 - Pragmatic release criteria
+- Smaller, focused team (4-6 engineers)
 
 The foundation is built (Phase 1). Execution begins now.
 
-**v1.0 target: Q2 2028**
+**v1.0 target: Q2 2027**
 
-**Long-term goal: Linux becomes the world's most beautiful, intelligent, accessible operating system.**
+**Long-term goal: Make GNOME the world's most beautiful and polished Linux desktop.**

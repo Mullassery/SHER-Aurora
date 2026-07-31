@@ -2,21 +2,21 @@
 
 ## System Overview
 
-Aurora is a **token-first design system** with platform-agnostic rendering backends. The architecture is layered:
+Aurora is a **GNOME-focused design system** built on GTK4 and libadwaita. The architecture is layered:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                     Application Layer                           │
-│          GTK4 Apps  │  Qt6 Apps  │  Web Apps  │  Electron      │
+│                    GNOME Application Layer                      │
+│        Files  │  Settings  │  Calendar  │  Music  │  Custom    │
 └──────────────────────────┬────────────────────────────────────────┘
                            │
 ┌──────────────────────────┴────────────────────────────────────────┐
-│                    Renderer Layer                                 │
-│    GTK Renderer  │  Qt Renderer  │  Web/WASM Renderer            │
+│                  Aurora Component Layer (GTK4)                    │
+│    Buttons  │  Cards  │  Inputs  │  Dialogs  │  Custom Widgets  │
 └──────────────────────────┬────────────────────────────────────────┘
                            │
 ┌──────────────────────────┴────────────────────────────────────────┐
-│              Core Design System (Rust + WASM)                    │
+│           Core Design System (Rust + CSS Codegen)               │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐            │
 │  │ Design       │  │ Typography   │  │ Color        │            │
 │  │ Tokens       │  │ Engine       │  │ System       │            │
@@ -26,14 +26,14 @@ Aurora is a **token-first design system** with platform-agnostic rendering backe
 │  │ Engine       │  │ System       │  │ Design       │            │
 │  └──────────────┘  └──────────────┘  └──────────────┘            │
 │  ┌──────────────────────────────────────────────────────────────┐│
-│  │                 Accessibility Layer                         ││
+│  │                 Accessibility Layer (WCAG AAA)              ││
 │  │  High Contrast │ Reduced Motion │ Screen Readers            ││
 │  └──────────────────────────────────────────────────────────────┘│
 └─────────────────────────────────────────────────────────────────┘
                            │
 ┌──────────────────────────┴────────────────────────────────────────┐
-│                   Data & Configuration                           │
-│    Design Tokens (YAML)  │  Font Manifests  │  Icon Metadata    │
+│           GTK4 + libadwaita + GNOME Infrastructure              │
+│    dconf  │  GNOME Settings  │  GNOME Shell  │  Wayland       │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -361,67 +361,43 @@ impl Aurora {
 }
 ```
 
-### Platform Renderers
+### GNOME Renderer
 
 #### `aurora-gtk`
-**GTK4 Renderer**
+**GTK4 Component Library**
 
-- GTK4-native widget implementations
+- GTK4-native widget implementations (Button, Card, Dialog, Input, etc.)
 - CSS provider for token-to-CSS-properties conversion
+- Motion engine integration (spring animations in GTK)
 - Event handling and interaction
-- Wayland/X11 compatibility
+- GNOME Shell integration
+- Wayland-native support
 
 **Structure**:
-- `src/widgets/` — Button, Card, Dialog, etc.
+- `src/widgets/` — Button, Card, Dialog, Input, Tooltip, etc.
 - `src/css/` — CSS generation from tokens
-- `src/events/` — Event handling, animation callbacks
-- `src/accessible/` — GTK accessibility integration
-
-#### `aurora-qt`
-**Qt6 Renderer (via FFI)**
-
-- Qt6 C++ bindings
-- QSS (Qt Style Sheets) generation
-- Qt Quick integration
-- Platform integration (KDE, Cosmic, XFCE)
-
-**Structure**:
-- `crates/aurora-qt/` — Rust wrapper
-- `crates/aurora-qt-cpp/` — C++ bindings
-- `src/widgets/` — C++ implementations
-- `src/styles/` — QSS generation
-
-#### `aurora-web`
-**Web/WASM Renderer**
-
-- WASM compilation of core Aurora
-- CSS custom properties generation
-- React/Vue/Svelte component library
+- `src/motion/` — Animation integration with GTK
+- `src/accessible/` — WCAG AAA accessibility features
+- `src/gnome/` — GNOME Settings and dconf integration
 - Web standard compliance
 
 **Structure**:
-- `src/lib.rs` — WASM entry point
-- `src/css/` — CSS generation
-- `packages/aurora-web-react/` — React components
-- `packages/aurora-web-vue/` — Vue components
-- `packages/aurora-web-svelte/` — Svelte components
-
 ## Data Flow
 
 ### Token Resolution
 
 ```
-Application requests "primary color"
+GNOME Application requests "primary color"
         ↓
 aurora-core resolves request
         ↓
-ColorSystem looks up in current Theme
+ColorSystem looks up in current Theme (Light/Dark/OLED)
         ↓
 Theme provides Color value
         ↓
-Renderer converts to platform-specific (CSS, Qt, GTK)
+GTK Renderer converts to CSS custom property
         ↓
-Application receives platform-native value
+Application receives GNOME-native value
 ```
 
 ### Animation Execution
@@ -471,19 +447,21 @@ Transition animated over `motion.normal` (220ms)
 **Why**:
 - Single source of truth
 - Easy theme switching
-- Consistency across platforms
+- Consistency across GNOME applications
 - Design tooling integration (Figma, XD)
+- CSS codegen for GTK
 
 **Tradeoff**: Initial setup overhead, but pays dividends at scale.
 
-### 3. Separate Renderers Per Platform
+### 3. GTK4-First Design
 
 **Why**:
-- Leverage platform-native capabilities
-- Optimize for each platform's rendering model
-- Maintain accessibility compliance (GTK accessibility, Qt accessibility)
+- Leverage GTK4/libadwaita as standard GNOME toolkit
+- Native Wayland support
+- Deep GNOME Shell integration
+- Optimal accessibility compliance
 
-**Tradeoff**: Code duplication, but consistency enforced at token layer.
+**Tradeoff**: GNOME-specific focus, but maximum polish for GNOME users.
 
 ### 4. Spring Physics Over Curves
 
@@ -517,37 +495,32 @@ Transition animated over `motion.normal` (220ms)
 
 1. **Design changes** — Update YAML tokens
 2. **Codegen** — Run `cargo build` to regenerate Rust/CSS/JSON
-3. **Local testing** — Test in GTK/Qt/Web renderers
-4. **Platform testing** — Run on GNOME, KDE, Cosmic, web
-5. **Accessibility audit** — Validate WCAG compliance
+3. **Local testing** — Test GTK4 components with libadwaita
+4. **GNOME testing** — Test in GNOME Shell, Settings, Files, Calendar
+5. **Accessibility audit** — Validate WCAG AAA compliance
 6. **Documentation** — Update design language spec
 
-## Future Extensibility
+## Future Enhancements (Post-v1.0)
 
-### Phase 5: AI Personalization
-
-- Local adaptation model (no cloud)
-- Signals: time of day, ambient light, display type, interaction patterns
-- Adaptations: contrast, density, font size, motion intensity
-
-### HDR/OLED Optimization
-
-- Extended color gamut rendering
-- OLED true black optimization
-- HDR metadata and display integration
-
-### Voice Interaction
-
-- Voice command support
-- Screen reader integration
-- Audio interface
-
-### Desktop Shell Integration
+### GNOME Integration Deepening
 
 - GNOME dynamic theme support
-- KDE Plasma color scheme integration
-- Cosmic native integration
-- XFCE theme support
+- dconf preference integration
+- GNOME Shell animation integration
+- Notification system styling
+
+### Display Support
+
+- Extended color gamut rendering (HDR)
+- OLED true black optimization
+- HDR metadata and display integration
+- Multi-monitor optimization
+
+### Accessibility Expansion
+
+- Voice command support (future)
+- Enhanced screen reader integration
+- Audio feedback customization
 
 ---
 

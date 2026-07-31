@@ -2,29 +2,27 @@
 
 ## Executive Summary
 
-**Aurora** is a complete desktop operating system abstraction layer that brings macOS-level visual polish, coherence, and user experience to Linux while preserving its openness, flexibility, and power.
+**Aurora** is a design system and visual enhancement layer built specifically for **GNOME** that brings macOS-level visual polish, coherence, and user experience while preserving Linux's openness and flexibility.
 
-Currently, Linux is powerful but fragmented. Every desktop environment, every application, every component behaves differently. Users perceive this fragmentation as a quality deficit compared to macOS.
+Currently, GNOME applications lack visual consistency and polish. Every application has different design patterns, motion behavior, color schemes, and accessibility support.
 
-Aurora solves this by providing a unified design system, motion language, color architecture, sound language, and accessibility framework that makes every Linux desktop application feel like it belongs to the same premium operating system.
+Aurora solves this by providing a unified design system, motion language, color architecture, sound language, and accessibility framework built on top of GTK4 and libadwaita that makes every GNOME application feel like it belongs to the same premium desktop environment.
 
 ## Problem Statement
 
-### The Linux Desktop Fragmentation Crisis
+### The GNOME Application Inconsistency Crisis
 
 **Today's Reality**:
-- GNOME looks and behaves differently from KDE
-- GTK applications behave differently from Qt applications
-- Electron applications feel disconnected from native apps
-- No unified motion language (animations vary wildly)
-- No unified color system (every app uses different colors)
-- Accessibility is an afterthought, not a first-class feature
-- Input handling is device-specific, not intent-based
-- No desktop-level intelligence (search, context, AI)
+- GNOME applications lack visual consistency (different spacings, radii, colors)
+- Motion is inconsistent—some apps animate, others don't
+- Color systems vary by app (no semantic design tokens)
+- Accessibility implementation is inconsistent
+- No unified component library for developers
+- New developers build components from scratch instead of reusing
 
-**The Result**: Users describe Linux as "powerful but rough" or "technically excellent but aesthetically inconsistent."
+**The Result**: Users describe GNOME as "inconsistent and rough compared to macOS."
 
-**The Opportunity**: If we provided the same level of coherence, polish, and intelligence that macOS offers, Linux would become the preferred desktop for power users and professionals.
+**The Opportunity**: If we provided a unified design system, consistent components, and intentional motion for GNOME—like libadwaita does for widgets—GNOME would become as polished and professional as macOS, attracting users who want a beautiful Linux desktop.
 
 ### The macOS Advantage
 
@@ -41,25 +39,26 @@ Why do users prefer macOS despite its limitations?
 
 ## Vision Statement
 
-> **Aurora makes Linux the world's most beautiful, polished, and intelligent desktop operating system by providing a unified design language, intelligent context awareness, and accessible-by-default architecture that makes every application feel like it belongs to the same premium ecosystem.**
+> **Aurora makes GNOME the world's most beautiful and polished desktop environment by providing a unified design language, elegant motion, consistent components, and accessible-by-default architecture that makes every GNOME application feel like it belongs to the same premium ecosystem.**
 
 ### What Aurora Is NOT
 
-- A theme or visual reskin
-- A single desktop environment
-- A replacement for GNOME, KDE, or Cosmic
+- A replacement for GNOME or libadwaita
+- A multi-desktop or multi-toolkit platform
+- A theme or visual reskin (it's a design system and component library)
 - Cloud-dependent or telemetry-heavy
 - Proprietary or vendor-locked
 - A graphics engine or windowing system
+- A complete operating system abstraction
 
 ### What Aurora IS
 
-- An **operating system abstraction layer** that sits above desktops and toolkits
-- A **complete design system** that defines how applications look, move, sound, and feel
-- An **intelligence platform** that understands user workflows and contexts
-- A **developer framework** that makes building professional apps effortless
-- An **accessibility-first architecture** that serves all users equally
-- An **open-source initiative** that unifies the Linux desktop
+- A **design system layer** built on GTK4 and libadwaita
+- A **complete component library** that defines how GNOME applications look, move, and feel
+- A **developer framework** that makes building beautiful, consistent GNOME apps effortless
+- A **motion language** with spring physics and intentional animations
+- An **accessibility-first architecture** (WCAG AAA) that serves all users equally
+- An **open-source initiative** that makes GNOME visual excellence standard
 
 ## Core Values
 
@@ -72,58 +71,58 @@ When every application behaves similarly, users need less training. Consistency 
 ### 3. **Accessibility is Mandatory**
 The system must work perfectly for users with vision, hearing, motor, and cognitive disabilities. Accessibility should not require special effort from developers.
 
-### 4. **Intelligence Serves Users**
-The desktop should understand workflows, context, and user intent without requiring explicit instruction or cloud uploads. All intelligence runs locally.
+### 4. **GNOME-Native Integration**
+Deep integration with GNOME's infrastructure (libadwaita, dconf, GNOME Settings, GNOME Shell) rather than platform-agnostic abstraction.
 
-### 5. **Openness Enables Choice**
-Aurora should work across desktop environments (GNOME, KDE, Cosmic, XFCE), toolkits (GTK4, Qt6, Electron, Web), and platforms. Users choose how to use it.
+### 5. **Openness Without Fragmentation**
+Aurora is open source and community-driven. All design decisions are transparent and community-influenced. Open doesn't mean inconsistent.
 
 ## Target Users
 
 ### Primary
-- **Linux Power Users** — Developers, designers, engineers who value both performance and polish
+- **GNOME Users** — People using GNOME who want a premium desktop experience
+- **Professional Desktop Users** — Developers, designers, engineers who want Linux with macOS-level polish
 - **Open Source Advocates** — Users who want freedom AND quality
-- **Professional Desktop Users** — Those transitioning from macOS to Linux
 
 ### Secondary
-- **Enterprise Desktop Administrators** — Organizations standardizing on Linux
-- **Educational Institutions** — Universities adopting Linux widely
-- **Accessibility-Focused Organizations** — Those requiring WCAG AAA compliance
+- **Enterprise Desktop Administrators** — Organizations standardizing on GNOME
+- **Educational Institutions** — Universities preferring GNOME for teaching/learning
+- **Accessibility-Focused Organizations** — Those requiring WCAG AAA compliance in GNOME
 
 ## Key Differentiation
 
-| Dimension | macOS | Windows | Linux Today | Aurora |
+| Dimension | macOS | Windows | GNOME Today | Aurora |
 |-----------|-------|---------|-------------|---------|
 | **Visual Coherence** | Excellent | Good | Poor | Excellent |
-| **Motion Quality** | Excellent | Good | Poor | Excellent |
-| **Accessibility** | Good | Excellent | Poor | Excellent |
+| **Motion Quality** | Excellent | Good | Inconsistent | Excellent |
+| **Accessibility** | Good | Excellent | Inconsistent | Excellent |
 | **Open Source** | No | No | Yes | Yes |
 | **Customization** | Limited | Moderate | Unlimited | High + coherent |
 | **Privacy** | Moderate | Poor | Excellent | Excellent |
 | **Cost** | High | Moderate | Free | Free |
-| **Developer Freedom** | Low | Moderate | High | High + guided |
-| **Intelligence (Offline)** | Moderate | Poor | Minimal | Excellent |
-| **Cross-Platform** | Mac only | Windows only | All Linux | All Linux + Web |
+| **Developer Ease** | High | Moderate | Low | High + guided |
+| **Component Library** | Built-in | Built-in | Partial (libadwaita) | Complete |
+| **GNOME Native** | N/A | N/A | Yes | Yes |
 
 ## Success Metrics
 
 ### For Users
-- **Perception**: "As polished as macOS, but open"
-- **Adoption**: >50% of Linux desktop users within 3 years
+- **Perception**: "GNOME feels as polished as macOS"
+- **Adoption**: >70% of GNOME users within 2 years
 - **Satisfaction**: NPS >60
-- **Accessibility**: Exceeds macOS/Windows in WCAG compliance
+- **Accessibility**: WCAG AAA compliance throughout (exceeds macOS/Windows)
 
 ### For Developers
-- **Adoption**: >70% of new Linux apps use Aurora components
-- **Speed**: Time-to-build reduced by 60% through reusable components
+- **Adoption**: >70% of GNOME applications use Aurora components
+- **Speed**: Time-to-build reduced by 50% through reusable components
 - **Quality**: Aurora Score >90/100 average
-- **Retention**: >90% developer satisfaction
+- **Retention**: >85% developer satisfaction
 
-### For the Ecosystem
-- **Linux Market Share**: +10% desktop share within 5 years (from 2% to 12%)
-- **Enterprise Adoption**: Linux becomes first choice for "desktop with polish"
-- **Educational**: Linux becomes preferred platform in universities
-- **Community**: 10,000+ active contributors, vibrant ecosystem
+### For GNOME
+- **Desktop Perception**: GNOME becomes recognized as the most beautiful Linux desktop
+- **Enterprise Adoption**: GNOME becomes first choice for "desktop with polish"
+- **Educational**: GNOME becomes preferred for teaching/learning
+- **Community**: 1,000+ active Aurora contributors, vibrant ecosystem
 
 ## Product Roadmap (High Level)
 
@@ -133,155 +132,111 @@ Aurora should work across desktop environments (GNOME, KDE, Cosmic, XFCE), toolk
 - Architecture documentation
 - Design system specification
 
-### Phase 2 🟡 (In Progress)
-**Motion & Rendering**
-- Motion engine (spring physics, animation system)
-- GTK4 renderer (token → CSS, widget library)
+### Phase 2 🟡 (Aug–Oct 2026)
+**GTK4 Components & GNOME Integration**
+- Motion engine in GTK4 (spring physics, animations)
+- Component library (Button, Card, Input, Dialog, etc.)
+- GNOME Shell integration (theming, colors)
 - Window motion system (open, close, minimize, maximize)
 
-### Phase 3 (Q2–Q3 2026)
-**Color & Multi-Toolkit**
-- Color engine (HDR, OLED, semantic colors)
-- Qt6 renderer (complete)
-- Web/WASM renderer (React, Vue, Svelte)
-- Electron integration
+### Phase 3 (Nov–Dec 2026)
+**Color System & App Porting**
+- Color engine (semantic tokens, HDR, OLED support)
+- GNOME app porting (Files, Settings, Calendar, Music)
+- Sound design system
+- Theme management (dconf, gsettings)
 
-### Phase 4 (Q3–Q4 2026)
-**Intelligence & Accessibility**
-- Sound system (spatial audio, semantic sounds)
+### Phase 4 (Jan–Feb 2027)
+**Accessibility & Refinement**
 - Accessibility layer (WCAG AAA infrastructure)
-- Search & knowledge layer (Spotlight-like)
-- Notification intelligence
+- High contrast mode
+- Reduced motion support
+- Screen reader testing and validation
+- Keyboard navigation audit
 
-### Phase 5 (Q1–Q2 2027)
-**System Intelligence**
-- AI runtime (local models, semantic understanding)
-- Power engine (battery optimization)
-- Context engine (project/workflow awareness)
-- Compositor integration (Wayland native)
+### Phase 5 (Mar–Apr 2027)
+**Polish & v1.0**
+- Final refinement and optimization
+- Community feedback integration
+- Documentation completion
+- v1.0 release
 
-### Phase 6+ (Ongoing)
+### Beyond v1.0 (Ongoing)
 **Ecosystem & Maturity**
-- Consistency validator (Lighthouse-style scoring)
-- Human Interface Guidelines (shared playbook)
-- Third-party app adoption
-- Future research (eye tracking, new input methods)
+- GNOME app adoption measurement
+- Developer feedback and iteration
+- Performance optimization
+- Feature enhancements based on community
 
 ## Go-to-Market Strategy
 
-### Phase 1: Foundation (Now)
-- Release comprehensive design specification
-- Publish open-source design tokens
-- Build community of interested developers
+### Phase 1: Foundation (Complete)
+- Release comprehensive design specification ✅
+- Publish open-source design tokens ✅
+- Build community of interested GNOME developers ✅
 
-### Phase 2: Early Adoption (6 months)
-- Release GTK4 and Qt6 renderers
-- Publish example applications
-- Gather developer feedback
+### Phase 2: Early Adoption (Aug–Oct 2026)
+- Release GTK4 component library
+- Showcase with GNOME example applications
+- Gather developer feedback from GNOME community
 
-### Phase 3: Acceleration (12 months)
-- Build application framework (make building apps trivial)
-- Port major Linux applications (Firefox, Thunderbird, GNOME apps)
-- Partner with desktop environments
-- Publish developer guidelines
+### Phase 3: Acceleration (Nov–Dec 2026)
+- Port core GNOME applications (Files, Settings, Calendar, Music)
+- Publish developer guidelines and component library
+- Partner with GNOME project
 
-### Phase 4: Ecosystem (18 months)
-- Consistency validator goes public
-- Third-party applications adopt Aurora widely
-- Linux market share gains momentum
-- Enterprise adoption increases
+### Phase 4: Ecosystem (Jan–Apr 2027)
+- Third-party GNOME applications begin adopting Aurora
+- v1.0 release
+- Community feedback drives Phase 5 priorities
 
-### Phase 5: Maturity (24+ months)
-- Aurora becomes standard for Linux applications
-- Cross-platform adoption (Electron, Web)
-- Future platforms (spatial computing, AR/VR)
-
-## Investment Required
-
-### Development Resources
-- **Phase 1**: ~0 (volunteer, open source)
-- **Phase 2**: ~4 engineers, 6 months
-- **Phase 3**: ~8 engineers, 6 months  
-- **Phase 4**: ~12 engineers, 6 months
-- **Phase 5+**: ~20+ engineers, ongoing
-
-### Community Resources
-- Design review and feedback
-- Third-party library integrations
-- Application testing and adoption
-- Documentation and guides
-
-## Risk Analysis
-
-### Technical Risks
-- **Risk**: Multi-toolkit consistency is difficult
-- **Mitigation**: Token-based architecture ensures consistency at source
-
-- **Risk**: Performance overhead (animations, accessibility)
-- **Mitigation**: GPU acceleration, profiling, performance budgets from Phase 1
-
-- **Risk**: Adoption of new tools/frameworks
-- **Mitigation**: Provide migration guides, backwards compatibility
-
-### Market Risks
-- **Risk**: Linux fragmentation prevents unified adoption
-- **Mitigation**: Work with multiple desktop environments, not just one
-
-- **Risk**: Desktop market continues shrinking
-- **Mitigation**: Focus on enterprise and professional users (growing segments)
-
-- **Risk**: macOS/Windows improve faster than we build Aurora
-- **Mitigation**: Focus on unique advantages (open source, local AI, customization)
-
-### Organizational Risks
-- **Risk**: Lack of sustained funding/leadership
-- **Mitigation**: Open-source community model, distributed governance
-
-- **Risk**: Community fork or competing system emerges
-- **Mitigation**: Establish Aurora as the obvious standard early
+### Phase 5: Maturity (2027+)
+- Aurora becomes standard for GNOME applications
+- GNOME recognized for visual excellence
+- Ongoing enhancement and community-driven development
 
 ## Competitive Advantages
 
-### vs. macOS
+### Aurora for GNOME vs. macOS
 - ✅ Open source (full transparency)
 - ✅ Free (no licensing costs)
 - ✅ Hardware flexibility (any Linux device)
 - ✅ Privacy-first (no telemetry required)
-- ✅ Local AI (no cloud dependency)
 - ✅ Customization without losing coherence
+- ✅ Built on proven, modern GTK4 stack
 
-### vs. Windows
-- ✅ Unix foundation (better for developers)
-- ✅ Lightweight (runs on older hardware)
-- ✅ Privacy-focused (not profit-driven)
-- ✅ No telemetry or forced updates
-- ✅ True multitasking and stability
+### Aurora for GNOME vs. KDE Plasma
+- ✅ Lighter, more focused design system
+- ✅ Simpler developer onboarding
+- ✅ Desktop environment agnostic (works standalone)
+- ✅ Better WCAG AAA compliance focus
+- ✅ Spring-physics motion language
 
-### vs. Current Linux Desktop
-- ✅ Unified experience across toolkits
-- ✅ Professional polish matching commercial OS
-- ✅ Intelligent, context-aware features
-- ✅ Accessible by default
-- ✅ Developer-friendly framework
+### Aurora for GNOME vs. Current GNOME
+- ✅ Unified component library
+- ✅ Professional polish matching macOS
+- ✅ Consistent motion and interaction language
+- ✅ Accessible by default (WCAG AAA)
+- ✅ Developer-friendly framework for app building
 
-## Long-Term Vision (5+ Years)
+## Long-Term Vision (3–5 Years)
 
 Aurora succeeds when:
 
-1. **Linux market share reaches 10%** (from current 2%)
-2. **Every major Linux application uses Aurora** (GTK, Qt, Electron)
-3. **Aurora becomes the reference for "beautiful Linux desktop"**
-4. **Enterprise adopts Linux as first choice** for professional desktops
-5. **New computer science graduates prefer Linux** as primary development platform
-6. **Users describe Linux as "as polished as macOS, but open"**
+1. **>70% of GNOME applications use Aurora components** within 2 years
+2. **GNOME becomes recognized as the most beautiful Linux desktop**
+3. **Enterprise adopts GNOME as first choice** for professional desktops
+4. **Users describe GNOME as "as polished as macOS, but open"**
+5. **Aurora community reaches 500+ active contributors**
+6. **New GNOME applications start with Aurora, not from scratch**
 
 ## Conclusion
 
-Aurora is not just a design system. It's a **bet on Linux's future as a premium, coherent, professional operating system**.
+Aurora is GNOME's answer to macOS polish. Not a complete OS abstraction. Not a multi-platform framework. Just **beautiful GNOME**.
 
-By providing unified design language, intelligent features, and accessibility-first architecture, Aurora transforms Linux from "technically excellent but visually inconsistent" to "the world's most beautiful and intelligent open operating system."
+By providing a unified design language, elegant motion, consistent components, and accessibility-first architecture, Aurora transforms GNOME from "powerful but inconsistent" to "the world's most beautiful and polished Linux desktop."
 
-The foundation is ready. The vision is clear. The path is defined.
+The foundation is ready (Phase 1). The vision is clear. The path is achievable.
 
 **What remains is execution.**
 
@@ -289,12 +244,12 @@ The foundation is ready. The vision is clear. The path is defined.
 
 ## Next Steps
 
-1. **Share this vision** with Linux community, desktop environments, developers
-2. **Gather feedback** on scope, priorities, and approach
-3. **Begin Phase 2** implementation (motion systems, GTK4 renderers)
-4. **Build early adopters** (example applications, design library)
-5. **Establish governance** (how decisions are made, how contributions work)
+1. **Share this vision** with GNOME community and developers
+2. **Gather feedback** on design language and component library
+3. **Begin Phase 2** implementation (GTK4 components, motion in GNOME)
+4. **Showcase with example GNOME applications**
+5. **Establish governance** (decision-making, contribution process)
 
-Aurora's success depends on community collaboration, not corporate control.
+Aurora's success depends on deep collaboration with the GNOME community.
 
-Every developer, designer, and user who believes in this vision can contribute to making Linux the world's best desktop.
+Every developer, designer, and user in the GNOME ecosystem can contribute to making GNOME the world's most beautiful desktop.

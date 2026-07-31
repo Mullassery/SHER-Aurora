@@ -1,74 +1,65 @@
-# Aurora Desktop Design System
+# Aurora: GNOME Enhancement Design System
 
-**The most polished open desktop experience ever built.**
+**The most polished GNOME experience ever built.**
 
-Aurora is a next-generation, open-source desktop design system for Linux that achieves macOS-level visual polish, consistency, and UX while remaining platform-neutral and compatible with GNOME, GTK4, Qt6, Electron, web applications, and future desktop environments.
+Aurora is an open-source design system and visual enhancement layer for GNOME that achieves macOS-level visual polish, consistency, motion, and accessibility while being deeply integrated with GNOME's existing infrastructure (GTK4, libadwaita, dconf, GNOME Settings).
 
 ## Philosophy
 
-**Not a theme. A complete design language and rendering ecosystem.**
+**Not a theme. A design language layer on top of GNOME.**
 
-Aurora defines how modern Linux applications should look, feel, animate, sound, and interact. The goal: become for Linux what Human Interface Guidelines are for Apple and Material Design is for Google.
+Aurora enhances GNOME by defining a unified design language, typography system, motion language, color system, and accessibility framework. The goal: make GNOME the most beautiful and polished desktop environment on Linux — competitive with macOS while preserving Linux's openness.
 
 ### Core Principles
 
-- **Consistency over customization** — Design systems define and enforce consistency; customization is an edge case
-- **Design systems over themes** — Tokens and semantic abstractions, not skin layers
-- **Motion over decoration** — Every animation must serve interaction and feedback
+- **GNOME-native integration** — Deep integration with GNOME, not platform-agnostic design
+- **Consistency over customization** — All GNOME apps follow the same design language
+- **Design systems over themes** — Tokens and semantic abstractions, not cosmetic themes
+- **Motion over decoration** — Every animation clarifies interaction and feedback
 - **Typography over visual effects** — Text is the primary interface; make it exceptional
-- **Accessibility over aesthetics** — WCAG AAA first, visual polish second
-- **Performance over complexity** — Cold startup <100ms, animations 60fps minimum
-- **Native integration over hacks** — No GNOME-specific patches; Wayland-native design
+- **Accessibility over aesthetics** — WCAG AAA compliance by default, not an afterthought
+- **Polish over complexity** — Visual excellence over feature-richness
+- **libadwaita integration** — Build on GNOME's modern toolkit, not around it
 
 ### Anti-Patterns
 
-- Excessive skeuomorphism
-- Overly glassy or heavy visual effects
-- Inconsistent widget styling across toolkits
-- Theme-specific application patches
-- Hardcoded color values (all semantic)
+- Ignoring libadwaita or fighting GNOME's design patterns
+- Excessive customization that breaks GNOME integration
+- Visual effects without functional purpose
+- Inconsistent widget styling within GNOME apps
+- Hardcoded color values (all derive from semantic tokens)
 
 ## Architecture
 
 ```
-Aurora Design System
-│
+GNOME Applications (Files, Settings, Calendar, Music, etc.)
+        ↓
+Aurora Enhancement Layer
 ├── Design Tokens (aurora-tokens)
 │   └── Spacing, radius, elevation, motion, semantic colors
-│
 ├── Typography Engine (aurora-typography)
-│   └── Font loading, optical sizing, responsive scaling, i18n
-│
+│   └── Responsive scales, i18n, optical sizing
 ├── Color System (aurora-color)
-│   └── Light, Dark, OLED, HDR themes with semantic tokens
-│
+│   └── Light, Dark, OLED themes with semantic tokens
 ├── Motion Engine (aurora-motion)
-│   └── Spring physics, velocity-aware animations, GPU acceleration
-│
+│   └── Spring physics, gesture tracking, animations
 ├── Icon System (aurora-icons)
-│   └── 1000+ SVG icons, consistent geometry and stroke width
-│
-├── Sound Design System (aurora-sound)
-│   └── Notifications, interactions, spatial audio
-│
+│   └── Consistent GNOME icon system (1000+ icons)
+├── Sound System (aurora-sound)
+│   └── Semantic notification and interaction sounds
 ├── Accessibility Layer (aurora-a11y)
-│   └── High contrast, reduced motion, screen readers, voice
-│
-├── Core Library (aurora-core)
-│   └── Unified abstraction over all subsystems
-│
-├── Renderers
-│   ├── GTK4 (aurora-gtk)
-│   ├── Qt6 (aurora-qt)
-│   └── Web/WASM (aurora-web)
-│
-├── Application SDKs
-│   └── aurora.button(), aurora.card(), aurora.dialog(), etc.
-│
-└── Desktop Integration
-    ├── Wayland-native composition integration
-    ├── X11 fallback
-    └── GNOME / KDE / Cosmic / XFCE support
+│   └── WCAG AAA, high contrast, screen readers
+├── Component Library
+│   └── GTK4 widgets built on libadwaita
+└── GNOME Integration
+    ├── Settings panel
+    ├── Shell theming
+    ├── dconf preferences
+    └── Notification system
+        ↓
+GTK4 + libadwaita (GNOME's modern toolkit)
+        ↓
+Wayland Compositor (GNOME Shell)
 ```
 
 ## Workspace Structure
@@ -90,72 +81,68 @@ crates/
 
 ## Key Design Decisions
 
-1. **Token-Driven Everything** — No hardcoded values. Every spacing, color, motion value comes from tokens. Applications consume semantic tokens only (e.g., `surface`, `primary`, not `#f0f0f0`).
+1. **Token-Driven Everything** — No hardcoded values. Every spacing, color, motion value comes from tokens. GNOME apps consume semantic tokens only (e.g., `surface`, `primary`, not `#f0f0f0`).
 
-2. **Wayland-First** — Composition protocol support, modern input handling, HDR/OLED-ready. X11 fallback only.
+2. **Deep libadwaita Integration** — Build on GNOME's modern toolkit, not around it. Leverage GTK4 + libadwaita for consistency and maintenance.
 
-3. **Modular Renderers** — Each renderer (GTK, Qt, Web) is independent. Shared token + typography + motion layer. Renderer-specific widget implementations.
+3. **GNOME-Native Only** — Focus exclusively on GNOME. No multi-desktop abstraction. Deep integration with GNOME Shell, Settings, dconf, and notifications.
 
-4. **Multi-Toolkit Consistency** — A GTK app and Qt app should be visually indistinguishable. Achieved through:
-   - Identical design tokens
-   - Identical typography scales
-   - Identical motion language
-   - Identical color system
-   - Consistent widget semantics
+4. **GNOME Application Consistency** — All GNOME apps (Files, Settings, Calendar, Music, etc.) follow the same design language. Achieved through:
+   - Shared design tokens
+   - Unified typography scales
+   - Consistent motion language
+   - Semantic color system
+   - Standard component library
 
 5. **Performance Targets**
    - Design token resolution: <1ms
-   - Cold startup: <100ms
-   - Window animations: 60fps minimum, 120fps preferred
-   - System-wide memory overhead: <100MB
+   - Animation smoothness: 60fps minimum, 120fps preferred
+   - Window animations: Fluid, responsive
+   - Memory overhead: Minimal (no extra system load)
 
-6. **AI-Powered Personalization** (Phase 5)
-   - Local, privacy-preserving adaptation
-   - No cloud dependency
-   - Signals: time of day, ambient light, display type, interaction patterns
-   - Adaptations: contrast, density, font size, motion intensity
-
-7. **Accessibility as First-Class** — WCAG AAA where possible:
+6. **Accessibility as First-Class** — WCAG AAA by default, not an afterthought:
    - High contrast mode
-   - Reduced motion mode
-   - Screen reader support
-   - Keyboard navigation
-   - Magnification
-   - Voice interaction support
+   - Reduced motion mode (respect `prefers-reduced-motion`)
+   - Screen reader support (Linux accessibility bus)
+   - 100% keyboard navigation
+   - Magnification support
+   - Assistive technology integration
 
-## Development Phases
+## Development Phases (GNOME-Focused)
 
-### Phase 1: Foundation (Design Language)
-- [ ] Design language specification
-- [ ] Typography system (SF Pro / Inter / IBM Plex research + selection)
-- [ ] Color system (light/dark/OLED/HDR)
-- [ ] Motion language (spring physics, easing curves)
-- [ ] Design token format and codegen
-- [ ] Design documentation
+### Phase 1: Foundation (Design Language) ✅ COMPLETE
+- [x] Design language specification
+- [x] Typography system (Inter with fallbacks)
+- [x] Color system (Light, Dark, OLED)
+- [x] Motion language (spring physics)
+- [x] Design tokens and codegen
+- [x] Design documentation
 
-### Phase 2: Core Renderers
-- [ ] GTK4 renderer
-- [ ] Qt6 FFI bindings
+### Phase 2: GTK4 Components & GNOME Integration (Aug–Oct 2026)
+- [ ] GTK4 component library (Button, Card, Input, Dialog, etc.)
+- [ ] GNOME Shell integration (theming, colors)
+- [ ] Motion engine in GTK4
 - [ ] Icon system (SVG, 1000+ icons)
 - [ ] Widget library implementation
 
-### Phase 3: SDK & Web
-- [ ] Electron renderer
-- [ ] Web/WASM renderer
-- [ ] React/Vue/Svelte SDKs
-- [ ] Application SDKs (aurora.button(), aurora.card(), etc.)
+### Phase 3: Color System & App Porting (Nov–Dec 2026)
+- [ ] Color engine (semantic tokens, HDR support)
+- [ ] GNOME app porting (Files, Settings, Calendar, Music)
+- [ ] Sound design system
+- [ ] Theme management (dconf, gsettings)
 
-### Phase 4: Integration & System
-- [ ] Desktop shell integration (GNOME, KDE, Cosmic, XFCE)
-- [ ] Accessibility suite
-- [ ] Sound system
-- [ ] OTel instrumentation
+### Phase 4: Accessibility & Refinement (Jan–Feb 2027)
+- [ ] Accessibility layer (WCAG AAA)
+- [ ] High contrast mode
+- [ ] Reduced motion support
+- [ ] Screen reader testing
+- [ ] Keyboard navigation audit
 
-### Phase 5: Intelligence
-- [ ] AI-powered personalization
-- [ ] HDR/OLED optimization
-- [ ] Ecosystem adoption tooling
-- [ ] Community theme validation
+### Phase 5: Polish & v1.0 (Mar–Apr 2027)
+- [ ] Final refinement and optimization
+- [ ] Community feedback integration
+- [ ] Comprehensive documentation
+- [ ] v1.0 release
 
 ## Design Subsystems
 
@@ -277,12 +264,12 @@ Target WCAG AAA where possible. Measure accessibility compliance regularly.
 
 Aurora succeeds when:
 
-1. **Visual Indistinguishability** — A GTK application and Qt application are visually indistinguishable from belonging to the same ecosystem
-2. **User Perception** — Users describe the desktop as polished, calm, and premium
-3. **Developer Adoption** — Developers can adopt the system with minimal effort
-4. **Accessibility Excellence** — Accessibility scores exceed major commercial operating systems (macOS, Windows, iOS)
-5. **Stability** — The design language remains stable for years without breaking applications
-6. **Community Impact** — Linux gains a truly unified, modern desktop design system rather than another short-lived theme
+1. **Visual Cohesion** — All GNOME applications (Files, Settings, Calendar, Music, etc.) feel visually consistent and premium
+2. **User Perception** — Users describe GNOME as "as polished as macOS, but open"
+3. **Developer Adoption** — >70% of GNOME applications adopt Aurora components
+4. **Accessibility Excellence** — WCAG AAA compliance throughout, exceeding commercial OSs (macOS, Windows)
+5. **Stability** — Design language remains stable for years without breaking GNOME apps
+6. **Ecosystem Impact** — GNOME becomes recognized as the most beautiful desktop environment on Linux
 
 ## References
 
