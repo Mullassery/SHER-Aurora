@@ -2,7 +2,7 @@
 //!
 //! Production-ready widgets for building beautiful GNOME applications.
 //!
-//! # Components
+//! # Components (v1.0)
 //!
 //! - **Button** — Filled, tinted, outlined, ghost variants
 //! - **Card** — Elevated, outlined container
@@ -14,6 +14,10 @@
 //! - **List** — Scrollable list container
 //! - **Badge** — Status indicators
 //! - **Sidebar** — Navigation sidebar
+//!
+//! # Components (v1.1)
+//!
+//! - **DataTable** — Sortable, selectable data display with pagination
 //!
 //! # Example
 //!
@@ -34,6 +38,7 @@ pub mod tooltip;
 pub mod list;
 pub mod badge;
 pub mod sidebar;
+pub mod datatable;
 
 pub use button::{Button, ButtonStyle, ButtonState};
 pub use card::{Card, CardStyle};
@@ -45,3 +50,4 @@ pub use tooltip::{set_tooltip, remove_tooltip};
 pub use list::List;
 pub use badge::{Badge, BadgeStyle};
 pub use sidebar::Sidebar;
+pub use datatable::{DataTable, Column, Row, SortDirection, SelectionMode};
