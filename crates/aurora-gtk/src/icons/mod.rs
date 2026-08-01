@@ -4,6 +4,7 @@
 
 pub mod core;
 pub mod svg;
+pub mod font;
 
 use std::collections::HashMap;
 
