@@ -21,6 +21,71 @@ This is **not a theme**. Aurora is a complete design language and component libr
 
 **Status: v1.0 PRODUCTION READY** ✅
 
+## The Problem
+
+### Current State of GNOME Applications
+
+**Inconsistency**: Each GNOME application (Files, Settings, Calendar, Music, Text Editor, etc.) uses different:
+- Colors and color palettes (no semantic token system)
+- Typography scales and font sizes
+- Spacing and layout patterns
+- Animation and motion behavior
+- Component styling and states
+
+**Result**: GNOME feels fragmented, not cohesive. Users switch between apps and experience jarring design differences.
+
+### Why This Matters
+
+1. **User Experience** — Inconsistent design feels unprofessional and breaks immersion
+2. **Developer Burden** — Each app must design and implement components from scratch
+3. **Accessibility** — No unified accessibility standards (contrast, keyboard nav, a11y features)
+4. **Maintenance** — Bugs in component design get replicated across all apps
+5. **Competitive Position** — Users compare GNOME to macOS/Windows and see the difference
+
+### Existing Solutions & Their Gaps
+
+**libadwaita** (GNOME's component library):
+- ✅ Provides GTK4 widgets
+- ❌ No comprehensive design system
+- ❌ No motion/animation language
+- ❌ No sound design
+- ❌ Only basic theming (Light/Dark)
+- ❌ Limited semantic token system
+
+**Material Design 3.0** (Google):
+- ✅ Comprehensive design system
+- ✅ 40+ components
+- ✅ Advanced theming (Material You)
+- ❌ Not GNOME-native (web/Android focused)
+- ❌ Requires adaptation for GTK4
+- ❌ Not Linux-first
+
+**Apple HIG**:
+- ✅ Beautiful, polished design
+- ✅ Professional standard
+- ❌ Proprietary (macOS/iOS only)
+- ❌ Not open-source
+- ❌ Can't be used on GNOME
+
+**No Solution**:
+- GNOME has no equivalent to HIG or Material Design
+- GNOME apps are individually designed with no coordination
+- Result: Fragmented, unprofessional appearance
+
+## The Solution: Aurora
+
+Aurora solves these problems by providing:
+
+1. **Unified Design System** — Single source of truth for all design decisions
+2. **Complete Component Library** — 11+ production-ready widgets (v1.0), expanding to 40+ (v1.2)
+3. **GNOME-Native Integration** — Deep integration with dconf, GNOME Settings, shell, notifications
+4. **Motion Language** — Elegant spring physics animations that clarify interaction
+5. **Comprehensive Theming** — 4 themes (Light/Dark/OLED/HDR) with WCAG AAA compliance
+6. **Accessibility-First** — AAA compliance by default, not an afterthought
+7. **Sound Design** — Semantic notification sounds for consistent feedback
+8. **Open-Source** — MIT/Apache 2.0 licensed, community-driven
+9. **Professional Polish** — Attention to detail that rivals commercial operating systems
+
 ## Vision
 
 Make GNOME **the most beautiful and polished desktop environment on Linux**, with professional-grade visual consistency and elegance, while preserving Linux's openness and freedom.
