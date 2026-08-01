@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-**Aurora** is a design system and visual enhancement layer built specifically for **GNOME** that brings macOS-level visual polish, coherence, and user experience while preserving Linux's openness and flexibility.
+**Aurora** is a design system and visual enhancement layer built specifically for **GNOME** that brings professional desktop environments-level visual polish, coherence, and user experience while preserving Linux's openness and flexibility.
 
 Currently, GNOME applications lack visual consistency and polish. Every application has different design patterns, motion behavior, color schemes, and accessibility support.
 
@@ -20,13 +20,13 @@ Aurora solves this by providing a unified design system, motion language, color 
 - No unified component library for developers
 - New developers build components from scratch instead of reusing
 
-**The Result**: Users describe GNOME as "inconsistent and rough compared to macOS."
+**The Result**: Users describe GNOME as "inconsistent and rough compared to professional desktop environments."
 
-**The Opportunity**: If we provided a unified design system, consistent components, and intentional motion for GNOME—like libadwaita does for widgets—GNOME would become as polished and professional as macOS, attracting users who want a beautiful Linux desktop.
+**The Opportunity**: If we provided a unified design system, consistent components, and intentional motion for GNOME—like libadwaita does for widgets—GNOME would become as polished and professional as professional desktop environments, attracting users who want a beautiful Linux desktop.
 
-### The macOS Advantage
+### The professional desktop environments Advantage
 
-Why do users prefer macOS despite its limitations?
+Why do users prefer professional desktop environments despite its limitations?
 
 1. **Coherence** — Every application follows the same design language
 2. **Polish** — Animations feel fluid, responsive, intentional
@@ -81,7 +81,7 @@ Aurora is open source and community-driven. All design decisions are transparent
 
 ### Primary
 - **GNOME Users** — People using GNOME who want a premium desktop experience
-- **Professional Desktop Users** — Developers, designers, engineers who want Linux with macOS-level polish
+- **Professional Desktop Users** — Developers, designers, engineers who want Linux with professional desktop environments-level polish
 - **Open Source Advocates** — Users who want freedom AND quality
 
 ### Secondary
@@ -91,7 +91,7 @@ Aurora is open source and community-driven. All design decisions are transparent
 
 ## Key Differentiation
 
-| Dimension | macOS | Windows | GNOME Today | Aurora |
+| Dimension | professional desktop environments | Windows | GNOME Today | Aurora |
 |-----------|-------|---------|-------------|---------|
 | **Visual Coherence** | Excellent | Good | Poor | Excellent |
 | **Motion Quality** | Excellent | Good | Inconsistent | Excellent |
@@ -107,10 +107,10 @@ Aurora is open source and community-driven. All design decisions are transparent
 ## Success Metrics
 
 ### For Users
-- **Perception**: "GNOME feels as polished as macOS"
+- **Perception**: "GNOME feels as polished as professional desktop environments"
 - **Adoption**: >70% of GNOME users within 2 years
 - **Satisfaction**: NPS >60
-- **Accessibility**: WCAG AAA compliance throughout (exceeds macOS/Windows)
+- **Accessibility**: WCAG AAA compliance throughout (exceeds professional desktop environments/Windows)
 
 ### For Developers
 - **Adoption**: >70% of GNOME applications use Aurora components
@@ -197,7 +197,7 @@ Aurora is open source and community-driven. All design decisions are transparent
 
 ## Competitive Advantages
 
-### Aurora for GNOME vs. macOS
+### Aurora for GNOME vs. professional desktop environments
 - ✅ Open source (full transparency)
 - ✅ Free (no licensing costs)
 - ✅ Hardware flexibility (any Linux device)
@@ -214,7 +214,7 @@ Aurora is open source and community-driven. All design decisions are transparent
 
 ### Aurora for GNOME vs. Current GNOME
 - ✅ Unified component library
-- ✅ Professional polish matching macOS
+- ✅ Professional polish matching professional desktop environments
 - ✅ Consistent motion and interaction language
 - ✅ Accessible by default (WCAG AAA)
 - ✅ Developer-friendly framework for app building
@@ -226,13 +226,13 @@ Aurora succeeds when:
 1. **>70% of GNOME applications use Aurora components** within 2 years
 2. **GNOME becomes recognized as the most beautiful Linux desktop**
 3. **Enterprise adopts GNOME as first choice** for professional desktops
-4. **Users describe GNOME as "as polished as macOS, but open"**
+4. **Users describe GNOME as "as polished as professional desktop environments, but open"**
 5. **Aurora community reaches 500+ active contributors**
 6. **New GNOME applications start with Aurora, not from scratch**
 
 ## Conclusion
 
-Aurora is GNOME's answer to macOS polish. Not a complete OS abstraction. Not a multi-platform framework. Just **beautiful GNOME**.
+Aurora is GNOME's answer to professional desktop environments polish. Not a complete OS abstraction. Not a multi-platform framework. Just **beautiful GNOME**.
 
 By providing a unified design language, elegant motion, consistent components, and accessibility-first architecture, Aurora transforms GNOME from "powerful but inconsistent" to "the world's most beautiful and polished Linux desktop."
 

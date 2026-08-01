@@ -2,13 +2,13 @@
 
 **The most polished GNOME experience ever built.**
 
-Aurora is an open-source design system and visual enhancement layer for GNOME that achieves macOS-level visual polish, consistency, motion, and accessibility while being deeply integrated with GNOME's existing infrastructure (GTK4, libadwaita, dconf, GNOME Settings).
+Aurora is an open-source design system and visual enhancement layer for GNOME that delivers professional-grade visual polish, consistency, motion, and accessibility while being deeply integrated with GNOME's existing infrastructure (GTK4, libadwaita, dconf, GNOME Settings).
 
 ## Philosophy
 
 **Not a theme. A design language layer on top of GNOME.**
 
-Aurora enhances GNOME by defining a unified design language, typography system, motion language, color system, and accessibility framework. The goal: make GNOME the most beautiful and polished desktop environment on Linux — competitive with macOS while preserving Linux's openness.
+Aurora enhances GNOME by defining a unified design language, typography system, motion language, color system, and accessibility framework. The goal: make GNOME the most beautiful, polished, and professional desktop environment on Linux while preserving Linux's openness.
 
 ### Core Principles
 

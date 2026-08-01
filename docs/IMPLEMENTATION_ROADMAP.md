@@ -289,7 +289,7 @@ This roadmap translates Aurora's GNOME enhancement vision into concrete developm
 ## Success Criteria (Overall)
 
 ### For Users
-- ✅ "As polished as macOS"
+- ✅ "Beautiful, polished, and professional"
 - ✅ >95% WCAG AAA compliance
 - ✅ Accessible to all users
 - ✅ Fluid, responsive interactions

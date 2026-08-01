@@ -4,7 +4,7 @@
 
 **Aurora** is a design system and visual enhancement layer built specifically for **GNOME** that delivers:
 
-- macOS-level visual polish
+- professional desktop environments-level visual polish
 - Unified design language (tokens, typography, motion, color, sound)
 - Consistent user experience across GNOME applications
 - Accessibility-first architecture (WCAG AAA)
@@ -171,7 +171,7 @@ Wayland Compositor
 ## Success Criteria
 
 ### For Users
-- GNOME feels as polished as macOS
+- GNOME feels as polished as professional desktop environments
 - Applications are visually consistent
 - Animations are smooth and intentional
 - Accessibility is seamless
@@ -208,7 +208,7 @@ Wayland Compositor
 ## Long-Term Vision
 
 Aurora makes GNOME **the most beautiful and polished desktop environment on Linux**, attracting:
-- Users who want macOS-level polish on Linux
+- Users who want professional desktop environments-level polish on Linux
 - Developers who value visual consistency
 - Enterprise customers seeking premium open-source desktop
 - Educational institutions with high design standards
@@ -216,13 +216,13 @@ Aurora makes GNOME **the most beautiful and polished desktop environment on Linu
 Within 3 years:
 - GNOME is recognized for visual excellence
 - Aurora components are adopted by >70% of GNOME apps
-- Linux desktop is competitive with macOS/Windows in polish
+- Linux desktop is competitive with professional desktop environments/Windows in polish
 - GNOME becomes preferred desktop for designers and creatives
 
 ---
 
 ## Summary
 
-Aurora is **GNOME's answer to macOS polish** — a focused, achievable design system that makes GNOME visually stunning and consistent without reinventing the desktop.
+Aurora is **GNOME's answer to professional desktop environments polish** — a focused, achievable design system that makes GNOME visually stunning and consistent without reinventing the desktop.
 
 Not a complete OS abstraction. Not a multi-platform framework. Just **beautiful GNOME**.
