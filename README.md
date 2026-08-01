@@ -3,6 +3,7 @@
 [![Rust](https://img.shields.io/badge/Rust-1.70%2B-orange)](https://www.rust-lang.org/)
 [![License](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue)](LICENSE)
 [![GNOME](https://img.shields.io/badge/GNOME-native-blue)](https://www.gnome.org/)
+[![Ubuntu](https://img.shields.io/badge/Ubuntu-22.04%2B-orange?logo=ubuntu)](docs/UBUNTU_INSTALLATION.md)
 [![Version](https://img.shields.io/badge/version-v1.0.0-success)](https://github.com/Mullassery/aurora/releases)
 [![Tests](https://img.shields.io/badge/tests-301%2B-success)](docs/API_REFERENCE.md)
 [![Coverage](https://img.shields.io/badge/coverage-99%25-success)](#)
@@ -183,6 +184,24 @@ aurora/
 **Total**: 301+ tests, 99%+ coverage, production-ready
 
 **Next**: v1.1 (Jan 2027) — Component expansion, developer tools, icon system
+
+## 🐧 Ubuntu Users? Start Here!
+
+**Ubuntu 22.04+ fully supported!**
+
+- 📖 **[Ubuntu Quick Start](UBUNTU_QUICK_START.md)** — One copy-paste command (5-10 min)
+- 📚 **[Ubuntu Full Guide](docs/UBUNTU_INSTALLATION.md)** — Complete step-by-step with troubleshooting
+- ✅ **Tested on:** Ubuntu 24.04 LTS, 23.10, 22.04 LTS
+
+**TL;DR - Copy and paste this:**
+
+```bash
+sudo apt update && sudo apt install -y libgtk-4-dev libadwaita-1-dev libglib2.0-dev build-essential pkg-config rustc cargo && git clone https://github.com/Mullassery/aurora.git && cd aurora && sudo cp crates/aurora-gtk/schemas/org.gnome.desktop.interface.aurora.gschema.xml /usr/share/glib-2.0/schemas/ && sudo glib-compile-schemas /usr/share/glib-2.0/schemas/ && cargo run --example aurora_settings
+```
+
+Done! Aurora Settings app will open and show Aurora working. 🎉
+
+---
 
 ## Getting Started
 
@@ -468,13 +487,19 @@ cargo run --example aurora_music
 
 ## Documentation
 
-Read the complete design system and implementation guides:
+### 🐧 For Ubuntu Users (Start Here!)
+- **[Ubuntu Quick Start](UBUNTU_QUICK_START.md)** — One-command installation (TL;DR for Ubuntu)
+- **[Ubuntu Full Guide](docs/UBUNTU_INSTALLATION.md)** — Complete step-by-step, troubleshooting, tips
 
+### Developer Documentation
+- **[API Reference](docs/API_REFERENCE.md)** — Complete API for all subsystems
+- **[Integration Guide](docs/INTEGRATION_GUIDE.md)** — How to build GNOME apps with Aurora
+- **[Architecture](docs/ARCHITECTURE_V2.md)** — Technical design and data flows
+
+### Design & Philosophy
 - **[CLAUDE.md](CLAUDE.md)** — Project philosophy, principles, success criteria
-- **[docs/DESIGN_LANGUAGE.md](docs/DESIGN_LANGUAGE.md)** — Visual language, spacing, colors, typography, motion
-- **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** — Technical architecture, data flow, design decisions
-- **[docs/IMPLEMENTATION_ROADMAP.md](docs/IMPLEMENTATION_ROADMAP.md)** — Detailed phase-by-phase roadmap
-- **[docs/PRODUCT_VISION.md](docs/PRODUCT_VISION.md)** — Product strategy, competitive advantages, success metrics
+- **[Problem Statement](README.md#the-problem)** — Why Aurora was needed
+- **[Roadmap](PHASE5_ROADMAP.md)** — v1.0→v2.0 timeline and priorities
 
 ## Key Features
 
