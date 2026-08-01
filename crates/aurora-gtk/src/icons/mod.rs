@@ -3,6 +3,7 @@
 //! Unified icon system for GNOME applications with SVG templates, color utilities, and sizing.
 
 pub mod core;
+pub mod svg;
 
 use std::collections::HashMap;
 
