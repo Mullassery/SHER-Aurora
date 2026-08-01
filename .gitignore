@@ -1,13 +1,103 @@
-/target
+# Rust build artifacts
+/target/
 Cargo.lock
-*.swp
-*.swo
-*~
-.DS_Store
+**/*.rs.bk
+
+# IDE and editor files
 .vscode/
 .idea/
 *.iml
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+.eclipse
+.project
+.cproject
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+.env.local
+.env.*.local
+
+# Logs
 *.log
-/dist
-/build
+logs/
+npm-debug.log*
+
+# Build and distribution
+/dist/
+/build/
 node_modules/
+*.whl
+*.egg-info/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# Test coverage
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.pytest_cache/
+
+# Development
+.env
+.env.dev
+.env.test
+.env.production.local
+.env.development.local
+.env.test.local
+
+# Documentation
+site/
+docs/_build/
+
+# Mac
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+.directory
+.Trash*
+
+# Windows
+Thumbs.db
+ehthumbs.db

@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Aurora Discussions
+    url: https://github.com/Mullassery/aurora/discussions
+    about: Ask questions, share ideas, and discuss Aurora with the community
+  - name: Report Security Issue
+    url: mailto:mullassery@gmail.com
+    about: Found a security vulnerability? Email mullassery@gmail.com instead of opening an issue
+  - name: Aurora Documentation
+    url: https://github.com/Mullassery/aurora/tree/main/docs
+    about: Check existing documentation and API reference
