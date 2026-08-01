@@ -18,6 +18,7 @@
 //! # Components (v1.1)
 //!
 //! - **DataTable** — Sortable, selectable data display with pagination
+//! - **Tabs** — Multi-view navigation with multiple styles and animations
 //!
 //! # Example
 //!
@@ -39,6 +40,7 @@ pub mod list;
 pub mod badge;
 pub mod sidebar;
 pub mod datatable;
+pub mod tabs;
 
 pub use button::{Button, ButtonStyle, ButtonState};
 pub use card::{Card, CardStyle};
@@ -51,3 +53,4 @@ pub use list::List;
 pub use badge::{Badge, BadgeStyle};
 pub use sidebar::Sidebar;
 pub use datatable::{DataTable, Column, Row, SortDirection, SelectionMode};
+pub use tabs::{Tabs, Tab, TabPanel, TabStyle, TabOrientation};
