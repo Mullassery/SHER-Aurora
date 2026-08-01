@@ -12,6 +12,7 @@ pub mod css;
 pub mod theme;
 pub mod widgets;
 pub mod motion;
+pub mod gnome;
 
 pub use errors::{GtkError, GtkResult};
 pub use css::CssProvider;

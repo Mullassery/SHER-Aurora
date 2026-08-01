@@ -16,6 +16,8 @@ tracing = { workspace = true }
 aurora-tokens = { path = "../aurora-tokens" }
 aurora-typography = { path = "../aurora-typography" }
 aurora-motion = { path = "../aurora-motion" }
+aurora-color = { path = "../aurora-color" }
+aurora-sound = { path = "../aurora-sound" }
 
 # GTK4 bindings (optional - requires system GTK4)
 # Uncomment when building against GTK4
