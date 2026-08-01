@@ -17,5 +17,7 @@ aurora-tokens = { path = "../aurora-tokens" }
 aurora-typography = { path = "../aurora-typography" }
 aurora-motion = { path = "../aurora-motion" }
 
-# GTK4 bindings (when available)
-# gtk4 = "0.9"  # Requires system GTK4 installation
+# GTK4 bindings (optional - requires system GTK4)
+# Uncomment when building against GTK4
+# gtk4 = { version = "0.9", features = ["v4_10"] }
+# glib = "0.19"

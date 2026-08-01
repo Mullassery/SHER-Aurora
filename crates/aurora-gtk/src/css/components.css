@@ -1,0 +1,187 @@
+/* Aurora GTK4 Component Styles */
+
+/* Card Component */
+.aurora-card-filled {
+    background-color: var(--color-surface);
+    border: 0;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    transition: all 220ms ease-in-out;
+}
+
+.aurora-card-outlined {
+    background-color: transparent;
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    transition: all 220ms ease-in-out;
+}
+
+.aurora-card-elevated {
+    background-color: var(--color-surface);
+    border: 0;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: var(--elevation-level-2);
+    transition: all 220ms ease-in-out;
+}
+
+/* Input Component */
+.aurora-input {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-family: inherit;
+    font-size: var(--font-size-body);
+    color: var(--color-foreground);
+    transition: all 220ms ease-in-out;
+}
+
+.aurora-input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-container);
+    outline: none;
+}
+
+.aurora-input:disabled {
+    background-color: var(--color-surface-disabled);
+    color: var(--color-text-disabled);
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.aurora-input-error {
+    border-color: var(--color-error);
+}
+
+.aurora-input-error:focus {
+    box-shadow: 0 0 0 3px var(--color-error-container);
+}
+
+/* Dialog Component */
+.aurora-dialog {
+    background-color: var(--color-background);
+}
+
+.aurora-dialog headerbar {
+    background-color: var(--color-surface);
+}
+
+/* Checkbox Component */
+.aurora-checkbox {
+    color: var(--color-foreground);
+    transition: all 220ms ease-in-out;
+}
+
+.aurora-checkbox:disabled {
+    color: var(--color-text-disabled);
+    opacity: 0.5;
+}
+
+/* Radio Button Component */
+.aurora-radio {
+    color: var(--color-foreground);
+    transition: all 220ms ease-in-out;
+}
+
+.aurora-radio:disabled {
+    color: var(--color-text-disabled);
+    opacity: 0.5;
+}
+
+/* Tooltip Component */
+tooltip {
+    background-color: var(--color-surface);
+    color: var(--color-foreground);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-caption);
+}
+
+/* List Component */
+.aurora-list {
+    background-color: var(--color-background);
+    border-radius: var(--radius-md);
+}
+
+/* Badge Component */
+.aurora-badge {
+    background-color: var(--color-primary-container);
+    color: var(--color-primary);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-caption);
+    font-weight: 600;
+    display: inline-block;
+}
+
+.aurora-badge-default {
+    background-color: var(--color-surface-variant);
+    color: var(--color-foreground);
+}
+
+.aurora-badge-success {
+    background-color: var(--color-success-container);
+    color: var(--color-success);
+}
+
+.aurora-badge-warning {
+    background-color: var(--color-warning-container);
+    color: var(--color-warning);
+}
+
+.aurora-badge-error {
+    background-color: var(--color-error-container);
+    color: var(--color-error);
+}
+
+.aurora-badge-info {
+    background-color: var(--color-info-container);
+    color: var(--color-info);
+}
+
+/* Sidebar Component */
+.aurora-sidebar {
+    background-color: var(--color-surface);
+    border-right: 1px solid var(--color-outline);
+    min-width: 280px;
+    transition: min-width 220ms ease-in-out;
+}
+
+.aurora-sidebar-collapsed {
+    min-width: 80px;
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    .aurora-card-filled {
+        background-color: var(--color-surface-dark);
+    }
+
+    .aurora-sidebar {
+        background-color: var(--color-surface-dark);
+        border-color: var(--color-outline-dark);
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: more) {
+    .aurora-input {
+        border-width: 2px;
+    }
+
+    .aurora-card-outlined {
+        border-width: 2px;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .aurora-button-filled,
+    .aurora-card-filled,
+    .aurora-input,
+    .aurora-sidebar {
+        transition: none;
+    }
+}

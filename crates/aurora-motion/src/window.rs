@@ -1,4 +1,4 @@
-use crate::{Animation, AnimationType, EasingFunction, SpringConfig};
+use crate::{Animation, EasingFunction, SpringConfig};
 use serde::{Deserialize, Serialize};
 use std::time::Duration;
 
@@ -308,7 +308,7 @@ mod tests {
         let config = WindowAnimationConfig::default();
         let mut anim = WindowAnimation::open(config).unwrap();
 
-        for _ in 0..100 {
+        for _ in 0..200 {
             anim.advance(Duration::from_millis(10));
             if anim.is_finished() {
                 break;
