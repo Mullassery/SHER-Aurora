@@ -22,6 +22,7 @@
 //! - **Select** — Dropdown with search, single/multi-select, custom rendering
 //! - **Menu** — Context and navigation menus with keyboard shortcuts
 //! - **Breadcrumb** — File path and hierarchical navigation
+//! - **IconDock** — Animated icon navigation bar with spring physics
 //!
 //! # Example
 //!
@@ -47,6 +48,7 @@ pub mod tabs;
 pub mod select;
 pub mod menu;
 pub mod breadcrumb;
+pub mod icon_dock;
 
 pub use button::{Button, ButtonStyle, ButtonState};
 pub use card::{Card, CardStyle};
@@ -63,3 +65,4 @@ pub use tabs::{Tabs, Tab, TabPanel, TabStyle, TabOrientation};
 pub use select::{Select, SelectOption, SelectMode, OptionState};
 pub use menu::{Menu, MenuItem, MenuItemType, MenuItemState, Shortcut};
 pub use breadcrumb::{Breadcrumb, Segment, OverflowBehavior};
+pub use icon_dock::{IconDock, DockItem, DockOrientation, DockPosition, DockAnimation};
