@@ -15,6 +15,7 @@ pub mod motion;
 pub mod gnome;
 pub mod icons;
 pub mod storybook;
+pub mod cli;
 
 pub use errors::{GtkError, GtkResult};
 pub use css::CssProvider;
