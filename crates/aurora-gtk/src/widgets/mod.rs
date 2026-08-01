@@ -21,6 +21,7 @@
 //! - **Tabs** — Multi-view navigation with multiple styles and animations
 //! - **Select** — Dropdown with search, single/multi-select, custom rendering
 //! - **Menu** — Context and navigation menus with keyboard shortcuts
+//! - **Breadcrumb** — File path and hierarchical navigation
 //!
 //! # Example
 //!
@@ -45,6 +46,7 @@ pub mod datatable;
 pub mod tabs;
 pub mod select;
 pub mod menu;
+pub mod breadcrumb;
 
 pub use button::{Button, ButtonStyle, ButtonState};
 pub use card::{Card, CardStyle};
@@ -60,3 +62,4 @@ pub use datatable::{DataTable, Column, Row, SortDirection, SelectionMode};
 pub use tabs::{Tabs, Tab, TabPanel, TabStyle, TabOrientation};
 pub use select::{Select, SelectOption, SelectMode, OptionState};
 pub use menu::{Menu, MenuItem, MenuItemType, MenuItemState, Shortcut};
+pub use breadcrumb::{Breadcrumb, Segment, OverflowBehavior};
