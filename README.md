@@ -121,44 +121,203 @@ aurora/
 
 ## Getting Started
 
-### Prerequisites
+### Installation on Linux
 
-- Rust 1.70+
-- GNOME 45+ (for testing)
-- GTK4 development files
-- libadwaita development files
+#### 1. Install System Dependencies
 
-### Building Aurora
+**Ubuntu/Debian:**
+```bash
+sudo apt update
+sudo apt install -y \
+    libgtk-4-dev \
+    libadwaita-1-dev \
+    libglib2.0-dev \
+    libglib2.0-0 \
+    build-essential \
+    pkg-config \
+    rust-1.70 \
+    cargo
+```
+
+**Fedora/RHEL:**
+```bash
+sudo dnf install -y \
+    gtk4-devel \
+    libadwaita-devel \
+    glib2-devel \
+    gcc \
+    rust \
+    cargo
+```
+
+**Arch Linux:**
+```bash
+sudo pacman -S \
+    gtk4 \
+    libadwaita \
+    glib2 \
+    rust
+```
+
+#### 2. Install Aurora dconf Schema
 
 ```bash
 # Clone the repository
 git clone https://github.com/Mullassery/aurora.git
 cd aurora
 
-# Build all crates
-cargo build
+# Copy dconf schema to system location
+sudo cp crates/aurora-gtk/schemas/org.gnome.desktop.interface.aurora.gschema.xml \
+    /usr/share/glib-2.0/schemas/
 
-# Run tests
-cargo test
+# Compile schemas (required for dconf to recognize Aurora settings)
+sudo glib-compile-schemas /usr/share/glib-2.0/schemas/
 
-# Build documentation
-cargo doc --open
+# Verify installation
+gsettings list-schemas | grep aurora
+# Output: org.gnome.desktop.interface.aurora
 ```
 
-### Using Aurora Components in a GNOME App
+#### 3. Build Aurora (Optional - if using from source)
+
+```bash
+cd aurora
+
+# Build all Aurora subsystems
+cargo build --release
+
+# Run test suite
+cargo test --lib
+
+# Build documentation
+cargo doc --no-deps --open
+```
+
+### Using Aurora in Your GNOME App
+
+#### Method 1: From crates.io (Recommended)
+
+Add to your `Cargo.toml`:
+```toml
+[dependencies]
+aurora-gtk = "1.0"
+aurora-color = "1.0"
+aurora-tokens = "1.0"
+aurora-motion = "1.0"
+aurora-sound = "1.0"
+
+# GNOME ecosystem
+gtk4 = { version = "0.9", features = ["v4_10"] }
+libadwaita = "0.5"
+glib = "0.19"
+```
+
+#### Method 2: From Source (Development)
+
+Add to your `Cargo.toml`:
+```toml
+[dependencies]
+aurora-gtk = { path = "../aurora/crates/aurora-gtk" }
+aurora-color = { path = "../aurora/crates/aurora-color" }
+# ... other crates
+```
+
+### Activating Aurora in Your Application
 
 ```rust
-use aurora_gtk::Button;
-use aurora_tokens::DesignTokens;
+use gtk4::{Application, ApplicationWindow};
+use gtk4::prelude::*;
+use aurora_gtk::AuroraGtk;
+use aurora_color::ThemeName;
 
 fn main() {
-    let tokens = DesignTokens::default();
-    let button = Button::new("Click me")
-        .token_style(&tokens.primary)
-        .with_motion();
-    
-    // Build your GNOME app with Aurora components
+    let app = Application::builder()
+        .application_id("com.example.myapp")
+        .build();
+
+    app.connect_activate(|app| {
+        // Initialize Aurora with Light theme (respects system preference)
+        let aurora = AuroraGtk::new(aurora_gtk::Theme::Light)
+            .expect("Failed to initialize Aurora");
+
+        // Create your application window
+        let window = ApplicationWindow::builder()
+            .application(app)
+            .title("My Aurora App")
+            .default_width(800)
+            .default_height(600)
+            .build();
+
+        // Use Aurora components
+        // let button = Button::new("Click me", ButtonStyle::Filled);
+        // window.set_child(Some(&button));
+
+        window.present();
+    });
+
+    app.run();
 }
+```
+
+### Enable Dynamic Theme Switching
+
+```rust
+use aurora_gtk::gnome::ThemeObserver;
+use aurora_color::ThemeName;
+
+fn setup_theme_observer() {
+    let mut observer = ThemeObserver::new();
+    
+    // Listen for theme changes from system
+    observer.on_theme_change(Box::new(|theme| {
+        println!("User switched to: {:?}", theme);
+        // Update your app's colors, CSS, etc.
+    }));
+    
+    // Start listening to dconf changes
+    observer.start_listening();
+}
+```
+
+### Build & Run
+
+```bash
+# Create a new project
+cargo new my-aurora-app
+cd my-aurora-app
+
+# Update Cargo.toml with Aurora dependencies
+# Update src/main.rs with code above
+
+# Build
+cargo build --release
+
+# Run
+./target/release/my-aurora-app
+
+# Or run directly
+cargo run --release
+```
+
+### Example Applications
+
+Try the included examples:
+
+```bash
+# Build all examples
+cargo build --examples
+
+# Run Aurora Settings
+cargo run --example aurora_settings
+
+# Run Aurora Files
+cargo run --example aurora_files
+
+# Run Aurora Calendar
+cargo run --example aurora_calendar
+
+# Run Aurora Music
+cargo run --example aurora_music
 ```
 
 ## Documentation
