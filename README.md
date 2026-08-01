@@ -186,62 +186,128 @@ aurora/
 
 ## Getting Started
 
+### Prerequisites: What You Need
+
+Before installing Aurora, you need a few things on your Linux system. Here's what they are in simple terms:
+
+| Dependency | What It Does | Why You Need It |
+|-----------|--------------|-----------------|
+| **Rust 1.70+** | Programming language | Aurora is written in Rust |
+| **Cargo** | Package manager for Rust | Downloads and manages Rust libraries |
+| **GTK4 Development** | GUI library for Linux | Creates graphical user interfaces |
+| **libadwaita** | GNOME component library | Provides modern GNOME widgets |
+| **GLib** | Core system library | Required by GTK4 and libadwaita |
+| **Build Tools** | Compiler and linker | Compiles Aurora from source code |
+| **pkg-config** | Configuration helper | Helps find libraries on your system |
+
+**In Plain English**: 
+- You need Rust (the programming language) to compile Aurora
+- You need GTK4 & libadwaita (GNOME libraries) so Aurora can create windows and buttons
+- You need build tools so your computer can turn source code into runnable programs
+
 ### Installation on Linux
 
 #### 1. Install System Dependencies
 
-**Ubuntu/Debian:**
+**Ubuntu/Debian (Copy & Paste):**
+
 ```bash
+# Update package list
 sudo apt update
+
+# Install everything Aurora needs (one command)
 sudo apt install -y \
     libgtk-4-dev \
     libadwaita-1-dev \
     libglib2.0-dev \
-    libglib2.0-0 \
     build-essential \
     pkg-config \
-    rust-1.70 \
+    rustc \
     cargo
 ```
 
-**Fedora/RHEL:**
+**What Each Package Does:**
+- `libgtk-4-dev` — GTK4 library for creating windows/buttons
+- `libadwaita-1-dev` — GNOME component library 
+- `libglib2.0-dev` — Core system library
+- `build-essential` — Compiler and build tools (gcc, make, etc.)
+- `pkg-config` — Finds libraries on your system
+- `rustc` — Rust compiler
+- `cargo` — Rust package manager
+
+**Fedora/RHEL (Copy & Paste):**
+
 ```bash
+# Install everything Aurora needs
 sudo dnf install -y \
     gtk4-devel \
     libadwaita-devel \
     glib2-devel \
     gcc \
+    make \
+    pkg-config \
     rust \
     cargo
 ```
 
-**Arch Linux:**
+**What Each Package Does:**
+- `gtk4-devel` — GTK4 library
+- `libadwaita-devel` — GNOME components
+- `glib2-devel` — Core system library
+- `gcc` — C compiler (needed for dependencies)
+- `make` — Build tool
+- `pkg-config` — Finds libraries
+- `rust` & `cargo` — Rust toolchain
+
+---
+
+**Arch Linux (Copy & Paste):**
+
 ```bash
+# Install everything Aurora needs (simpler on Arch)
 sudo pacman -S \
     gtk4 \
     libadwaita \
     glib2 \
+    base-devel \
     rust
 ```
 
-#### 2. Install Aurora dconf Schema
+**What Each Package Does:**
+- `gtk4` — GTK4 library
+- `libadwaita` — GNOME components
+- `glib2` — Core system library
+- `base-devel` — Compiler, make, pkg-config, etc.
+- `rust` — Rust compiler and cargo (included)
+
+#### 2. Install Aurora Settings (dconf Schema)
+
+**What is dconf?** It's where GNOME stores settings (like theme, sound volume, etc.)
+
+**What is a schema?** It defines what settings Aurora can store in dconf
+
+**Steps** (Copy & Paste):
 
 ```bash
-# Clone the repository
+# 1. Download Aurora
 git clone https://github.com/Mullassery/aurora.git
 cd aurora
 
-# Copy dconf schema to system location
+# 2. Register Aurora settings with GNOME
 sudo cp crates/aurora-gtk/schemas/org.gnome.desktop.interface.aurora.gschema.xml \
     /usr/share/glib-2.0/schemas/
 
-# Compile schemas (required for dconf to recognize Aurora settings)
+# 3. Tell GNOME about the new settings (required!)
 sudo glib-compile-schemas /usr/share/glib-2.0/schemas/
 
-# Verify installation
+# 4. Verify it worked (should show: org.gnome.desktop.interface.aurora)
 gsettings list-schemas | grep aurora
-# Output: org.gnome.desktop.interface.aurora
 ```
+
+**What's happening?**
+- Step 2: Tells GNOME that Aurora has settings to store
+- Step 3: Compiles the schema (GNOME reads binary format, not text)
+- Step 4: Checks that everything is recognized
 
 #### 3. Build Aurora (Optional - if using from source)
 
@@ -289,23 +355,35 @@ aurora-color = { path = "../aurora/crates/aurora-color" }
 
 ### Activating Aurora in Your Application
 
+**What this code does**: Creates a GNOME app with Aurora design
+
+**Step-by-step explanation**:
+1. Import Aurora and GTK4 libraries
+2. Create an application
+3. When app starts, initialize Aurora
+4. Create a window
+5. Add Aurora components
+6. Run the app
+
 ```rust
 use gtk4::{Application, ApplicationWindow};
 use gtk4::prelude::*;
 use aurora_gtk::AuroraGtk;
-use aurora_color::ThemeName;
 
 fn main() {
+    // 1. Create the application
     let app = Application::builder()
-        .application_id("com.example.myapp")
+        .application_id("com.example.myapp")  // Unique ID for your app
         .build();
 
+    // 2. When the app starts, run this code
     app.connect_activate(|app| {
-        // Initialize Aurora with Light theme (respects system preference)
-        let aurora = AuroraGtk::new(aurora_gtk::Theme::Light)
-            .expect("Failed to initialize Aurora");
+        // Initialize Aurora with Light theme
+        // (Aurora will respect user's system theme setting)
+        let _aurora = AuroraGtk::new(aurora_gtk::Theme::Light)
+            .expect("Aurora initialization failed");
 
-        // Create your application window
+        // 3. Create a window
         let window = ApplicationWindow::builder()
             .application(app)
             .title("My Aurora App")
@@ -313,16 +391,19 @@ fn main() {
             .default_height(600)
             .build();
 
-        // Use Aurora components
-        // let button = Button::new("Click me", ButtonStyle::Filled);
-        // window.set_child(Some(&button));
+        // 4. Add Aurora components here
+        // (see example below)
 
+        // 5. Show the window
         window.present();
     });
 
+    // 6. Start the application
     app.run();
 }
 ```
+
+**That's it!** Your app now has Aurora's beautiful design automatically applied. No need to manually style buttons, colors, or spacing.
 
 ### Enable Dynamic Theme Switching
 
