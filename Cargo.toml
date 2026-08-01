@@ -19,7 +19,7 @@ resolver = "2"
 version = "1.0.0"
 edition = "2021"
 authors = ["Georgi Mammen Mullassery <mullassery@gmail.com>"]
-license = "MIT OR Apache-2.0"
+license = "Proprietary"
 repository = "https://github.com/Mullassery/aurora"
 
 [workspace.dependencies]
