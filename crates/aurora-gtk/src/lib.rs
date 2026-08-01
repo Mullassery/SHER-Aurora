@@ -10,10 +10,13 @@
 pub mod errors;
 pub mod css;
 pub mod theme;
+pub mod widgets;
+pub mod motion;
 
 pub use errors::{GtkError, GtkResult};
 pub use css::CssProvider;
 pub use theme::Theme;
+pub use widgets::Button;
 
 /// Aurora GTK4 renderer context
 #[derive(Debug)]
