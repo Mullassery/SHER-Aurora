@@ -1,6 +1,6 @@
 # Aurora: Linux Design System
 
-Aurora is a comprehensive, production-ready open-source design system that brings professional-grade visual consistency, accessibility, and elegance to Linux desktop environments. Aurora includes GTK/Qt/Plasma themes, icons, typography, and system integration across GNOME, KDE Plasma, Xfce, and other desktop environments.
+Aurora is a comprehensive, production-ready open-source design system for GNOME that brings professional-grade visual consistency, accessibility, and elegance to GNOME applications. Aurora includes GTK themes, icons, typography, and deep system integration with GNOME.
 
 **Status: v1.0.0 PRODUCTION READY**
 
@@ -104,15 +104,15 @@ Let's build it together.
 
 ## What Aurora Provides
 
-### 18 Integrated Packages
+### GNOME Integration Packages
 
-Aurora is distributed as a comprehensive Debian/Ubuntu package ecosystem:
+Aurora is distributed as a comprehensive Debian/Ubuntu package ecosystem for GNOME:
 
 **Core Packages:**
 - `aurora` (meta-package) — Install everything with one command
-- `aurora-themes` — GTK/Qt/Plasma themes with light and dark variants
-- `aurora-icons` — 2000+ icons for applications and system
-- `aurora-cursors` — Cursor themes for desktop environments
+- `aurora-themes` — GTK themes with light and dark variants
+- `aurora-icons` — 2000+ icons for GNOME applications and system
+- `aurora-cursors` — Cursor themes for GNOME
 - `aurora-fonts` — Carefully curated typography system
 - `aurora-colors` — Design tokens and color palettes
 - `aurora-branding` — Official brand assets and guidelines
@@ -123,11 +123,8 @@ Aurora is distributed as a comprehensive Debian/Ubuntu package ecosystem:
 - `aurora-vscode` — Visual Studio Code theme
 - `aurora-jetbrains` — JetBrains IDEs theme (PyCharm, IntelliJ, WebStorm, etc.)
 
-**Desktop Environment Support:**
-- `aurora-kde-themes` — Complete KDE Plasma integration
-- `aurora-kde-integration` — KDE-specific features and settings
-- `aurora-gnome-integration` — GNOME Shell and Settings integration
-- `aurora-sddm` — KDE SDDM login screen theme
+**GNOME-Specific:**
+- `aurora-gnome-integration` — Deep GNOME Shell and Settings integration
 - `aurora-gdm` — GNOME GDM login screen theme
 - `aurora-accessibility` — High-contrast, dyslexia-friendly variants
 - `aurora-plymouth` — Boot splash screen theme
@@ -140,8 +137,8 @@ Install only what you need:
 # Just themes and icons
 sudo apt install aurora-themes aurora-icons
 
-# For KDE users
-sudo apt install aurora-kde-themes aurora-sddm
+# For GNOME users
+sudo apt install aurora-gdm aurora-gnome-integration
 
 # For developers
 sudo apt install aurora-vscode aurora-jetbrains
@@ -155,10 +152,10 @@ sudo apt install aurora-accessibility
 - **Easy Installation** — Single `apt install` command
 - **Automatic Updates** — Integrated with system package manager
 - **GPG Signed** — Cryptographically verified packages
-- **Multi-Desktop Support** — Works on GNOME, KDE, Xfce, Cinnamon, MATE
+- **GNOME Native** — Deep integration with GNOME Shell and Settings
 - **Modular** — Install only the packages you need
 - **Release Channels** — Choose stable, testing, or nightly builds
-- **Design Tokens** — Unified color palette across all components
+- **Design Tokens** — Unified color palette across all GNOME components
 - **Accessibility First** — WCAG AAA compliance, high-contrast modes, reduced motion support
 
 ### Documentation
@@ -540,7 +537,7 @@ Developer Tools - CLI tool for project setup, Storybook for documentation, SVG g
 |---------|--------|---------|--------------|--------|------|-----------|
 | **Design System** | Complete | GTK-only | Design language | KDE-only | Ubuntu-only | Color palette |
 | **Component Library** | Yes (GTK4) | Yes (GTK4) | Reference only | Yes (KDE) | GTK/Qt themes | No |
-| **Desktop Support** | GNOME, KDE, Xfce, Cinnamon, MATE | GNOME only | Multi-desktop | KDE only | GNOME, GTK | Universal |
+| **Desktop Support** | GNOME only | GNOME only | Multi-desktop | KDE only | GNOME, GTK | Universal |
 | **Themes** | Light, Dark, OLED, HDR | Light, Dark | Light, Dark, Material You | Light, Dark | Light, Dark | 5+ variants |
 | **Typography System** | Yes (responsive scales) | Yes (basic) | Reference | Yes (basic) | No | No |
 | **Motion/Animations** | Spring physics | Spring easing | Material Motion | KDE animations | Basic | No |
@@ -558,8 +555,8 @@ Developer Tools - CLI tool for project setup, Storybook for documentation, SVG g
 ### Key Differentiators
 
 **Aurora Advantages:**
-- ✅ Complete design system with tokens, typography, motion, and icons
-- ✅ Cross-desktop support (GNOME, KDE, Xfce, Cinnamon, MATE)
+- ✅ Complete GNOME design system with tokens, typography, motion, and icons
+- ✅ Deep GNOME Shell and Settings integration
 - ✅ Production-grade APT repository with GPG signing
 - ✅ Spring physics animations across all components
 - ✅ WCAG AAA accessibility by default
@@ -583,8 +580,8 @@ Developer Tools - CLI tool for project setup, Storybook for documentation, SVG g
 **Aurora is now available as a production-grade Debian/Ubuntu package**
 
 Distribution Features:
-- ✅ 18 integrated packages (themes, icons, fonts, integrations)
-- ✅ Multi-desktop support (GNOME, KDE, Xfce, Cinnamon, MATE)
+- ✅ Complete GNOME package ecosystem (themes, icons, fonts, integrations)
+- ✅ GNOME-native design with libadwaita integration
 - ✅ GPG-signed packages and repository
 - ✅ Multi-channel distribution (stable, testing, unstable)
 - ✅ Automated CI/CD pipeline (GitHub Actions)
