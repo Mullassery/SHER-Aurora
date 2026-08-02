@@ -7,8 +7,8 @@ use std::fmt;
 /// Dock orientation
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum DockOrientation {
-    Horizontal,  // Bottom or top dock
-    Vertical,    // Left or right dock
+    Horizontal, // Bottom or top dock
+    Vertical,   // Left or right dock
 }
 
 /// Dock position
@@ -55,20 +55,30 @@ impl DockItem {
     }
 
     /// Getters
-    pub fn id(&self) -> &str { &self.id }
-    pub fn icon(&self) -> &str { &self.icon }
-    pub fn label(&self) -> &str { &self.label }
-    pub fn is_active(&self) -> bool { self.active }
-    pub fn badge(&self) -> std::option::Option<u32> { self.badge }
+    pub fn id(&self) -> &str {
+        &self.id
+    }
+    pub fn icon(&self) -> &str {
+        &self.icon
+    }
+    pub fn label(&self) -> &str {
+        &self.label
+    }
+    pub fn is_active(&self) -> bool {
+        self.active
+    }
+    pub fn badge(&self) -> std::option::Option<u32> {
+        self.badge
+    }
 }
 
 /// Animation configuration
 #[derive(Debug, Clone)]
 pub struct DockAnimation {
-    scale_on_hover: f32,     // 1.0-1.5
-    scale_spring_damping: f32, // 0.5-1.0
-    scale_spring_stiffness: f32, // 100-300
-    duration_ms: u32,        // 150-300ms
+    scale_on_hover: f32,          // 1.0-1.5
+    scale_spring_damping: f32,    // 0.5-1.0
+    scale_spring_stiffness: f32,  // 100-300
+    duration_ms: u32,             // 150-300ms
     active_indicator_height: f32, // px
 }
 
@@ -104,11 +114,21 @@ impl DockAnimation {
     }
 
     /// Getters
-    pub fn scale_on_hover(&self) -> f32 { self.scale_on_hover }
-    pub fn scale_spring_damping(&self) -> f32 { self.scale_spring_damping }
-    pub fn scale_spring_stiffness(&self) -> f32 { self.scale_spring_stiffness }
-    pub fn duration_ms(&self) -> u32 { self.duration_ms }
-    pub fn active_indicator_height(&self) -> f32 { self.active_indicator_height }
+    pub fn scale_on_hover(&self) -> f32 {
+        self.scale_on_hover
+    }
+    pub fn scale_spring_damping(&self) -> f32 {
+        self.scale_spring_damping
+    }
+    pub fn scale_spring_stiffness(&self) -> f32 {
+        self.scale_spring_stiffness
+    }
+    pub fn duration_ms(&self) -> u32 {
+        self.duration_ms
+    }
+    pub fn active_indicator_height(&self) -> f32 {
+        self.active_indicator_height
+    }
 }
 
 impl Default for DockAnimation {
@@ -124,8 +144,8 @@ pub struct IconDock {
     orientation: DockOrientation,
     position: DockPosition,
     animation: DockAnimation,
-    icon_size: u32,  // px
-    spacing: u32,    // px between icons
+    icon_size: u32, // px
+    spacing: u32,   // px between icons
 }
 
 impl IconDock {
@@ -279,7 +299,10 @@ impl IconDock {
             DockPosition::Left => "left",
             DockPosition::Right => "right",
         };
-        format!("aurora-icon-dock aurora-dock-{} aurora-dock-{}", orientation_str, position_str)
+        format!(
+            "aurora-icon-dock aurora-dock-{} aurora-dock-{}",
+            orientation_str, position_str
+        )
     }
 
     /// Get animation CSS class

@@ -5,9 +5,9 @@ use std::time::Duration;
 /// Spring physics configuration
 #[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub struct SpringConfig {
-    pub mass: f32,      // Typically 1.0 (kg)
-    pub tension: f32,   // Stiffness constant (N/m)
-    pub friction: f32,  // Damping coefficient (N·s/m)
+    pub mass: f32,     // Typically 1.0 (kg)
+    pub tension: f32,  // Stiffness constant (N/m)
+    pub friction: f32, // Damping coefficient (N·s/m)
 }
 
 impl Default for SpringConfig {
@@ -85,8 +85,8 @@ impl SpringConfig {
 /// Spring animation state
 #[derive(Debug, Clone, Copy)]
 pub struct SpringState {
-    pub position: f32,    // Current position
-    pub velocity: f32,    // Current velocity
+    pub position: f32,     // Current position
+    pub velocity: f32,     // Current velocity
     pub acceleration: f32, // Current acceleration
 }
 
@@ -206,8 +206,7 @@ impl SpringAnimator {
         if self.finished {
             1.0
         } else {
-            let normalized = self.elapsed.as_secs_f32()
-                / (self.max_time.as_secs_f32() * 0.5); // Estimate
+            let normalized = self.elapsed.as_secs_f32() / (self.max_time.as_secs_f32() * 0.5); // Estimate
             normalized.min(1.0)
         }
     }

@@ -216,10 +216,7 @@ impl WindowAnimation {
 
     /// Get current scale (0.0–1.0)
     pub fn scale(&self) -> f32 {
-        self.scale_anim
-            .as_ref()
-            .map(|a| a.current())
-            .unwrap_or(1.0)
+        self.scale_anim.as_ref().map(|a| a.current()).unwrap_or(1.0)
     }
 
     /// Get current opacity (0.0–1.0)

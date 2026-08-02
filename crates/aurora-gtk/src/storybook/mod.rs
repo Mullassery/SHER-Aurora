@@ -54,12 +54,24 @@ impl Story {
     }
 
     /// Getters
-    pub fn id(&self) -> &str { &self.id }
-    pub fn title(&self) -> &str { &self.title }
-    pub fn description(&self) -> &str { &self.description }
-    pub fn code_example(&self) -> &str { &self.code_example }
-    pub fn props(&self) -> &HashMap<String, String> { &self.props }
-    pub fn accessibility_notes(&self) -> &str { &self.accessibility_notes }
+    pub fn id(&self) -> &str {
+        &self.id
+    }
+    pub fn title(&self) -> &str {
+        &self.title
+    }
+    pub fn description(&self) -> &str {
+        &self.description
+    }
+    pub fn code_example(&self) -> &str {
+        &self.code_example
+    }
+    pub fn props(&self) -> &HashMap<String, String> {
+        &self.props
+    }
+    pub fn accessibility_notes(&self) -> &str {
+        &self.accessibility_notes
+    }
 }
 
 /// Component documentation
@@ -109,19 +121,33 @@ impl ComponentDoc {
     }
 
     /// Getters
-    pub fn id(&self) -> &str { &self.id }
-    pub fn name(&self) -> &str { &self.name }
-    pub fn category(&self) -> &str { &self.category }
-    pub fn stories(&self) -> &[Story] { &self.stories }
-    pub fn overview(&self) -> &str { &self.overview }
-    pub fn imports(&self) -> &str { &self.imports }
-    pub fn story_count(&self) -> usize { self.stories.len() }
+    pub fn id(&self) -> &str {
+        &self.id
+    }
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+    pub fn category(&self) -> &str {
+        &self.category
+    }
+    pub fn stories(&self) -> &[Story] {
+        &self.stories
+    }
+    pub fn overview(&self) -> &str {
+        &self.overview
+    }
+    pub fn imports(&self) -> &str {
+        &self.imports
+    }
+    pub fn story_count(&self) -> usize {
+        self.stories.len()
+    }
 }
 
 /// Storybook catalog
 pub struct Storybook {
     components: HashMap<String, ComponentDoc>,
-    categories: HashMap<String, Vec<String>>,  // category -> component ids
+    categories: HashMap<String, Vec<String>>, // category -> component ids
 }
 
 impl Storybook {
@@ -214,14 +240,19 @@ impl Storybook {
     /// Generate catalog index
     pub fn generate_catalog_index(&self) -> String {
         let mut html = String::from("<h1>Aurora Component Catalog</h1>\n");
-        html.push_str(&format!("<p>Total Components: {}</p>\n", self.total_count()));
+        html.push_str(&format!(
+            "<p>Total Components: {}</p>\n",
+            self.total_count()
+        ));
 
         for category in self.categories() {
             html.push_str(&format!("<h2>{}</h2>\n", category));
             html.push_str("<ul>\n");
             for component in self.by_category(category) {
-                html.push_str(&format!("<li><a href='#{}' onclick='loadComponent(\"{}\")'>{}</a></li>\n",
-                    component.id, component.id, component.name));
+                html.push_str(&format!(
+                    "<li><a href='#{}' onclick='loadComponent(\"{}\")'>{}</a></li>\n",
+                    component.id, component.id, component.name
+                ));
             }
             html.push_str("</ul>\n");
         }
@@ -252,7 +283,10 @@ mod tests {
         let story = Story::new("button-primary", "Primary Button")
             .with_description("A button with primary style")
             .with_code("Button::new(\"Click me\").with_style(ButtonStyle::Filled)")
-            .add_prop("style", "The button style (Filled, Tinted, Outlined, Ghost)")
+            .add_prop(
+                "style",
+                "The button style (Filled, Tinted, Outlined, Ghost)",
+            )
             .with_a11y_notes("Ensure sufficient color contrast (7:1)");
 
         assert_eq!(story.description(), "A button with primary style");
@@ -315,9 +349,11 @@ mod tests {
         let mut storybook = Storybook::new();
         let mut component = ComponentDoc::new("button", "Button", "Components")
             .with_overview("A flexible button component");
-        component.add_story(Story::new("primary", "Primary Button")
-            .with_description("Default primary button")
-            .with_code("Button::new(\"Click\")"));
+        component.add_story(
+            Story::new("primary", "Primary Button")
+                .with_description("Default primary button")
+                .with_code("Button::new(\"Click\")"),
+        );
 
         storybook.register(component);
 

@@ -1,6 +1,6 @@
-use aurora_tokens::DesignTokens;
-use crate::theme::Theme;
 use crate::errors::{GtkError, GtkResult};
+use crate::theme::Theme;
+use aurora_tokens::DesignTokens;
 
 /// GTK CSS Provider — converts Aurora tokens to GTK CSS
 #[derive(Debug)]
@@ -51,14 +51,23 @@ impl CssProvider {
 
         // Spacing tokens
         css.push_str("  /* Spacing (8px baseline) */\n");
-        css.push_str(&format!("  --spacing-xxs: {}px;\n", self.tokens.spacing.xxs));
+        css.push_str(&format!(
+            "  --spacing-xxs: {}px;\n",
+            self.tokens.spacing.xxs
+        ));
         css.push_str(&format!("  --spacing-xs: {}px;\n", self.tokens.spacing.xs));
         css.push_str(&format!("  --spacing-sm: {}px;\n", self.tokens.spacing.sm));
         css.push_str(&format!("  --spacing-md: {}px;\n", self.tokens.spacing.md));
         css.push_str(&format!("  --spacing-lg: {}px;\n", self.tokens.spacing.lg));
         css.push_str(&format!("  --spacing-xl: {}px;\n", self.tokens.spacing.xl));
-        css.push_str(&format!("  --spacing-xxl: {}px;\n", self.tokens.spacing.xxl));
-        css.push_str(&format!("  --spacing-xxxl: {}px;\n", self.tokens.spacing.xxxl));
+        css.push_str(&format!(
+            "  --spacing-xxl: {}px;\n",
+            self.tokens.spacing.xxl
+        ));
+        css.push_str(&format!(
+            "  --spacing-xxxl: {}px;\n",
+            self.tokens.spacing.xxxl
+        ));
 
         // Radius tokens
         css.push_str("\n  /* Border Radius */\n");
@@ -78,21 +87,42 @@ impl CssProvider {
 
         // Elevation tokens
         css.push_str("\n  /* Elevation (Shadows) */\n");
-        css.push_str(&format!("  --elevation-1: {};\n", self.tokens.elevation.level1.to_css()));
-        css.push_str(&format!("  --elevation-2: {};\n", self.tokens.elevation.level2.to_css()));
-        css.push_str(&format!("  --elevation-3: {};\n", self.tokens.elevation.level3.to_css()));
-        css.push_str(&format!("  --elevation-4: {};\n", self.tokens.elevation.level4.to_css()));
-        css.push_str(&format!("  --elevation-5: {};\n", self.tokens.elevation.level5.to_css()));
+        css.push_str(&format!(
+            "  --elevation-1: {};\n",
+            self.tokens.elevation.level1.to_css()
+        ));
+        css.push_str(&format!(
+            "  --elevation-2: {};\n",
+            self.tokens.elevation.level2.to_css()
+        ));
+        css.push_str(&format!(
+            "  --elevation-3: {};\n",
+            self.tokens.elevation.level3.to_css()
+        ));
+        css.push_str(&format!(
+            "  --elevation-4: {};\n",
+            self.tokens.elevation.level4.to_css()
+        ));
+        css.push_str(&format!(
+            "  --elevation-5: {};\n",
+            self.tokens.elevation.level5.to_css()
+        ));
 
         // Color tokens (from current theme)
         let colors = self.tokens.color_system.current();
         css.push_str("\n  /* Semantic Colors */\n");
-        css.push_str(&format!("  --color-surface: {};\n", colors.surface.to_rgba()));
+        css.push_str(&format!(
+            "  --color-surface: {};\n",
+            colors.surface.to_rgba()
+        ));
         css.push_str(&format!(
             "  --color-surface-variant: {};\n",
             colors.surface_variant.to_rgba()
         ));
-        css.push_str(&format!("  --color-background: {};\n", colors.background.to_rgba()));
+        css.push_str(&format!(
+            "  --color-background: {};\n",
+            colors.background.to_rgba()
+        ));
         css.push_str(&format!(
             "  --color-foreground: {};\n",
             colors.foreground.to_rgba()
@@ -105,17 +135,29 @@ impl CssProvider {
             "  --color-foreground-tertiary: {};\n",
             colors.foreground_tertiary.to_rgba()
         ));
-        css.push_str(&format!("  --color-primary: {};\n", colors.primary.to_rgba()));
+        css.push_str(&format!(
+            "  --color-primary: {};\n",
+            colors.primary.to_rgba()
+        ));
         css.push_str(&format!(
             "  --color-secondary: {};\n",
             colors.secondary.to_rgba()
         ));
         css.push_str(&format!("  --color-accent: {};\n", colors.accent.to_rgba()));
-        css.push_str(&format!("  --color-success: {};\n", colors.success.to_rgba()));
-        css.push_str(&format!("  --color-warning: {};\n", colors.warning.to_rgba()));
+        css.push_str(&format!(
+            "  --color-success: {};\n",
+            colors.success.to_rgba()
+        ));
+        css.push_str(&format!(
+            "  --color-warning: {};\n",
+            colors.warning.to_rgba()
+        ));
         css.push_str(&format!("  --color-error: {};\n", colors.error.to_rgba()));
         css.push_str(&format!("  --color-info: {};\n", colors.info.to_rgba()));
-        css.push_str(&format!("  --color-outline: {};\n", colors.outline.to_rgba()));
+        css.push_str(&format!(
+            "  --color-outline: {};\n",
+            colors.outline.to_rgba()
+        ));
 
         css.push_str("}\n\n");
 

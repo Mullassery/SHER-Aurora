@@ -5,9 +5,9 @@ use serde::{Deserialize, Serialize};
 /// Screen size breakpoint
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Breakpoint {
-    Mobile,   // 11" laptop (1366×768)
-    Tablet,   // 14" laptop (1920×1080)
-    Desktop,  // 24"–27" monitor (2560×1440)
+    Mobile,    // 11" laptop (1366×768)
+    Tablet,    // 14" laptop (1920×1080)
+    Desktop,   // 24"–27" monitor (2560×1440)
     Ultrawide, // >30" ultrawide (3440×1440)
 }
 
@@ -137,13 +137,13 @@ impl ResponsiveTypography {
         // Get the responsive scale for this style
         // This is simplified; in practice we'd need to identify which style we're adjusting
         let scale = match style.font_size {
-            48 => self.display,     // Display base
-            32 => self.headline,    // Headline base
-            20 => self.title,       // Title base
-            14 => self.body,        // Body base
-            12 => self.caption,     // Caption base
-            11 => self.micro,       // Micro base
-            _ => return,            // Unknown style
+            48 => self.display,  // Display base
+            32 => self.headline, // Headline base
+            20 => self.title,    // Title base
+            14 => self.body,     // Body base
+            12 => self.caption,  // Caption base
+            11 => self.micro,    // Micro base
+            _ => return,         // Unknown style
         };
 
         // Apply responsive size
@@ -161,23 +161,50 @@ impl ResponsiveTypography {
 
         css.push_str("/* Mobile (11\" laptop) */\n");
         css.push_str("@media (min-width: 1024px) {\n");
-        css.push_str(&format!("  .text-display {{ font-size: {}px; }}\n", self.display.mobile));
-        css.push_str(&format!("  .text-headline {{ font-size: {}px; }}\n", self.headline.mobile));
-        css.push_str(&format!("  .text-title {{ font-size: {}px; }}\n", self.title.mobile));
+        css.push_str(&format!(
+            "  .text-display {{ font-size: {}px; }}\n",
+            self.display.mobile
+        ));
+        css.push_str(&format!(
+            "  .text-headline {{ font-size: {}px; }}\n",
+            self.headline.mobile
+        ));
+        css.push_str(&format!(
+            "  .text-title {{ font-size: {}px; }}\n",
+            self.title.mobile
+        ));
         css.push_str("}\n\n");
 
         css.push_str("/* Tablet (14\" laptop) */\n");
         css.push_str("@media (min-width: 1366px) {\n");
-        css.push_str(&format!("  .text-display {{ font-size: {}px; }}\n", self.display.tablet));
-        css.push_str(&format!("  .text-headline {{ font-size: {}px; }}\n", self.headline.tablet));
-        css.push_str(&format!("  .text-title {{ font-size: {}px; }}\n", self.title.tablet));
+        css.push_str(&format!(
+            "  .text-display {{ font-size: {}px; }}\n",
+            self.display.tablet
+        ));
+        css.push_str(&format!(
+            "  .text-headline {{ font-size: {}px; }}\n",
+            self.headline.tablet
+        ));
+        css.push_str(&format!(
+            "  .text-title {{ font-size: {}px; }}\n",
+            self.title.tablet
+        ));
         css.push_str("}\n\n");
 
         css.push_str("/* Desktop (24–27\" monitor) */\n");
         css.push_str("@media (min-width: 1920px) {\n");
-        css.push_str(&format!("  .text-display {{ font-size: {}px; }}\n", self.display.desktop));
-        css.push_str(&format!("  .text-headline {{ font-size: {}px; }}\n", self.headline.desktop));
-        css.push_str(&format!("  .text-title {{ font-size: {}px; }}\n", self.title.desktop));
+        css.push_str(&format!(
+            "  .text-display {{ font-size: {}px; }}\n",
+            self.display.desktop
+        ));
+        css.push_str(&format!(
+            "  .text-headline {{ font-size: {}px; }}\n",
+            self.headline.desktop
+        ));
+        css.push_str(&format!(
+            "  .text-title {{ font-size: {}px; }}\n",
+            self.title.desktop
+        ));
         css.push_str("}\n\n");
 
         css.push_str("/* Ultrawide (>30\") */\n");
@@ -211,10 +238,14 @@ impl ResponsiveTypography {
         ];
 
         for (name, scale) in scales.iter() {
-            if scale.mobile > scale.tablet || scale.tablet > scale.desktop || scale.desktop > scale.ultrawide {
-                return Err(TypographyError::ValidationError(
-                    format!("{} sizes not in ascending order", name),
-                ));
+            if scale.mobile > scale.tablet
+                || scale.tablet > scale.desktop
+                || scale.desktop > scale.ultrawide
+            {
+                return Err(TypographyError::ValidationError(format!(
+                    "{} sizes not in ascending order",
+                    name
+                )));
             }
         }
 
@@ -228,9 +259,18 @@ mod tests {
 
     #[test]
     fn test_viewport_breakpoint() {
-        assert_eq!(ViewportSize::new(1024, 768).breakpoint(), Breakpoint::Mobile);
-        assert_eq!(ViewportSize::new(1920, 1080).breakpoint(), Breakpoint::Desktop);
-        assert_eq!(ViewportSize::new(3440, 1440).breakpoint(), Breakpoint::Ultrawide);
+        assert_eq!(
+            ViewportSize::new(1024, 768).breakpoint(),
+            Breakpoint::Mobile
+        );
+        assert_eq!(
+            ViewportSize::new(1920, 1080).breakpoint(),
+            Breakpoint::Desktop
+        );
+        assert_eq!(
+            ViewportSize::new(3440, 1440).breakpoint(),
+            Breakpoint::Ultrawide
+        );
     }
 
     #[test]

@@ -7,31 +7,23 @@
 //! - Animation integration
 //! - Accessibility support
 
-pub mod errors;
+pub mod accessibility;
+pub mod cli;
 pub mod css;
-pub mod theme;
-pub mod widgets;
-pub mod motion;
+pub mod errors;
 pub mod gnome;
 pub mod icons;
+pub mod motion;
 pub mod storybook;
-pub mod cli;
-pub mod accessibility;
+pub mod theme;
+pub mod widgets;
 
-pub use errors::{GtkError, GtkResult};
 pub use css::CssProvider;
+pub use errors::{GtkError, GtkResult};
 pub use theme::Theme;
 pub use widgets::{
-    Button, ButtonStyle, ButtonState,
-    Card, CardStyle,
-    Input, InputType,
-    AuroraDialog, DialogResponse,
-    Checkbox,
-    RadioButton,
-    set_tooltip, remove_tooltip,
-    List,
-    Badge, BadgeStyle,
-    Sidebar,
+    remove_tooltip, set_tooltip, AuroraDialog, Badge, BadgeStyle, Button, ButtonState, ButtonStyle,
+    Card, CardStyle, Checkbox, DialogResponse, Input, InputType, List, RadioButton, Sidebar,
 };
 
 /// Aurora GTK4 renderer context

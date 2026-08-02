@@ -2,7 +2,7 @@
 //!
 //! First batch: 50 navigation, 50 actions, 40 status, 40 media, 30 system (210 total)
 
-use crate::icons::{IconLibrary, IconMetadata, IconCategory, IconContext};
+use crate::icons::{IconCategory, IconContext, IconLibrary, IconMetadata};
 
 /// Initialize core icon library with essential 300 icons
 pub fn load_core_icons() -> IconLibrary {
@@ -82,8 +82,12 @@ fn load_navigation_icons(library: &mut IconLibrary) {
     // Add 40 more stubs
     for i in 11..=50 {
         library.register(
-            IconMetadata::new(&format!("nav-{}", i), &format!("Navigation {}", i), IconCategory::Navigation)
-                .with_tag("navigation"),
+            IconMetadata::new(
+                &format!("nav-{}", i),
+                &format!("Navigation {}", i),
+                IconCategory::Navigation,
+            )
+            .with_tag("navigation"),
         );
     }
 }
@@ -112,10 +116,7 @@ fn load_actions_icons(library: &mut IconLibrary) {
             .with_tag("action")
             .with_tag("duplicate"),
     );
-    library.register(
-        IconMetadata::new("paste", "Paste", IconCategory::Actions)
-            .with_tag("action"),
-    );
+    library.register(IconMetadata::new("paste", "Paste", IconCategory::Actions).with_tag("action"));
     library.register(
         IconMetadata::new("refresh", "Refresh", IconCategory::Actions)
             .with_tag("action")
@@ -145,8 +146,12 @@ fn load_actions_icons(library: &mut IconLibrary) {
     // Add 40 more stubs
     for i in 11..=50 {
         library.register(
-            IconMetadata::new(&format!("act-{}", i), &format!("Action {}", i), IconCategory::Actions)
-                .with_tag("action"),
+            IconMetadata::new(
+                &format!("act-{}", i),
+                &format!("Action {}", i),
+                IconCategory::Actions,
+            )
+            .with_tag("action"),
         );
     }
 }
@@ -200,8 +205,12 @@ fn load_status_icons(library: &mut IconLibrary) {
     // Add 32 more stubs
     for i in 9..=40 {
         library.register(
-            IconMetadata::new(&format!("stat-{}", i), &format!("Status {}", i), IconCategory::Status)
-                .with_tag("status"),
+            IconMetadata::new(
+                &format!("stat-{}", i),
+                &format!("Status {}", i),
+                IconCategory::Status,
+            )
+            .with_tag("status"),
         );
     }
 }
@@ -255,8 +264,12 @@ fn load_media_icons(library: &mut IconLibrary) {
     // Add 32 more stubs
     for i in 9..=40 {
         library.register(
-            IconMetadata::new(&format!("media-{}", i), &format!("Media {}", i), IconCategory::Media)
-                .with_tag("media"),
+            IconMetadata::new(
+                &format!("media-{}", i),
+                &format!("Media {}", i),
+                IconCategory::Media,
+            )
+            .with_tag("media"),
         );
     }
 }
@@ -318,8 +331,12 @@ fn load_system_icons(library: &mut IconLibrary) {
     // Add 20 more stubs
     for i in 11..=30 {
         library.register(
-            IconMetadata::new(&format!("sys-{}", i), &format!("System {}", i), IconCategory::System)
-                .with_tag("system"),
+            IconMetadata::new(
+                &format!("sys-{}", i),
+                &format!("System {}", i),
+                IconCategory::System,
+            )
+            .with_tag("system"),
         );
     }
 }

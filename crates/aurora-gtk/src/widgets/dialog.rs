@@ -87,15 +87,13 @@ mod tests {
 
     #[test]
     fn test_dialog_message() {
-        let dialog = AuroraDialog::new("Test")
-            .with_message("Hello World");
+        let dialog = AuroraDialog::new("Test").with_message("Hello World");
         assert_eq!(dialog.message(), "Hello World");
     }
 
     #[test]
     fn test_dialog_modal() {
-        let dialog = AuroraDialog::new("Test")
-            .modal(true);
+        let dialog = AuroraDialog::new("Test").modal(true);
         assert!(dialog.is_modal());
     }
 

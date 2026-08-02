@@ -29,10 +29,18 @@ impl FontFamily {
 
     pub fn url(&self) -> Option<&'static str> {
         match self {
-            FontFamily::Inter => Some("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700"),
-            FontFamily::IBMPlexSans => Some("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700"),
-            FontFamily::NotoSans => Some("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700"),
-            FontFamily::Monospace => Some("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600"),
+            FontFamily::Inter => {
+                Some("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700")
+            }
+            FontFamily::IBMPlexSans => {
+                Some("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700")
+            }
+            FontFamily::NotoSans => {
+                Some("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700")
+            }
+            FontFamily::Monospace => {
+                Some("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600")
+            }
         }
     }
 
@@ -53,9 +61,7 @@ impl FontFamily {
                 FontFamily::Inter,
                 FontFamily::IBMPlexSans,
             ],
-            FontFamily::Monospace => vec![
-                FontFamily::Monospace,
-            ],
+            FontFamily::Monospace => vec![FontFamily::Monospace],
         }
     }
 }
@@ -191,9 +197,9 @@ impl Font {
     }
 
     pub fn css_import(&self) -> Option<String> {
-        self.family.url().map(|url| {
-            format!("@import url('{}');", url)
-        })
+        self.family
+            .url()
+            .map(|url| format!("@import url('{}');", url))
     }
 
     pub fn has_weight(&self, weight: FontWeight) -> bool {

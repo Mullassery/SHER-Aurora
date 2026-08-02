@@ -94,7 +94,10 @@ mod tests {
     #[test]
     fn test_a11y_announcement() {
         let feedback = SoundFeedback::new(Feedback::Success);
-        assert_eq!(feedback.a11y_announcement(), "Action completed successfully");
+        assert_eq!(
+            feedback.a11y_announcement(),
+            "Action completed successfully"
+        );
     }
 
     #[test]

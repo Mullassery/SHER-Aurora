@@ -8,9 +8,9 @@ use std::fmt;
 /// Tab style variant
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum TabStyle {
-    Underline,  // Underline active tab
-    Button,     // Button-like tabs
-    Pill,       // Pill-shaped with background
+    Underline, // Underline active tab
+    Button,    // Button-like tabs
+    Pill,      // Pill-shaped with background
 }
 
 /// Tab orientation
@@ -262,7 +262,10 @@ impl Tabs {
             TabOrientation::Horizontal => "horizontal",
             TabOrientation::Vertical => "vertical",
         };
-        format!("aurora-tabs aurora-tabs-{} aurora-tabs-{}", style_str, orientation_str)
+        format!(
+            "aurora-tabs aurora-tabs-{} aurora-tabs-{}",
+            style_str, orientation_str
+        )
     }
 }
 

@@ -68,10 +68,18 @@ impl Argument {
         self
     }
 
-    pub fn name(&self) -> &str { &self.name }
-    pub fn description(&self) -> &str { &self.description }
-    pub fn is_required(&self) -> bool { self.required }
-    pub fn default_value(&self) -> std::option::Option<&str> { self.default_value.as_deref() }
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+    pub fn description(&self) -> &str {
+        &self.description
+    }
+    pub fn is_required(&self) -> bool {
+        self.required
+    }
+    pub fn default_value(&self) -> std::option::Option<&str> {
+        self.default_value.as_deref()
+    }
 }
 
 /// CLI flag/option
@@ -103,10 +111,18 @@ impl Flag {
         self
     }
 
-    pub fn short_flag(&self) -> std::option::Option<char> { self.short_flag }
-    pub fn long_flag(&self) -> &str { &self.long_flag }
-    pub fn description(&self) -> &str { &self.description }
-    pub fn has_value(&self) -> bool { self.has_value }
+    pub fn short_flag(&self) -> std::option::Option<char> {
+        self.short_flag
+    }
+    pub fn long_flag(&self) -> &str {
+        &self.long_flag
+    }
+    pub fn description(&self) -> &str {
+        &self.description
+    }
+    pub fn has_value(&self) -> bool {
+        self.has_value
+    }
 }
 
 /// CLI command definition
@@ -143,10 +159,18 @@ impl Command {
         self
     }
 
-    pub fn command_type(&self) -> CommandType { self.command_type }
-    pub fn arguments(&self) -> &[Argument] { &self.arguments }
-    pub fn flags(&self) -> &[Flag] { &self.flags }
-    pub fn aliases(&self) -> &[String] { &self.aliases }
+    pub fn command_type(&self) -> CommandType {
+        self.command_type
+    }
+    pub fn arguments(&self) -> &[Argument] {
+        &self.arguments
+    }
+    pub fn flags(&self) -> &[Flag] {
+        &self.flags
+    }
+    pub fn aliases(&self) -> &[String] {
+        &self.aliases
+    }
 
     pub fn help(&self) -> String {
         let mut help = String::new();
@@ -166,9 +190,18 @@ impl Command {
             help.push_str("FLAGS:\n");
             for flag in &self.flags {
                 if let Some(c) = flag.short_flag() {
-                    help.push_str(&format!("  -{}, --{}  {}\n", c, flag.long_flag(), flag.description()));
+                    help.push_str(&format!(
+                        "  -{}, --{}  {}\n",
+                        c,
+                        flag.long_flag(),
+                        flag.description()
+                    ));
                 } else {
-                    help.push_str(&format!("  --{}  {}\n", flag.long_flag(), flag.description()));
+                    help.push_str(&format!(
+                        "  --{}  {}\n",
+                        flag.long_flag(),
+                        flag.description()
+                    ));
                 }
             }
         }
@@ -196,7 +229,11 @@ impl AuroraCli {
     fn register_default_commands(&mut self) {
         let new_cmd = Command::new(CommandType::New)
             .add_argument(Argument::new("project-name", "Name of project").required())
-            .add_flag(Flag::new("template", "Project template").with_short('t').with_value())
+            .add_flag(
+                Flag::new("template", "Project template")
+                    .with_short('t')
+                    .with_value(),
+            )
             .add_flag(Flag::new("force", "Overwrite existing").with_short('f'));
         self.commands.insert("new".to_string(), new_cmd);
 
@@ -207,17 +244,29 @@ impl AuroraCli {
 
         let gen_cmd = Command::new(CommandType::Generate)
             .add_argument(Argument::new("target", "Generate icons/themes").required())
-            .add_flag(Flag::new("output", "Output directory").with_short('o').with_value());
+            .add_flag(
+                Flag::new("output", "Output directory")
+                    .with_short('o')
+                    .with_value(),
+            );
         self.commands.insert("generate".to_string(), gen_cmd);
 
         let theme_cmd = Command::new(CommandType::Theme)
             .add_argument(Argument::new("action", "customize/export/preview").required())
-            .add_flag(Flag::new("colors", "Color file").with_short('c').with_value());
+            .add_flag(
+                Flag::new("colors", "Color file")
+                    .with_short('c')
+                    .with_value(),
+            );
         self.commands.insert("theme".to_string(), theme_cmd);
 
         let export_cmd = Command::new(CommandType::Export)
             .add_argument(Argument::new("target", "icons/fonts/tokens").required())
-            .add_flag(Flag::new("format", "Export format").with_short('f').with_value());
+            .add_flag(
+                Flag::new("format", "Export format")
+                    .with_short('f')
+                    .with_value(),
+            );
         self.commands.insert("export".to_string(), export_cmd);
 
         let init_cmd = Command::new(CommandType::Init)
@@ -302,7 +351,9 @@ mod tests {
 
     #[test]
     fn test_flag_with_value() {
-        let flag = Flag::new("output", "Output file").with_short('o').with_value();
+        let flag = Flag::new("output", "Output file")
+            .with_short('o')
+            .with_value();
         assert!(flag.has_value());
     }
 
@@ -316,8 +367,8 @@ mod tests {
 
     #[test]
     fn test_command_help() {
-        let cmd = Command::new(CommandType::New)
-            .add_argument(Argument::new("name", "Name").required());
+        let cmd =
+            Command::new(CommandType::New).add_argument(Argument::new("name", "Name").required());
         let help = cmd.help();
         assert!(help.contains("aurora new"));
         assert!(help.contains("name"));

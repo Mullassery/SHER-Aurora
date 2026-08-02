@@ -109,8 +109,7 @@ mod tests {
 
     #[test]
     fn test_checkbox_label_update() {
-        let checkbox = Checkbox::new("Initial")
-            .with_label("Updated");
+        let checkbox = Checkbox::new("Initial").with_label("Updated");
         assert_eq!(checkbox.label(), "Updated");
     }
 

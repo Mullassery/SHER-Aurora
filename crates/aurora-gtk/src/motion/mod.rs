@@ -24,41 +24,22 @@ impl GtkAnimator {
     /// * `from` - Initial scale value
     /// * `to` - Final scale value
     /// * `duration_ms` - Animation duration in milliseconds
-    pub fn animate_scale(
-        &self,
-        _widget_id: &str,
-        _from: f64,
-        _to: f64,
-        _duration_ms: u32,
-    ) {
+    pub fn animate_scale(&self, _widget_id: &str, _from: f64, _to: f64, _duration_ms: u32) {
         // Animation implementation delegated to GTK4 layer
     }
 
     /// Animate opacity property
-    pub fn animate_opacity(
-        &self,
-        _widget_id: &str,
-        _from: f64,
-        _to: f64,
-        _duration_ms: u32,
-    ) {
+    pub fn animate_opacity(&self, _widget_id: &str, _from: f64, _to: f64, _duration_ms: u32) {
         // Animation implementation delegated to GTK4 layer
     }
 
     /// Animate color transition
-    pub fn animate_color(
-        &self,
-        _widget_id: &str,
-        _duration_ms: u32,
-    ) {
+    pub fn animate_color(&self, _widget_id: &str, _duration_ms: u32) {
         // Animation implementation delegated to GTK4 layer
     }
 
     /// Execute callback after delay
-    pub fn delay_callback<F: FnOnce() + 'static>(
-        _delay_ms: u32,
-        _callback: F,
-    ) {
+    pub fn delay_callback<F: FnOnce() + 'static>(_delay_ms: u32, _callback: F) {
         // Callback implementation delegated to GTK4 layer
     }
 }

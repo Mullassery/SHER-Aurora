@@ -4,12 +4,12 @@
 //! All colors are defined as tokens, not raw hex values, ensuring consistency across applications.
 
 pub mod color;
-pub mod theme;
 pub mod contrast;
+pub mod theme;
 
 pub use color::Color;
-pub use theme::{Theme, ThemeName, ColorSystem};
 pub use contrast::validate_contrast;
+pub use theme::{ColorSystem, Theme, ThemeName};
 
 /// Aurora color system context
 #[derive(Debug, Clone)]

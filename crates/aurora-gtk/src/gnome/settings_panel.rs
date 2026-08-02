@@ -120,14 +120,12 @@ impl SettingsPanel {
     fn accessibility_section() -> SettingsSection {
         SettingsSection {
             title: "Accessibility".to_string(),
-            settings: vec![
-                Setting {
-                    key: "reduce-motion".to_string(),
-                    label: "Reduce Motion".to_string(),
-                    value_type: SettingType::Boolean,
-                    current_value: "false".to_string(),
-                },
-            ],
+            settings: vec![Setting {
+                key: "reduce-motion".to_string(),
+                label: "Reduce Motion".to_string(),
+                value_type: SettingType::Boolean,
+                current_value: "false".to_string(),
+            }],
         }
     }
 

@@ -54,9 +54,9 @@ impl Segment {
 /// Breadcrumb overflow behavior
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum OverflowBehavior {
-    ShowAll,     // Show all segments
-    Truncate,    // Show first and last, hide middle
-    Collapse,    // Show only last segment (+ overflow menu)
+    ShowAll,  // Show all segments
+    Truncate, // Show first and last, hide middle
+    Collapse, // Show only last segment (+ overflow menu)
 }
 
 /// Breadcrumb navigation component
@@ -168,7 +168,10 @@ impl Breadcrumb {
 
     /// Get current segment (last/active)
     pub fn current_segment(&self) -> std::option::Option<&Segment> {
-        self.segments.iter().find(|s| s.is_active()).or_else(|| self.segments.last())
+        self.segments
+            .iter()
+            .find(|s| s.is_active())
+            .or_else(|| self.segments.last())
     }
 
     /// Get root segment (first)
@@ -302,7 +305,10 @@ mod tests {
         breadcrumb.add_segment(Segment::new("docs", "Documents", "/home/Documents"));
 
         assert!(breadcrumb.find_segment("docs").is_some());
-        assert_eq!(breadcrumb.find_segment("docs").unwrap().label(), "Documents");
+        assert_eq!(
+            breadcrumb.find_segment("docs").unwrap().label(),
+            "Documents"
+        );
         assert!(breadcrumb.find_segment("unknown").is_none());
     }
 
@@ -310,9 +316,7 @@ mod tests {
     fn test_current_segment() {
         let mut breadcrumb = Breadcrumb::new();
         breadcrumb.add_segment(Segment::new("home", "Home", "/home"));
-        breadcrumb.add_segment(
-            Segment::new("docs", "Documents", "/home/Documents").active(),
-        );
+        breadcrumb.add_segment(Segment::new("docs", "Documents", "/home/Documents").active());
 
         let current = breadcrumb.current_segment();
         assert!(current.is_some());
@@ -363,8 +367,7 @@ mod tests {
 
     #[test]
     fn test_separator() {
-        let breadcrumb = Breadcrumb::new()
-            .with_separator(">");
+        let breadcrumb = Breadcrumb::new().with_separator(">");
         assert_eq!(breadcrumb.separator(), ">");
 
         let mut breadcrumb2 = Breadcrumb::new().with_separator("•");
@@ -376,11 +379,14 @@ mod tests {
 
     #[test]
     fn test_overflow_show_all() {
-        let mut breadcrumb = Breadcrumb::new()
-            .with_overflow(OverflowBehavior::ShowAll);
+        let mut breadcrumb = Breadcrumb::new().with_overflow(OverflowBehavior::ShowAll);
 
         for i in 0..5 {
-            breadcrumb.add_segment(Segment::new(&i.to_string(), &format!("Dir {}", i), &format!("/{}", i)));
+            breadcrumb.add_segment(Segment::new(
+                &i.to_string(),
+                &format!("Dir {}", i),
+                &format!("/{}", i),
+            ));
         }
 
         assert_eq!(breadcrumb.visible_count(), 5);
@@ -394,7 +400,11 @@ mod tests {
             .with_max_visible(3);
 
         for i in 0..5 {
-            breadcrumb.add_segment(Segment::new(&i.to_string(), &format!("Dir {}", i), &format!("/{}", i)));
+            breadcrumb.add_segment(Segment::new(
+                &i.to_string(),
+                &format!("Dir {}", i),
+                &format!("/{}", i),
+            ));
         }
 
         assert!(breadcrumb.has_overflow());
@@ -404,11 +414,14 @@ mod tests {
 
     #[test]
     fn test_overflow_collapse() {
-        let mut breadcrumb = Breadcrumb::new()
-            .with_overflow(OverflowBehavior::Collapse);
+        let mut breadcrumb = Breadcrumb::new().with_overflow(OverflowBehavior::Collapse);
 
         for i in 0..3 {
-            breadcrumb.add_segment(Segment::new(&i.to_string(), &format!("Dir {}", i), &format!("/{}", i)));
+            breadcrumb.add_segment(Segment::new(
+                &i.to_string(),
+                &format!("Dir {}", i),
+                &format!("/{}", i),
+            ));
         }
 
         assert!(breadcrumb.has_overflow());

@@ -124,36 +124,35 @@ mod tests {
     #[test]
     fn test_input_types() {
         assert_eq!(Input::new(InputType::Text).input_type(), InputType::Text);
-        assert_eq!(Input::new(InputType::Password).input_type(), InputType::Password);
+        assert_eq!(
+            Input::new(InputType::Password).input_type(),
+            InputType::Password
+        );
         assert_eq!(Input::new(InputType::Email).input_type(), InputType::Email);
     }
 
     #[test]
     fn test_input_placeholder() {
-        let input = Input::new(InputType::Text)
-            .with_placeholder("Enter text");
+        let input = Input::new(InputType::Text).with_placeholder("Enter text");
         assert_eq!(input.placeholder(), "Enter text");
     }
 
     #[test]
     fn test_input_text() {
-        let input = Input::new(InputType::Text)
-            .with_text("Hello");
+        let input = Input::new(InputType::Text).with_text("Hello");
         assert_eq!(input.text(), "Hello");
     }
 
     #[test]
     fn test_input_clear() {
-        let mut input = Input::new(InputType::Text)
-            .with_text("Hello");
+        let mut input = Input::new(InputType::Text).with_text("Hello");
         input.clear();
         assert_eq!(input.text(), "");
     }
 
     #[test]
     fn test_input_error_state() {
-        let input = Input::new(InputType::Text)
-            .set_error(true);
+        let input = Input::new(InputType::Text).set_error(true);
         assert!(input.is_error());
     }
 

@@ -3,11 +3,11 @@ use serde::{Deserialize, Serialize};
 /// Border radius scale
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
 pub struct RadiusScale {
-    pub xs: u16,   // 4px — subtle softness
-    pub sm: u16,   // 8px — buttons, cards, inputs
-    pub md: u16,   // 12px — larger containers, modals
-    pub lg: u16,   // 16px — prominent surfaces
-    pub xl: u16,   // 24px — large cards, full-width containers
+    pub xs: u16, // 4px — subtle softness
+    pub sm: u16, // 8px — buttons, cards, inputs
+    pub md: u16, // 12px — larger containers, modals
+    pub lg: u16, // 16px — prominent surfaces
+    pub xl: u16, // 24px — large cards, full-width containers
 }
 
 impl Default for RadiusScale {

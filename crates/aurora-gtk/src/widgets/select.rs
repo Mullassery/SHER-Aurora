@@ -159,7 +159,8 @@ impl Select {
                     opt.label
                         .to_lowercase()
                         .contains(&self.search_term.to_lowercase())
-                        || opt.value
+                        || opt
+                            .value
                             .to_lowercase()
                             .contains(&self.search_term.to_lowercase())
                 }
@@ -221,7 +222,8 @@ impl Select {
 
     /// Deselect an option by ID
     pub fn deselect(&mut self, option_id: &str) -> bool {
-        if let std::option::Option::Some(pos) = self.selected.iter().position(|id| id == option_id) {
+        if let std::option::Option::Some(pos) = self.selected.iter().position(|id| id == option_id)
+        {
             self.selected.remove(pos);
             true
         } else {
@@ -263,11 +265,10 @@ impl Select {
     /// Get selected label(s)
     pub fn selected_label(&self) -> String {
         match self.selection_mode {
-            SelectMode::Single => {
-                self.first_selected()
-                    .map(|o| o.label.clone())
-                    .unwrap_or_else(|| self.placeholder.clone())
-            }
+            SelectMode::Single => self
+                .first_selected()
+                .map(|o| o.label.clone())
+                .unwrap_or_else(|| self.placeholder.clone()),
             SelectMode::Multiple => {
                 if self.selected.is_empty() {
                     self.placeholder.clone()
@@ -370,8 +371,7 @@ mod tests {
 
     #[test]
     fn test_select_single_mode() {
-        let mut select = Select::new()
-            .with_mode(SelectMode::Single);
+        let mut select = Select::new().with_mode(SelectMode::Single);
         select.add_option(SelectOption::new("1", "Apple", "apple"));
         select.add_option(SelectOption::new("2", "Banana", "banana"));
 
@@ -388,8 +388,7 @@ mod tests {
 
     #[test]
     fn test_select_multiple_mode() {
-        let mut select = Select::new()
-            .with_mode(SelectMode::Multiple);
+        let mut select = Select::new().with_mode(SelectMode::Multiple);
         select.add_option(SelectOption::new("1", "Apple", "apple"));
         select.add_option(SelectOption::new("2", "Banana", "banana"));
         select.add_option(SelectOption::new("3", "Cherry", "cherry"));
@@ -403,8 +402,7 @@ mod tests {
 
     #[test]
     fn test_deselect() {
-        let mut select = Select::new()
-            .with_mode(SelectMode::Multiple);
+        let mut select = Select::new().with_mode(SelectMode::Multiple);
         select.add_option(SelectOption::new("1", "Apple", "apple"));
         select.add_option(SelectOption::new("2", "Banana", "banana"));
 
@@ -419,8 +417,7 @@ mod tests {
 
     #[test]
     fn test_toggle() {
-        let mut select = Select::new()
-            .with_mode(SelectMode::Multiple);
+        let mut select = Select::new().with_mode(SelectMode::Multiple);
         select.add_option(SelectOption::new("1", "Apple", "apple"));
 
         select.toggle("1");
@@ -457,8 +454,7 @@ mod tests {
 
     #[test]
     fn test_search_disabled() {
-        let select = Select::new()
-            .with_search(false);
+        let select = Select::new().with_search(false);
         assert!(!select.is_search_enabled());
     }
 
@@ -504,8 +500,7 @@ mod tests {
 
     #[test]
     fn test_clear() {
-        let mut select = Select::new()
-            .with_mode(SelectMode::Multiple);
+        let mut select = Select::new().with_mode(SelectMode::Multiple);
         select.add_option(SelectOption::new("1", "Apple", "apple"));
         select.add_option(SelectOption::new("2", "Banana", "banana"));
 
@@ -519,8 +514,7 @@ mod tests {
 
     #[test]
     fn test_first_selected() {
-        let mut select = Select::new()
-            .with_mode(SelectMode::Single);
+        let mut select = Select::new().with_mode(SelectMode::Single);
         select.add_option(SelectOption::new("1", "Apple", "apple"));
 
         assert!(select.first_selected().is_none());
@@ -532,8 +526,7 @@ mod tests {
 
     #[test]
     fn test_selected_options() {
-        let mut select = Select::new()
-            .with_mode(SelectMode::Multiple);
+        let mut select = Select::new().with_mode(SelectMode::Multiple);
         select.add_option(SelectOption::new("1", "Apple", "apple"));
         select.add_option(SelectOption::new("2", "Banana", "banana"));
         select.add_option(SelectOption::new("3", "Cherry", "cherry"));
@@ -553,8 +546,14 @@ mod tests {
         select.add_option(SelectOption::new("1", "Red Apple", "red_apple").in_group("Fruits"));
         select.add_option(SelectOption::new("2", "Carrot", "carrot").in_group("Vegetables"));
 
-        assert_eq!(select.options[0].group(), std::option::Option::Some("Fruits"));
-        assert_eq!(select.options[1].group(), std::option::Option::Some("Vegetables"));
+        assert_eq!(
+            select.options[0].group(),
+            std::option::Option::Some("Fruits")
+        );
+        assert_eq!(
+            select.options[1].group(),
+            std::option::Option::Some("Vegetables")
+        );
     }
 
     #[test]
@@ -585,8 +584,7 @@ mod tests {
 
     #[test]
     fn test_placeholder() {
-        let select = Select::new()
-            .with_placeholder("Custom placeholder");
+        let select = Select::new().with_placeholder("Custom placeholder");
         assert_eq!(select.placeholder(), "Custom placeholder");
     }
 }

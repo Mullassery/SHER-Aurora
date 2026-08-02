@@ -90,8 +90,7 @@ mod tests {
 
     #[test]
     fn test_radio_label_update() {
-        let radio = RadioButton::new("Initial")
-            .with_label("Updated");
+        let radio = RadioButton::new("Initial").with_label("Updated");
         assert_eq!(radio.label(), "Updated");
     }
 

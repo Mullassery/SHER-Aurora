@@ -99,8 +99,14 @@ mod tests {
     #[test]
     fn test_volume_for_theme() {
         let success = Sound::Success;
-        assert!(success.volume_for_theme(SoundTheme::Subtle) < success.volume_for_theme(SoundTheme::Standard));
-        assert!(success.volume_for_theme(SoundTheme::Standard) < success.volume_for_theme(SoundTheme::Rich));
+        assert!(
+            success.volume_for_theme(SoundTheme::Subtle)
+                < success.volume_for_theme(SoundTheme::Standard)
+        );
+        assert!(
+            success.volume_for_theme(SoundTheme::Standard)
+                < success.volume_for_theme(SoundTheme::Rich)
+        );
     }
 
     #[test]

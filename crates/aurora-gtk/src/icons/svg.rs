@@ -2,7 +2,7 @@
 //!
 //! Generate production-ready SVG icons from metadata with proper sizing, stroke weights, and colors.
 
-use crate::icons::{IconSize, IconContext};
+use crate::icons::{IconContext, IconSize};
 
 /// SVG viewBox dimensions
 #[derive(Debug, Clone)]
@@ -15,7 +15,12 @@ pub struct ViewBox {
 
 impl ViewBox {
     pub fn new(x: i32, y: i32, width: i32, height: i32) -> Self {
-        Self { x, y, width, height }
+        Self {
+            x,
+            y,
+            width,
+            height,
+        }
     }
 
     pub fn standard() -> Self {
@@ -206,7 +211,11 @@ impl SvgIconBuilder {
 }
 
 /// Generate SVG for a common icon
-pub fn generate_icon_svg(icon_name: &str, size: IconSize, context: IconContext) -> std::option::Option<String> {
+pub fn generate_icon_svg(
+    icon_name: &str,
+    size: IconSize,
+    context: IconContext,
+) -> std::option::Option<String> {
     match icon_name {
         "home" => Some(generate_home_icon(size, context)),
         "save" => Some(generate_save_icon(size, context)),
@@ -398,8 +407,7 @@ mod tests {
 
     #[test]
     fn test_circle_element() {
-        let circle = CircleElement::new(12.0, 12.0, 10.0)
-            .with_fill("#FF0000");
+        let circle = CircleElement::new(12.0, 12.0, 10.0).with_fill("#FF0000");
 
         let svg = circle.to_svg();
         assert!(svg.contains("cx=\"12\""));
@@ -442,7 +450,10 @@ mod tests {
 
     #[test]
     fn test_generate_icon_svg_all() {
-        let icons = vec!["home", "save", "delete", "settings", "search", "menu", "close", "check", "alert", "info"];
+        let icons = vec![
+            "home", "save", "delete", "settings", "search", "menu", "close", "check", "alert",
+            "info",
+        ];
 
         for icon in icons {
             let svg = generate_icon_svg(icon, IconSize::Small, IconContext::Primary);
@@ -459,7 +470,13 @@ mod tests {
 
     #[test]
     fn test_icon_different_sizes() {
-        for size in [IconSize::ExtraSmall, IconSize::Small, IconSize::Medium, IconSize::Large, IconSize::ExtraLarge] {
+        for size in [
+            IconSize::ExtraSmall,
+            IconSize::Small,
+            IconSize::Medium,
+            IconSize::Large,
+            IconSize::ExtraLarge,
+        ] {
             let svg = generate_home_icon(size, IconContext::Primary);
             assert!(svg.contains(&format!("width=\"{}\"", size.pixels())));
             assert!(svg.contains(&format!("height=\"{}\"", size.pixels())));

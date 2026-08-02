@@ -6,17 +6,17 @@ use std::time::Duration;
 /// Animation type
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
 pub enum AnimationType {
-    Spring,  // Spring physics animation
-    Tween,   // Linear interpolation with easing
+    Spring, // Spring physics animation
+    Tween,  // Linear interpolation with easing
 }
 
 /// Animation state
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
 pub enum AnimationState {
-    Idle,       // Not started
-    Running,    // In progress
-    Paused,     // Paused
-    Finished,   // Complete
+    Idle,     // Not started
+    Running,  // In progress
+    Paused,   // Paused
+    Finished, // Complete
 }
 
 /// Complete animation definition
@@ -168,8 +168,7 @@ impl Animation {
                     }
                 }
 
-                let progress = (self.elapsed.as_secs_f32() / self.duration.as_secs_f32())
-                    .min(1.0);
+                let progress = (self.elapsed.as_secs_f32() / self.duration.as_secs_f32()).min(1.0);
                 self.easing.evaluate(progress)
             }
             AnimationState::Finished => 1.0,
@@ -223,8 +222,13 @@ mod tests {
 
     #[test]
     fn test_tween_animation_creation() {
-        let anim =
-            Animation::tween("test", 0.0, 1.0, Duration::from_millis(200), EasingFunction::EaseOut);
+        let anim = Animation::tween(
+            "test",
+            0.0,
+            1.0,
+            Duration::from_millis(200),
+            EasingFunction::EaseOut,
+        );
         assert_eq!(anim.name, "test");
         assert_eq!(anim.start, 0.0);
         assert_eq!(anim.end, 1.0);
@@ -232,8 +236,13 @@ mod tests {
 
     #[test]
     fn test_animation_start() {
-        let mut anim =
-            Animation::tween("test", 0.0, 1.0, Duration::from_millis(200), EasingFunction::Linear);
+        let mut anim = Animation::tween(
+            "test",
+            0.0,
+            1.0,
+            Duration::from_millis(200),
+            EasingFunction::Linear,
+        );
         assert_eq!(anim.state, AnimationState::Idle);
         anim.start();
         assert_eq!(anim.state, AnimationState::Running);
@@ -241,8 +250,13 @@ mod tests {
 
     #[test]
     fn test_animation_pause_resume() {
-        let mut anim =
-            Animation::tween("test", 0.0, 1.0, Duration::from_millis(200), EasingFunction::Linear);
+        let mut anim = Animation::tween(
+            "test",
+            0.0,
+            1.0,
+            Duration::from_millis(200),
+            EasingFunction::Linear,
+        );
         anim.start();
         anim.pause();
         assert_eq!(anim.state, AnimationState::Paused);
@@ -252,8 +266,13 @@ mod tests {
 
     #[test]
     fn test_animation_advance() {
-        let mut anim =
-            Animation::tween("test", 0.0, 1.0, Duration::from_millis(200), EasingFunction::Linear);
+        let mut anim = Animation::tween(
+            "test",
+            0.0,
+            1.0,
+            Duration::from_millis(200),
+            EasingFunction::Linear,
+        );
         anim.start();
         anim.advance(Duration::from_millis(100));
         assert!(anim.progress() > 0.0);
@@ -262,8 +281,13 @@ mod tests {
 
     #[test]
     fn test_animation_completion() {
-        let mut anim =
-            Animation::tween("test", 0.0, 1.0, Duration::from_millis(200), EasingFunction::Linear);
+        let mut anim = Animation::tween(
+            "test",
+            0.0,
+            1.0,
+            Duration::from_millis(200),
+            EasingFunction::Linear,
+        );
         anim.start();
 
         for _ in 0..10 {
@@ -279,8 +303,14 @@ mod tests {
 
     #[test]
     fn test_animation_with_delay() {
-        let mut anim = Animation::tween("test", 0.0, 1.0, Duration::from_millis(200), EasingFunction::Linear)
-            .with_delay(Duration::from_millis(100));
+        let mut anim = Animation::tween(
+            "test",
+            0.0,
+            1.0,
+            Duration::from_millis(200),
+            EasingFunction::Linear,
+        )
+        .with_delay(Duration::from_millis(100));
         anim.start();
 
         // Advance less than delay
@@ -294,8 +324,13 @@ mod tests {
 
     #[test]
     fn test_animation_current_in_range() {
-        let mut anim =
-            Animation::tween("test", 10.0, 20.0, Duration::from_millis(200), EasingFunction::Linear);
+        let mut anim = Animation::tween(
+            "test",
+            10.0,
+            20.0,
+            Duration::from_millis(200),
+            EasingFunction::Linear,
+        );
         anim.start();
         anim.advance(Duration::from_millis(100));
 
@@ -305,8 +340,14 @@ mod tests {
 
     #[test]
     fn test_animation_gpu_acceleration() {
-        let anim = Animation::tween("test", 0.0, 1.0, Duration::from_millis(200), EasingFunction::Linear)
-            .with_gpu_acceleration(false);
+        let anim = Animation::tween(
+            "test",
+            0.0,
+            1.0,
+            Duration::from_millis(200),
+            EasingFunction::Linear,
+        )
+        .with_gpu_acceleration(false);
         assert!(!anim.allow_gpu_acceleration);
     }
 }

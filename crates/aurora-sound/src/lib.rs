@@ -3,11 +3,11 @@
 //! A semantic sound design system for GNOME applications.
 //! Provides feedback sounds for user interactions with accessibility alternatives.
 
-pub mod sound;
 pub mod feedback;
+pub mod sound;
 
-pub use sound::{Sound, SoundCategory, SoundTheme};
 pub use feedback::{Feedback, SoundFeedback};
+pub use sound::{Sound, SoundCategory, SoundTheme};
 
 /// Aurora sound system context
 #[derive(Debug, Clone)]

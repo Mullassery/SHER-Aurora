@@ -7,16 +7,16 @@
 //! - GPU acceleration hints
 //! - Keyframe support
 
+pub mod animation;
+pub mod easing;
 pub mod errors;
 pub mod spring;
-pub mod easing;
-pub mod animation;
 pub mod window;
 
-pub use errors::{MotionError, MotionResult};
-pub use spring::{SpringConfig, SpringState, SpringAnimator};
+pub use animation::{Animation, AnimationState, AnimationType};
 pub use easing::EasingFunction;
-pub use animation::{Animation, AnimationType, AnimationState};
+pub use errors::{MotionError, MotionResult};
+pub use spring::{SpringAnimator, SpringConfig, SpringState};
 pub use window::{WindowAnimation, WindowAnimationConfig, WindowEvent, WindowState};
 
 /// Motion engine — manages all animations
@@ -107,10 +107,7 @@ impl MotionEngine {
 
     /// Number of active animations
     pub fn active_count(&self) -> usize {
-        self.animations
-            .iter()
-            .filter(|a| !a.is_finished())
-            .count()
+        self.animations.iter().filter(|a| !a.is_finished()).count()
     }
 
     /// Are all animations finished?
@@ -223,4 +220,3 @@ mod tests {
         assert_eq!(engine.active_count(), 0);
     }
 }
-
