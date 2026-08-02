@@ -88,6 +88,20 @@ Aurora solves fragmentation by providing:
 
 ---
 
+## Why Aurora?
+
+Aurora represents:
+- The breaking dawn of a new era for GNOME
+- Light breaking through darkness (polished beauty on Linux)
+- Natural beauty and elegance
+- New beginnings and hope
+
+GNOME can be as beautiful and polished as macOS. Aurora is the foundation to make it happen.
+
+Let's build it together.
+
+---
+
 ## What Aurora Provides
 
 ### 18 Integrated Packages
@@ -635,16 +649,3 @@ Accessibility: Target WCAG AAA, Actual WCAG AAA
 
 Aurora is dual-licensed under MIT and Apache License 2.0. Choose whichever fits your project needs. See LICENSE file for full terms.
 
----
-
-## Why Aurora?
-
-Aurora represents:
-- The breaking dawn of a new era for GNOME
-- Light breaking through darkness (polished beauty on Linux)
-- Natural beauty and elegance
-- New beginnings and hope
-
-GNOME can be as beautiful and polished as macOS. Aurora is the foundation to make it happen.
-
-Let's build it together.
