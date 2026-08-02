@@ -589,16 +589,6 @@ Accessibility: Target WCAG AAA, Actual WCAG AAA
 
 ---
 
-## Roadmap
-
-v1.1.x (Maintenance) - Bug fixes, performance improvements, community feedback
-
-v1.2 (Apr-Jun 2027) - Additional components, advanced theming, interactive design tools
-
-v2.0 (2027+) - Qt6 renderer for Windows/macOS, Web/WASM renderer, mobile support
-
----
-
 ## Team and Support
 
 Lead Design: Georgi Mammen Mullassery (mullassery@gmail.com)
