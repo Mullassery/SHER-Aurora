@@ -32,7 +32,7 @@ Aurora enhances GNOME by defining a unified design language, typography system, 
 ## Architecture
 
 ```
-GNOME Applications (Files, Settings, Calendar, Music, etc.)
+GNOME Applications (Nautilus, Settings, Calendar, Music, Gedit, etc.)
         ↓
 Aurora Enhancement Layer
 ├── Design Tokens (aurora-tokens)
@@ -44,18 +44,18 @@ Aurora Enhancement Layer
 ├── Motion Engine (aurora-motion)
 │   └── Spring physics, gesture tracking, animations
 ├── Icon System (aurora-icons)
-│   └── Consistent GNOME icon system (1000+ icons)
+│   └── GNOME icon set (1000+ system and app icons)
 ├── Sound System (aurora-sound)
 │   └── Semantic notification and interaction sounds
 ├── Accessibility Layer (aurora-a11y)
 │   └── WCAG AAA, high contrast, screen readers
-├── Component Library
-│   └── GTK4 widgets built on libadwaita
+├── Component Library (aurora-gtk)
+│   └── GTK4 widgets and patterns built on libadwaita
 └── GNOME Integration
-    ├── Settings panel
-    ├── Shell theming
-    ├── dconf preferences
-    └── Notification system
+    ├── Settings panel (GNOME Settings, dconf)
+    ├── Shell theming (GTK theme, GNOME Shell CSS)
+    ├── GDM integration (login screen theming)
+    └── Notification system (GNOME Notification Daemon)
         ↓
 GTK4 + libadwaita (GNOME's modern toolkit)
         ↓
@@ -74,9 +74,7 @@ crates/
 ├── aurora-sound/        # Sound design definitions
 ├── aurora-a11y/         # Accessibility layer
 ├── aurora-core/         # Unified API over all subsystems
-├── aurora-gtk/          # GTK4 renderer
-├── aurora-qt/           # Qt6 renderer (via FFI)
-└── aurora-web/          # Web/WASM renderer
+└── aurora-gtk/          # GTK4/libadwaita theme engine and components
 ```
 
 ## Key Design Decisions
@@ -120,29 +118,30 @@ crates/
 
 ### Phase 2: GTK4 Components & GNOME Integration (Aug–Oct 2026)
 - [ ] GTK4 component library (Button, Card, Input, Dialog, etc.)
-- [ ] GNOME Shell integration (theming, colors)
-- [ ] Motion engine in GTK4
-- [ ] Icon system (SVG, 1000+ icons)
-- [ ] Widget library implementation
+- [ ] GNOME Shell integration (GTK theme, CSS, dconf)
+- [ ] GDM theme (GNOME login screen)
+- [ ] Motion engine in GTK4 (CSS animations)
+- [ ] Icon system (SVG, 1000+ system and application icons)
+- [ ] libadwaita widget implementation
 
-### Phase 3: Color System & App Porting (Nov–Dec 2026)
+### Phase 3: Color System & GNOME App Enhancement (Nov–Dec 2026)
 - [ ] Color engine (semantic tokens, HDR support)
-- [ ] GNOME app porting (Files, Settings, Calendar, Music)
-- [ ] Sound design system
-- [ ] Theme management (dconf, gsettings)
+- [ ] GNOME core app integration (Nautilus, Settings, Calendar, GNOME Music, Epiphany)
+- [ ] Sound design system (notification, interaction, event sounds)
+- [ ] Theme management (dconf, gsettings, GTK theme system)
 
-### Phase 4: Accessibility & Refinement (Jan–Feb 2027)
-- [ ] Accessibility layer (WCAG AAA)
-- [ ] High contrast mode
-- [ ] Reduced motion support
-- [ ] Screen reader testing
-- [ ] Keyboard navigation audit
+### Phase 4: Accessibility & GNOME Refinement (Jan–Feb 2027)
+- [ ] Accessibility layer (WCAG AAA compliance)
+- [ ] High contrast mode (increased color contrast for vision impairment)
+- [ ] Reduced motion mode (respect GNOME's `prefers-reduced-motion` setting)
+- [ ] Screen reader testing (Orca integration)
+- [ ] Full keyboard navigation audit (no mouse required)
 
-### Phase 5: Polish & v1.0 (Mar–Apr 2027)
-- [ ] Final refinement and optimization
-- [ ] Community feedback integration
-- [ ] Comprehensive documentation
-- [ ] v1.0 release
+### Phase 5: Polish & GNOME v1.0 Launch (Mar–Apr 2027)
+- [ ] Final refinement and optimization for GNOME
+- [ ] GNOME community feedback integration
+- [ ] Comprehensive documentation and user guides
+- [ ] v1.0 release (GNOME-native design system)
 
 ## Design Subsystems
 
