@@ -1,0 +1,24 @@
+Package: aurora-themes
+Version: 1.0.0
+Architecture: all
+Maintainer: Aurora Team <aurora@example.com>
+Homepage: https://github.com/aurora-linux/aurora
+Vcs-Git: https://github.com/aurora-linux/aurora.git
+Built-Using: debhelper (= 13.11.6ubuntu1)
+Standards-Version: 4.6.2
+Priority: optional
+
+Depends: ${misc:Depends}
+Recommends: aurora-icons, aurora-cursors
+Suggests: aurora-fonts, aurora-accessibility
+
+Description: Aurora Linux Design System — GTK/Qt/Plasma themes
+ Aurora themes provide a cohesive visual experience across GTK, Qt, and
+ KDE Plasma environments.
+ .
+ Includes:
+  • GTK 3 and GTK 4 themes
+  • Qt 5 and Qt 6 platform styles
+  • KDE Plasma color schemes
+ .
+ Variants: Aurora (Auto), Aurora Light, Aurora Dark

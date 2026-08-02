@@ -1,0 +1,25 @@
+#!/bin/bash
+set -e
+
+case "$1" in
+  remove|purge)
+    # Rebuild caches after removal
+    if command -v update-icon-caches &> /dev/null; then
+      update-icon-caches /usr/share/icons 2>/dev/null || true
+    fi
+
+    if command -v fc-cache &> /dev/null; then
+      fc-cache -fv 2>/dev/null || true
+    fi
+    ;;
+
+  upgrade|failed-upgrade|disappear)
+    ;;
+
+  *)
+    echo "postrm called with unknown argument \`$1'" >&2
+    exit 1
+    ;;
+esac
+
+exit 0

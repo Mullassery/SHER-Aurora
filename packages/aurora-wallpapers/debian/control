@@ -1,0 +1,15 @@
+Package: aurora-wallpapers
+Version: 1.0.0
+Architecture: all
+Maintainer: Aurora Team <aurora@example.com>
+Homepage: https://github.com/aurora-linux/aurora
+Vcs-Git: https://github.com/aurora-linux/aurora.git
+Built-Using: debhelper (= 13.11.6ubuntu1)
+Standards-Version: 4.6.2
+Priority: optional
+
+Depends: ${misc:Depends}
+Recommends: aurora-themes
+
+Description: Aurora Linux Design System — aurora-wallpapers
+ Part of the Aurora Linux Design System.

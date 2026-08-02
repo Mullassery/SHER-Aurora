@@ -1,0 +1,27 @@
+Package: aurora-fonts
+Version: 1.0.0
+Architecture: all
+Maintainer: Aurora Team <aurora@example.com>
+Homepage: https://github.com/aurora-linux/aurora
+Vcs-Git: https://github.com/aurora-linux/aurora.git
+Built-Using: debhelper (= 13.11.6ubuntu1)
+Standards-Version: 4.6.2
+Priority: optional
+
+
+Description: Aurora Linux Design System — Typography
+ Carefully curated font collection for Aurora including:
+  • Aurora Display (headings, UI)
+  • Aurora Text (body text, long-form reading)
+  • Aurora Mono (code editors, terminals)
+ .
+Depends: ${misc:Depends}, fontconfig
+Recommends: aurora-themes
+
+Description: Aurora Linux Design System — Typography
+ Carefully curated font collection for Aurora including:
+  • Aurora Display (headings, UI)
+  • Aurora Text (body text, long-form reading)
+  • Aurora Mono (code editors, terminals)
+ .
+ All fonts are licensed under open-source licenses (OFL-1.1, Apache 2.0).

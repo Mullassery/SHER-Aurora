@@ -1,0 +1,23 @@
+Package: aurora-cursors
+Version: 1.0.0
+Architecture: all
+Maintainer: Aurora Team <aurora@example.com>
+Homepage: https://github.com/aurora-linux/aurora
+Vcs-Git: https://github.com/aurora-linux/aurora.git
+Built-Using: debhelper (= 13.11.6ubuntu1)
+Standards-Version: 4.6.2
+Priority: optional
+
+
+Description: Aurora Linux Design System — Cursor themes
+
+Description: Aurora Linux Design System — Cursor themes
+Depends: ${misc:Depends}
+Recommends: aurora-icons
+
+Description: Aurora Linux Design System — Cursor themes
+Depends: ${misc:Depends}
+Recommends: aurora-icons
+
+Description: Aurora Linux Design System — Cursor themes
+ Aurora cursor theme set with multiple sizes and variants.

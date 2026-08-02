@@ -1,0 +1,33 @@
+#!/bin/bash
+set -e
+
+case "$1" in
+  configure)
+    # Update GTK icon cache if applicable
+    if command -v update-icon-caches &> /dev/null; then
+      update-icon-caches /usr/share/icons 2>/dev/null || true
+    fi
+
+    # Update font cache if applicable
+    if command -v fc-cache &> /dev/null; then
+      fc-cache -fv /usr/share/fonts 2>/dev/null || true
+    fi
+
+    # Update glib schemas if applicable
+    if command -v glib-compile-schemas &> /dev/null; then
+      glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
+    fi
+
+    echo "✅ Aurora package configured successfully"
+    ;;
+
+  abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+  *)
+    echo "postinst called with unknown argument \`$1'" >&2
+    exit 1
+    ;;
+esac
+
+exit 0
