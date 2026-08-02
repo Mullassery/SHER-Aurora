@@ -631,17 +631,6 @@ Accessibility: Target WCAG AAA, Actual WCAG AAA
 
 ---
 
-## Team and Support
-
-Lead Design: Georgi Mammen Mullassery (mullassery@gmail.com)
-
-Get involved:
-- GitHub Issues: Bug reports and feature requests
-- GitHub Discussions: Questions, ideas, and feedback
-- Email: mullassery@gmail.com
-
----
-
 ## License
 
 Aurora is dual-licensed under MIT and Apache License 2.0. Choose whichever fits your project needs. See LICENSE file for full terms.
