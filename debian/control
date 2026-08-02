@@ -1,0 +1,35 @@
+Package: aurora
+Version: 1.0.0
+Architecture: all
+Maintainer: Aurora Team <aurora@example.com>
+Homepage: https://github.com/aurora-linux/aurora
+Vcs-Git: https://github.com/aurora-linux/aurora.git
+Vcs-Browser: https://github.com/aurora-linux/aurora
+Built-Using: debhelper (= 13.11.6ubuntu1)
+Standards-Version: 4.6.2
+Priority: optional
+
+Depends: ${misc:Depends}, aurora-themes, aurora-icons, aurora-cursors, aurora-fonts, aurora-colors, aurora-wallpapers, aurora-branding
+Recommends: aurora-terminal-themes, aurora-vscode, aurora-jetbrains
+Suggests: aurora-kde-themes, aurora-kde-integration, aurora-gnome-integration, aurora-sddm, aurora-gdm, aurora-accessibility, aurora-plymouth
+
+Description: Aurora Linux Design System — Complete package
+ Aurora is a comprehensive Linux design system providing a cohesive visual
+ experience across all major desktop environments and applications.
+ .
+ This meta-package installs all core Aurora components including:
+ .
+  • GTK, Qt, and Plasma themes
+  • Icon theme sets
+  • Cursor themes
+  • System fonts
+  • Color palettes and design tokens
+  • Wallpaper collection
+  • Brand assets
+  • Terminal themes
+  • Code editor themes (VS Code, JetBrains)
+ .
+ Optional packages include desktop environment-specific integrations and
+ accessibility enhancements.
+ .
+ For more information, visit: https://github.com/aurora-linux/aurora
