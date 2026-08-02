@@ -475,13 +475,11 @@ APT Repository Management:
 - Hosting Setup (docs/HOSTING_SETUP.md) - Deploy repository to GitHub Pages, Cloudflare R2, or AWS S3
 - GPG Signing (docs/GPG_SIGNING_SETUP.md) - Key management and package verification
 - Production Checklist (docs/PRODUCTION_READINESS_CHECKLIST.md) - 150+ verification items
-- Architecture (docs/APT_DISTRIBUTION_ARCHITECTURE.md) - Complete design (45,000+ words)
 
 ### For GNOME App Developers
 
 API Reference (docs/API_REFERENCE.md) - Complete API documentation for all components and systems
 Integration Guide (docs/INTEGRATION_GUIDE.md) - Step-by-step guide to building GNOME apps
-Architecture (docs/ARCHITECTURE.md) - Technical design and system architecture
 Component Library (docs/COMPONENT_LIBRARY.md) - All 17 components with examples
 
 ### For Designers
@@ -522,68 +520,6 @@ Developer Tools - CLI tool for project setup, Storybook for documentation, SVG g
 
 ---
 
-## Architecture
-
-### Distribution Model
-
-```
-Aurora Source Repository (GitHub)
-    ↓
-GitHub Actions CI/CD
-├── Build 18 packages (debhelper)
-├── Sign with GPG (4096-bit RSA)
-├── Generate repository metadata (aptly)
-└── Publish to APT repository
-    ↓
-APT Repository (archive.aurora.linux)
-├── pool/ — .deb package files
-└── dists/ — stable, testing, unstable channels
-    ↓
-User's System
-├── wget/curl (download key)
-├── apt-key add (import key)
-├── apt update (refresh package list)
-└── apt install aurora (install packages)
-    ↓
-Linux Desktop (GNOME, KDE, Xfce, etc.)
-```
-
-### Component Architecture
-
-```
-Aurora Desktop Environment
-    ↓
-18 Aurora Packages
-├── Themes (GTK/Qt/Plasma)
-├── Icons (2000+ icons)
-├── Fonts (typography system)
-├── Colors (design tokens)
-├── Terminal themes
-├── IDE themes (VS Code, JetBrains)
-├── Login screens (SDDM, GDM)
-└── Boot splash (Plymouth)
-    ↓
-Desktop Environments (GNOME, KDE, Xfce, Cinnamon, MATE)
-    ↓
-Applications
-    ↓
-Wayland/X11 Compositor
-```
-
-### Repository Infrastructure
-
-Aurora uses a production-grade APT repository with:
-
-- **Multi-Channel Distribution:** Stable (production), Testing (beta), Unstable (nightly)
-- **GPG Signing:** All packages cryptographically verified
-- **Snapshot Publishing:** Immutable releases with instant rollback capability
-- **Global CDN:** Fast downloads worldwide via GitHub Pages or Cloudflare
-- **Automated CI/CD:** GitHub Actions builds, signs, and publishes automatically
-
-For complete architecture details, see `docs/APT_DISTRIBUTION_ARCHITECTURE.md` (45,000+ words).
-
----
-
 ## Release Status
 
 ### v1.0.0 APT Distribution (Production Ready)
@@ -620,11 +556,10 @@ Documentation: Complete API reference, integration guide, design system
 Aurora welcomes contributions from developers, designers, and accessibility experts.
 
 Development Guidelines:
-1. Read docs/ARCHITECTURE.md for technical architecture
-2. Follow CLAUDE.md design principles
-3. Write tests with high coverage
-4. Ensure WCAG AAA accessibility compliance
-5. Update documentation for changes
+1. Follow CLAUDE.md design principles
+2. Write tests with high coverage
+3. Ensure WCAG AAA accessibility compliance
+4. Update documentation for changes
 
 Contribution Process:
 1. Fork the repository
