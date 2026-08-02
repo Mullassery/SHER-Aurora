@@ -520,6 +520,48 @@ Developer Tools - CLI tool for project setup, Storybook for documentation, SVG g
 
 ---
 
+## Comparison with Similar OSS Themes
+
+| Feature | Aurora | Adwaita | Material You | Breeze | Yaru | Catppuccin |
+|---------|--------|---------|--------------|--------|------|-----------|
+| **Design System** | Complete | GTK-only | Design language | KDE-only | Ubuntu-only | Color palette |
+| **Component Library** | Yes (GTK4) | Yes (GTK4) | Reference only | Yes (KDE) | GTK/Qt themes | No |
+| **Desktop Support** | GNOME, KDE, Xfce, Cinnamon, MATE | GNOME only | Multi-desktop | KDE only | GNOME, GTK | Universal |
+| **Themes** | Light, Dark, OLED, HDR | Light, Dark | Light, Dark, Material You | Light, Dark | Light, Dark | 5+ variants |
+| **Typography System** | Yes (responsive scales) | Yes (basic) | Reference | Yes (basic) | No | No |
+| **Motion/Animations** | Spring physics | Spring easing | Material Motion | KDE animations | Basic | No |
+| **Icon System** | 2000+ custom icons | Reference | Reference | ~2000 icons | ~1500 icons | No |
+| **Accessibility** | WCAG AAA | WCAG AA | Material standards | Decent | Basic | Basic |
+| **Package Distribution** | APT (Debian/Ubuntu) | System package | Design reference | System package | Ubuntu package | GitHub releases |
+| **GPG Signed** | Yes | Yes | N/A | Yes | Yes | No |
+| **Version Control** | Semantic versioning | Calendar versioning | N/A | Semantic | Calendar | Semantic |
+| **Documentation** | Comprehensive (50k+ words) | Good | Extensive | Good | Basic | Moderate |
+| **Installation** | `apt install aurora` | Pre-installed | Design system | System package | Pre-installed | Manual |
+| **Active Development** | Yes (2024+) | Yes (GNOME team) | Yes (Google) | Yes (KDE team) | Yes (Canonical) | Yes (community) |
+| **Multi-Theme Support** | 4+ variants | 2 variants | Multiple | 2 variants | 2 variants | 5+ variants |
+| **Source License** | MIT/Apache 2.0 | LGPL 3.0 | Apache 2.0 | LGPL 2.0+ | CC-BY-SA 4.0 | MIT |
+
+### Key Differentiators
+
+**Aurora Advantages:**
+- ✅ Complete design system with tokens, typography, motion, and icons
+- ✅ Cross-desktop support (GNOME, KDE, Xfce, Cinnamon, MATE)
+- ✅ Production-grade APT repository with GPG signing
+- ✅ Spring physics animations across all components
+- ✅ WCAG AAA accessibility by default
+- ✅ 50,000+ words of comprehensive documentation
+- ✅ Semantic versioning and stable releases
+- ✅ Multiple theme variants (Light, Dark, OLED, HDR)
+
+**When to Use Alternatives:**
+- **Adwaita**: If you only use GNOME and want system-integrated defaults
+- **Material You**: If you prefer Google's design language
+- **Breeze**: If you only use KDE Plasma
+- **Yaru**: If you only use Ubuntu and want Ubuntu-specific styling
+- **Catppuccin**: If you want minimal overhead for color consistency only
+
+---
+
 ## Release Status
 
 ### v1.0.0 APT Distribution (Production Ready)
