@@ -54,7 +54,7 @@ impl Typography {
     /// Adjust typography for a specific script (CJK, RTL, etc.)
     pub fn adjust_for_script(&self, style: &mut TypographyStyle, script: Script) {
         let adjustment = script.adjustment();
-        style.line_height = adjustment.line_height_multiplier * style.line_height;
+        style.line_height *= adjustment.line_height_multiplier;
     }
 
     /// Get optimal line length for a script in characters

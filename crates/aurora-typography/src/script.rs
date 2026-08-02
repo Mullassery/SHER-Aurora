@@ -79,8 +79,7 @@ impl Script {
         // RTL detection (Arabic, Hebrew)
         if text.chars().any(|c| {
             matches!(c as u32,
-                0x0600..=0x06FF |   // Arabic
-                0x0590..=0x05FF     // Hebrew
+                0x0590..=0x06FF     // Hebrew and Arabic (contiguous range)
             )
         }) {
             return Script::RTL;
