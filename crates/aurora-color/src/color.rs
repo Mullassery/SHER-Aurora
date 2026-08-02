@@ -1,7 +1,7 @@
 /// Aurora Color representation
 ///
 /// Represents a color in RGB format (0-255 for each component).
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
 pub struct Color {
     pub r: u8,
     pub g: u8,
@@ -83,16 +83,6 @@ impl Color {
     /// Check if passes WCAG AA contrast (4.5:1)
     pub fn passes_wcag_aa(&self, other: &Color) -> bool {
         self.contrast_ratio(other) >= 4.5
-    }
-}
-
-impl Default for Color {
-    fn default() -> Self {
-        Self {
-            r: 0,
-            g: 0,
-            b: 0,
-        }
     }
 }
 
