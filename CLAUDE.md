@@ -264,16 +264,16 @@ Target WCAG AAA where possible. Measure accessibility compliance regularly.
 Aurora succeeds when:
 
 1. **Visual Cohesion** — All GNOME applications (Files, Settings, Calendar, Music, etc.) feel visually consistent and premium
-2. **User Perception** — Users describe GNOME as "as polished as macOS, but open"
+2. **User Perception** — Users describe GNOME as "as polished as any commercial desktop, but open"
 3. **Developer Adoption** — >70% of GNOME applications adopt Aurora components
-4. **Accessibility Excellence** — WCAG AAA compliance throughout, exceeding commercial OSs (macOS, Windows)
+4. **Accessibility Excellence** — WCAG AAA compliance throughout, exceeding commercial desktop environments
 5. **Stability** — Design language remains stable for years without breaking GNOME apps
 6. **Ecosystem Impact** — GNOME becomes recognized as the most beautiful desktop environment on Linux
 
 ## References
 
 - **Typography**: SF Pro, Inter, IBM Plex Sans, Noto Sans
-- **Design Systems**: Human Interface Guidelines (Apple), Material Design (Google), Fluent Design (Microsoft)
+- **Design Systems**: Material Design (Google), Fluent Design (Microsoft), design system best practices
 - **Motion**: Framer Motion, Spring easing references
 - **Color Science**: WCAG, color-contrast-analyzer
 - **Icons**: SF Symbols, Fluent Icons
