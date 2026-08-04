@@ -1,4 +1,8 @@
-# Aurora: GNOME Design System
+# Aurora
+
+GNOME design system. Complete design language with tokens, typography, color, motion, and sound. 10+ foundational components, 4 example applications, comprehensive documentation.
+
+Build consistent, accessible GNOME applications using this production-ready design system.
 
 Aurora is a production-ready, comprehensive design system for GNOME that brings professional visual consistency, accessibility, and elegance to every application. Aurora provides a complete ecosystem: unified color tokens, typography system, motion language, icon library, and deep GNOME integration.
 
