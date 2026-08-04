@@ -11,6 +11,7 @@ Aurora is a production-ready, comprehensive design system for GNOME that brings 
 ---
 
 ## The Problem
+See [INSTALL.md](.github/INSTALL.md) for platform-specific installation guidance.
 
 GNOME applications lack visual cohesion. Each app (Files, Settings, Calendar, Music, Text Editor) is designed independently, creating fragmentation:
 
@@ -25,6 +26,7 @@ Users experience GNOME as visually scattered. When switching between apps, the U
 ---
 
 ## The Solution
+See [INSTALL.md](.github/INSTALL.md) for platform-specific installation guidance.
 
 Aurora provides a unified design language with semantic tokens, responsive typography, spring physics animations, comprehensive theming (Light, Dark, OLED, HDR), and accessibility-first implementation across all GNOME applications.
 
@@ -41,6 +43,7 @@ Key components:
 ---
 
 ## Install Aurora
+See [INSTALL.md](.github/INSTALL.md) for platform-specific installation guidance.
 
 ### For Ubuntu & Debian Users (Recommended)
 
@@ -87,6 +90,7 @@ sudo apt install aurora-accessibility
 ---
 
 ## Aurora Package Ecosystem
+See [INSTALL.md](.github/INSTALL.md) for platform-specific installation guidance.
 
 Aurora distributes 18 integrated Debian/Ubuntu packages:
 
@@ -113,6 +117,7 @@ Aurora distributes 18 integrated Debian/Ubuntu packages:
 ---
 
 ## Key Features
+See [INSTALL.md](.github/INSTALL.md) for platform-specific installation guidance.
 
 **Visual Consistency** — All GNOME applications share the same design language. Tokens, colors, typography, spacing, and motion are unified. No more jarring transitions between apps.
 
@@ -131,6 +136,7 @@ Aurora distributes 18 integrated Debian/Ubuntu packages:
 ---
 
 ## Comparison with Similar OSS Themes
+See [INSTALL.md](.github/INSTALL.md) for platform-specific installation guidance.
 
 | Feature | Aurora | Adwaita | Material You | Breeze | Yaru | Catppuccin |
 |---------|--------|---------|--------------|--------|------|-----------|
@@ -150,6 +156,7 @@ Aurora distributes 18 integrated Debian/Ubuntu packages:
 ---
 
 ## Architecture
+See [INSTALL.md](.github/INSTALL.md) for platform-specific installation guidance.
 
 Aurora is built as a complete system of interconnected subsystems:
 
@@ -179,6 +186,7 @@ Wayland Compositor (GNOME Shell)
 ---
 
 ## For Developers: Build from Source
+See [INSTALL.md](.github/INSTALL.md) for platform-specific installation guidance.
 
 ### Prerequisites
 
@@ -283,6 +291,7 @@ cargo run --example aurora_music         # Music player
 ---
 
 ## Documentation
+See [INSTALL.md](.github/INSTALL.md) for platform-specific installation guidance.
 
 **User & Installation:**
 - Quick Install: `curl https://get.aurora.linux | sudo bash`
@@ -304,6 +313,7 @@ cargo run --example aurora_music         # Music player
 ---
 
 ## Performance
+See [INSTALL.md](.github/INSTALL.md) for platform-specific installation guidance.
 
 Current performance metrics exceeding targets:
 
@@ -318,6 +328,7 @@ Current performance metrics exceeding targets:
 ---
 
 ## Release History
+See [INSTALL.md](.github/INSTALL.md) for platform-specific installation guidance.
 
 **v1.0.0 — Production Ready**
 - Complete GNOME package ecosystem (themes, icons, fonts, integrations)
@@ -334,6 +345,7 @@ Current performance metrics exceeding targets:
 ---
 
 ## Contributing
+See [INSTALL.md](.github/INSTALL.md) for platform-specific installation guidance.
 
 Aurora welcomes contributions from developers, designers, and accessibility experts.
 
@@ -358,6 +370,7 @@ Aurora welcomes contributions from developers, designers, and accessibility expe
 ---
 
 ## Support & Community
+See [INSTALL.md](.github/INSTALL.md) for platform-specific installation guidance.
 
 **Report Issues:** https://github.com/Mullassery/aurora/issues
 
@@ -368,12 +381,14 @@ Aurora welcomes contributions from developers, designers, and accessibility expe
 ---
 
 ## License
+See [INSTALL.md](.github/INSTALL.md) for platform-specific installation guidance.
 
 Aurora is dual-licensed under MIT and Apache License 2.0. Choose whichever fits your project needs. See LICENSE file for full terms.
 
 ---
 
 ## Why Aurora?
+See [INSTALL.md](.github/INSTALL.md) for platform-specific installation guidance.
 
 Aurora represents the breaking dawn of a new era for GNOME—light breaking through darkness, polished beauty on Linux, natural elegance, and new beginnings. GNOME can be as beautiful and polished as any commercial desktop. Aurora is the foundation to make it happen.
 
