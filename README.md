@@ -1,153 +1,99 @@
-# Aurora: GNOME Design System
+# Aurora
 
-Aurora is a production-ready, comprehensive design system for GNOME that brings professional visual consistency, accessibility, and elegance to every application. Aurora provides a complete ecosystem: unified color tokens, typography system, motion language, icon library, and deep GNOME integration.
+**Beautiful GTK4 design system for GNOME. Professional polish. WCAG AAA. Production ready.**
 
-**Status: v1.0.0 Production Ready | 328 Tests Passing | WCAG AAA Compliance**
+Unified design language across all GNOME apps. 2000+ icons, spring physics animations, semantic tokens, comprehensive theming (Light, Dark, OLED, HDR), and accessibility-first by default.
 
----
-
-## The Problem
-
-GNOME applications lack visual cohesion. Each app (Files, Settings, Calendar, Music, Text Editor) is designed independently, creating fragmentation:
-
-- Color palettes vary across applications with no semantic system
-- Typography sizes, weights, and spacing differ inconsistently
-- Animation behavior is absent or inconsistent
-- Component styling varies (buttons, inputs, dialogs look different everywhere)
-- Accessibility standards are not unified
-
-Users experience GNOME as visually scattered. When switching between apps, the UI feels jarring and unprofessional. This affects user experience, developer burden, maintenance, and competitive perception against commercial desktop environments.
+[![Tests: 328 Passing](https://img.shields.io/badge/tests-328%20passing-success)](./tests)
+[![WCAG AAA](https://img.shields.io/badge/accessibility-WCAG%20AAA-success)]()
+[![Status: v1.0.0 Production Ready](https://img.shields.io/badge/status-v1.0.0%20Production%20Ready-brightgreen)]()
 
 ---
 
-## The Solution
-
-Aurora provides a unified design language with semantic tokens, responsive typography, spring physics animations, comprehensive theming (Light, Dark, OLED, HDR), and accessibility-first implementation across all GNOME applications.
-
-Key components:
-- **Complete design system** — Tokens, typography scales, color palettes, spacing rules
-- **Component library** — 17 production-ready GTK4 widgets with animations and accessibility
-- **GNOME integration** — Deep integration with dconf, GNOME Settings, Shell, and GDM
-- **Motion language** — Spring physics animations that clarify interaction and feedback
-- **Icon system** — 2000+ organized system and application icons in SVG
-- **Accessibility** — WCAG AAA compliance by default, high contrast modes, reduced motion support
-- **Sound design** — Semantic feedback for notifications, success, error, and interactions
-- **Developer tools** — CLI, Storybook, code generators for rapid development
-
----
-
-## Install Aurora
-
-### For Ubuntu & Debian Users (Recommended)
-
-Install Aurora with one command:
+## 30-Second Start
 
 ```bash
+# Install (Ubuntu/Debian)
+sudo apt install aurora
+
+# Select theme in GNOME Settings
+```
+
+---
+
+## Why Aurora?
+
+**The Problem:**
+- GNOME apps look scattered (no unified design language)
+- Each app has different colors, typography, spacing
+- Accessibility is inconsistent (not WCAG AAA)
+- Building polished GNOME apps is time-consuming
+
+**The Solution:**
+- Complete design system (tokens, typography, motion, icons)
+- 17 production-ready GTK4 widgets
+- WCAG AAA compliance by default
+- Deep GNOME integration (dconf, Shell, GDM)
+
+---
+
+## What You Get
+
+| Feature | Aurora | Adwaita | Material You | Breeze |
+|---------|--------|---------|--------------|--------|
+| **Design System** | ✅ Complete | GTK only | Ref only | KDE only |
+| **Component Library** | ✅ 17 GTK4 | 17 GTK4 | Reference | KDE only |
+| **Themes** | Light, Dark, OLED, HDR | Light, Dark | Light, Dark | Light, Dark |
+| **Typography** | Responsive scales | Basic | Ref | Basic |
+| **Animations** | Spring physics | Spring easing | Material | Basic |
+| **Icons** | 2000+ custom | Reference | Reference | ~2000 |
+| **Accessibility** | ✅ WCAG AAA | WCAG AA | Material | Good |
+| **Installation** | `apt install aurora` | Pre-installed | Design | System pkg |
+
+---
+
+## Install
+
+### Ubuntu & Debian
+
+```bash
+# One-command install
 curl https://get.aurora.linux | sudo bash
 sudo apt install aurora
 ```
 
-Or manually add the repository:
+**Supported:** Ubuntu 20.04+, 22.04+, 24.04+, Debian 11+, 12+
+
+### Components
 
 ```bash
-wget https://archive.aurora.linux/aurora-archive-keyring.gpg
-sudo apt-key add aurora-archive-keyring.gpg
-
-echo "deb https://archive.aurora.linux/dists/stable main" | \
-  sudo tee /etc/apt/sources.list.d/aurora.sources
-
-sudo apt update
-sudo apt install aurora
-```
-
-Supported: Ubuntu 20.04 LTS, 22.04 LTS, 24.04 LTS, Debian 11, Debian 12
-
-### Install Specific Components
-
-Choose only what you need:
-
-```bash
-# Themes and icons only
+# Install specific parts
 sudo apt install aurora-themes aurora-icons
-
-# For GNOME users (login screen and Settings integration)
 sudo apt install aurora-gdm aurora-gnome-integration
-
-# For developers (IDE themes)
 sudo apt install aurora-vscode aurora-jetbrains
-
-# For accessibility (high-contrast, dyslexia-friendly variants)
-sudo apt install aurora-accessibility
 ```
-
----
-
-## Aurora Package Ecosystem
-
-Aurora distributes 18 integrated Debian/Ubuntu packages:
-
-**Core Components:**
-- `aurora-themes` — GTK themes with light and dark variants
-- `aurora-icons` — 2000+ system and application icons
-- `aurora-cursors` — Cursor themes for GNOME
-- `aurora-fonts` — Curated typography system
-- `aurora-colors` — Design tokens and color palettes
-- `aurora-branding` — Brand assets and guidelines
-- `aurora-wallpapers` — High-quality 4K backgrounds
-
-**Application Themes:**
-- `aurora-terminal-themes` — Color schemes for terminal emulators
-- `aurora-vscode` — Visual Studio Code theme
-- `aurora-jetbrains` — JetBrains IDEs theme
-
-**GNOME Integration:**
-- `aurora-gnome-integration` — Deep Shell and Settings integration
-- `aurora-gdm` — GNOME GDM login screen theme
-- `aurora-accessibility` — Accessibility variants
-- `aurora-plymouth` — Boot splash screen
 
 ---
 
 ## Key Features
 
-**Visual Consistency** — All GNOME applications share the same design language. Tokens, colors, typography, spacing, and motion are unified. No more jarring transitions between apps.
-
-**Elegant Motion** — Spring physics-based animations for window transitions, interactions, and feedback. Motion language respects user preferences (reduced motion support).
-
-**Semantic Colors** — Light, Dark, OLED, and HDR themes with semantic tokens (`surface`, `primary`, `success`, `error`). No hardcoded hex values in applications.
-
-**Exceptional Typography** — Responsive type scales (Display, Headline, Title, Body, Caption, Micro) with variable fonts, optical sizing, and full multilingual support.
-
-**Accessibility First** — WCAG AAA compliance throughout. High contrast mode, reduced motion support, screen reader integration, 100% keyboard navigation.
-
-**Sound Design** — Semantic sound effects for notifications, success states, errors, and interactions. Optional and fully accessible.
-
-**Component Library** — Pre-built GTK4 widgets with animations, accessibility, and theming. Reduces development time by approximately 50%.
+- **Semantic Tokens** — One source of truth for colors, spacing, motion
+- **Spring Physics Animations** — Elegant, responsive, respects reduced-motion preference
+- **Responsive Typography** — Display, Headline, Title, Body, Caption, Micro scales
+- **2000+ Icons** — System and application icons in SVG
+- **GNOME Integration** — Settings, Shell, GDM, notifications, keyboard navigation
+- **Sound Design** — Semantic audio feedback for interactions
+- **Accessibility First** — WCAG AAA, high contrast, screen reader support, 100% keyboard
+- **Component Library** — Pre-built GTK4 widgets (50% faster development)
 
 ---
 
-## Comparison with Similar OSS Themes
+## Documentation
 
-| Feature | Aurora | Adwaita | Material You | Breeze | Yaru | Catppuccin |
-|---------|--------|---------|--------------|--------|------|-----------|
-| **Design System** | Complete | GTK-only | Design language | KDE-only | Ubuntu-only | Color palette |
-| **Component Library** | Yes (GTK4) | Yes (GTK4) | Reference only | Yes (KDE) | GTK/Qt themes | No |
-| **Desktop Support** | GNOME only | GNOME only | Multi-desktop | KDE only | GNOME, GTK | Universal |
-| **Themes** | Light, Dark, OLED, HDR | Light, Dark | Light, Dark, Material You | Light, Dark | Light, Dark | 5+ variants |
-| **Typography System** | Yes (responsive) | Yes (basic) | Reference | Yes (basic) | No | No |
-| **Motion/Animations** | Spring physics | Spring easing | Material Motion | KDE animations | Basic | No |
-| **Icon System** | 2000+ custom | Reference | Reference | ~2000 icons | ~1500 icons | No |
-| **Accessibility** | WCAG AAA | WCAG AA | Material standards | Decent | Basic | Basic |
-| **Package Distribution** | APT (Debian/Ubuntu) | System package | Design reference | System package | Ubuntu package | GitHub releases |
-| **GPG Signed** | Yes | Yes | N/A | Yes | Yes | No |
-| **Documentation** | Comprehensive (50k+ words) | Good | Extensive | Good | Basic | Moderate |
-| **Installation** | `apt install aurora` | Pre-installed | Design system | System package | Pre-installed | Manual |
-
----
-
-## Architecture
-
-Aurora is built as a complete system of interconnected subsystems:
+- [Architecture & Design Philosophy](CLAUDE.md)
+- [Getting Started](docs/GETTING_STARTED.md)
+- [API Reference](docs/API.md)
+- [Contributing](CONTRIBUTING.md)
 
 ```
 GNOME Applications (Nautilus, Settings, Calendar, Music, Gedit, etc.)
