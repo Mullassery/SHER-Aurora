@@ -75,14 +75,32 @@ impl Color {
         (lighter + 0.05) / (darker + 0.05)
     }
 
-    /// Check if passes WCAG AAA contrast (7:1)
+    /// Check if passes WCAG AAA contrast for normal-size text (7:1)
     pub fn passes_wcag_aaa(&self, other: &Color) -> bool {
         self.contrast_ratio(other) >= 7.0
     }
 
-    /// Check if passes WCAG AA contrast (4.5:1)
+    /// Check if passes WCAG AA contrast for normal-size text (4.5:1)
     pub fn passes_wcag_aa(&self, other: &Color) -> bool {
         self.contrast_ratio(other) >= 4.5
+    }
+
+    /// Check if passes WCAG AAA contrast for large text (>=18pt, or >=14pt bold): 4.5:1.
+    /// WCAG 2.1 SC 1.4.6 relaxes the AAA threshold for large text vs. normal text.
+    pub fn passes_wcag_aaa_large(&self, other: &Color) -> bool {
+        self.contrast_ratio(other) >= 4.5
+    }
+
+    /// Check if passes WCAG AA contrast for large text (>=18pt, or >=14pt bold): 3:1.
+    /// WCAG 2.1 SC 1.4.3 relaxes the AA threshold for large text vs. normal text.
+    pub fn passes_wcag_aa_large(&self, other: &Color) -> bool {
+        self.contrast_ratio(other) >= 3.0
+    }
+
+    /// Check if passes WCAG 1.4.11 non-text contrast for UI components (icons, borders,
+    /// focus indicators): 3:1. This criterion has no separate AAA tier in the spec.
+    pub fn passes_wcag_ui_component(&self, other: &Color) -> bool {
+        self.contrast_ratio(other) >= 3.0
     }
 }
 
@@ -164,5 +182,44 @@ mod tests {
         assert_eq!(color.r, 0);
         assert_eq!(color.g, 0);
         assert_eq!(color.b, 0);
+    }
+
+    #[test]
+    fn test_wcag_aaa_large_text_threshold_is_lower_than_normal() {
+        // A pair that clears large-text AAA (4.5:1) but not normal-text AAA (7:1).
+        let fg = Color::new(0x76, 0x76, 0x76); // #767676 on white is ~4.54:1
+        let bg = Color::new(0xFF, 0xFF, 0xFF);
+        let ratio = fg.contrast_ratio(&bg);
+        assert!(
+            (4.5..7.0).contains(&ratio),
+            "fixture ratio out of expected band: {ratio}"
+        );
+        assert!(fg.passes_wcag_aaa_large(&bg));
+        assert!(!fg.passes_wcag_aaa(&bg));
+    }
+
+    #[test]
+    fn test_wcag_aa_large_text_threshold_is_lower_than_aaa_large() {
+        // A pair that clears large-text AA (3:1) but not large-text AAA (4.5:1).
+        let fg = Color::new(0x92, 0x92, 0x92); // #929292 on white is ~3.11:1
+        let bg = Color::new(0xFF, 0xFF, 0xFF);
+        let ratio = fg.contrast_ratio(&bg);
+        assert!(
+            (3.0..4.5).contains(&ratio),
+            "fixture ratio out of expected band: {ratio}"
+        );
+        assert!(fg.passes_wcag_aa_large(&bg));
+        assert!(!fg.passes_wcag_aaa_large(&bg));
+    }
+
+    #[test]
+    fn test_wcag_ui_component_contrast() {
+        let white = Color::new(255, 255, 255);
+        let black = Color::new(0, 0, 0);
+        assert!(black.passes_wcag_ui_component(&white));
+
+        // A pair below the 3:1 non-text threshold must fail.
+        let light_gray = Color::new(0xE0, 0xE0, 0xE0);
+        assert!(!light_gray.passes_wcag_ui_component(&white));
     }
 }

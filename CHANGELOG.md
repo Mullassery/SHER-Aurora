@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - Unreleased
+
+### Added
+
+- **`aurora-a11y` crate is now real** - previously an empty stub despite being documented as the project's dedicated accessibility layer. Now provides an automated WCAG 2.1 contrast audit (`audit_theme`, `audit_all_themes`) that computes real contrast ratios for every semantically meaningful color-token pairing (readable text, brand-color-on-container, and non-text UI components) across all four shipped themes (Light, Dark, OLED, HDR), plus `wcag_level`/`TextSize`/`WcagLevel` for checking any individual pair.
+- `aurora-color::Color` gained WCAG's real large-text thresholds - `passes_wcag_aaa_large`/`passes_wcag_aa_large` (4.5:1 / 3:1, per SC 1.4.3/1.4.6) and `passes_wcag_ui_component` (3:1, per SC 1.4.11) - alongside the existing normal-text `passes_wcag_aaa`/`passes_wcag_aa` (7:1 / 4.5:1).
+
+### Fixed
+
+- Dark/OLED/HDR themes: `primary_container`, `secondary_container`, `error_container`, `warning_container`, `success_container`, and `info_container` were too close in luminance to the semantic color rendered on top of them (as low as 1.92:1 for `warning`/`warning_container`, failing even WCAG AA). Darkened to reach real AAA text contrast (7:1) against their paired semantic color.
+- `outline` in every theme fell short of the WCAG 1.4.11 non-text contrast minimum (3:1) against `background`/`surface` (as low as 1.32:1) - borders and focus indicators using this token were effectively invisible for low-vision users. Adjusted to genuinely clear 3:1 in all four themes.
+- These were found by the new `aurora-a11y` audit computing real ratios from the shipping palette, not by manual inspection - the audit's regression tests now catch any future palette change that reintroduces a sub-3:1 UI component or a sub-4.5:1 text-on-container pairing.
+
 ## [1.1.0] - 2027-03-31
 
 ### Added

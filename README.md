@@ -6,7 +6,7 @@ Build consistent, accessible GNOME applications using this production-ready desi
 
 Aurora is a production-ready, comprehensive design system for GNOME that brings professional visual consistency, accessibility, and elegance to every application. Aurora provides a complete ecosystem: unified color tokens, typography system, motion language, icon library, and deep GNOME integration.
 
-**Status: v1.0.0 Production Ready | 328 Tests Passing | WCAG AAA Compliance**
+**Status: v1.0.0 Production Ready | 498 Tests Passing | WCAG-Audited Color System**
 
 ---
 
@@ -36,7 +36,7 @@ Key components:
 - **GNOME integration** — Deep integration with dconf, GNOME Settings, Shell, and GDM
 - **Motion language** — Spring physics animations that clarify interaction and feedback
 - **Icon system** — 2000+ organized system and application icons in SVG
-- **Accessibility** — WCAG AAA compliance by default, high contrast modes, reduced motion support
+- **Accessibility** — every theme's color tokens are checked by an automated WCAG contrast audit (`aurora-a11y`); core reading text and large text/UI reach AAA in all four themes, high contrast modes, reduced motion support
 - **Sound design** — Semantic feedback for notifications, success, error, and interactions
 - **Developer tools** — CLI, Storybook, code generators for rapid development
 
@@ -127,7 +127,7 @@ See [INSTALL.md](.github/INSTALL.md) for platform-specific installation guidance
 
 **Exceptional Typography** — Responsive type scales (Display, Headline, Title, Body, Caption, Micro) with variable fonts, optical sizing, and full multilingual support.
 
-**Accessibility First** — WCAG AAA compliance throughout. High contrast mode, reduced motion support, screen reader integration, 100% keyboard navigation.
+**Accessibility First** — Color contrast is enforced by an automated WCAG audit (`aurora-a11y`), not just claimed: core reading text and large text/UI components reach AAA in all four themes, with any pair still short of AAA at normal text size tracked explicitly in the test suite. High contrast mode, reduced motion support, screen reader integration, 100% keyboard navigation.
 
 **Sound Design** — Semantic sound effects for notifications, success states, errors, and interactions. Optional and fully accessible.
 
@@ -323,7 +323,7 @@ Current performance metrics exceeding targets:
 - Theme switching: ~50ms (target <100ms)
 - Memory overhead: <10MB (target <10MB)
 - Test coverage: 99%+ (target 95%+)
-- Accessibility: WCAG AAA (target WCAG AAA)
+- Accessibility: WCAG AAA for core reading text and large text/UI in every theme, automated via `aurora-a11y` (target WCAG AAA)
 
 ---
 

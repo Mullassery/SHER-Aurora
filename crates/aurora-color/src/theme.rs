@@ -89,7 +89,9 @@ impl ColorSystem {
             foreground: Color::from_hex("#1A1A1A").unwrap(),
             foreground_secondary: Color::from_hex("#333333").unwrap(),
             foreground_tertiary: Color::from_hex("#666666").unwrap(),
-            outline: Color::from_hex("#CCCCCC").unwrap(),
+            // #949494 clears the WCAG 1.4.11 non-text contrast minimum (3:1) against both
+            // surface and background; the previous #CCCCCC only reached ~1.6:1.
+            outline: Color::from_hex("#949494").unwrap(),
             outline_variant: Color::from_hex("#DDDDDD").unwrap(),
             theme: ThemeName::Light,
         }
@@ -99,18 +101,21 @@ impl ColorSystem {
     fn dark() -> Self {
         Self {
             primary: Color::from_hex("#6EB7FF").unwrap(),
-            primary_container: Color::from_hex("#0A47A9").unwrap(),
+            // Container tones below are darkened from their original values so the
+            // semantic color rendered on top (e.g. `primary` on `primary_container`)
+            // clears real WCAG AAA text contrast (7:1) instead of falling to ~2-4:1.
+            primary_container: Color::from_hex("#052456").unwrap(),
             secondary: Color::from_hex("#C5B3FF").unwrap(),
-            secondary_container: Color::from_hex("#480D7C").unwrap(),
+            secondary_container: Color::from_hex("#470D7A").unwrap(),
             accent: Color::from_hex("#FF80AB").unwrap(),
             error: Color::from_hex("#F8A29A").unwrap(),
-            error_container: Color::from_hex("#B3261E").unwrap(),
+            error_container: Color::from_hex("#58130F").unwrap(),
             warning: Color::from_hex("#FFD54F").unwrap(),
-            warning_container: Color::from_hex("#F57C00").unwrap(),
+            warning_container: Color::from_hex("#693500").unwrap(),
             success: Color::from_hex("#81C784").unwrap(),
-            success_container: Color::from_hex("#1B5E20").unwrap(),
+            success_container: Color::from_hex("#0E3211").unwrap(),
             info: Color::from_hex("#64B5F6").unwrap(),
-            info_container: Color::from_hex("#0D47A1").unwrap(),
+            info_container: Color::from_hex("#06224D").unwrap(),
             surface: Color::from_hex("#1E1E1E").unwrap(),
             surface_variant: Color::from_hex("#2D2D2D").unwrap(),
             surface_dim: Color::from_hex("#121212").unwrap(),
@@ -118,7 +123,9 @@ impl ColorSystem {
             foreground: Color::from_hex("#F5F5F5").unwrap(),
             foreground_secondary: Color::from_hex("#BDBDBD").unwrap(),
             foreground_tertiary: Color::from_hex("#9E9E9E").unwrap(),
-            outline: Color::from_hex("#424242").unwrap(),
+            // #696969 clears the WCAG 1.4.11 non-text contrast minimum (3:1) against both
+            // surface and background; the previous #424242 only reached ~1.6-1.9:1.
+            outline: Color::from_hex("#696969").unwrap(),
             outline_variant: Color::from_hex("#333333").unwrap(),
             theme: ThemeName::Dark,
         }
@@ -128,18 +135,18 @@ impl ColorSystem {
     fn oled() -> Self {
         Self {
             primary: Color::from_hex("#6EB7FF").unwrap(),
-            primary_container: Color::from_hex("#0A47A9").unwrap(),
+            primary_container: Color::from_hex("#052456").unwrap(),
             secondary: Color::from_hex("#C5B3FF").unwrap(),
-            secondary_container: Color::from_hex("#480D7C").unwrap(),
+            secondary_container: Color::from_hex("#470D7A").unwrap(),
             accent: Color::from_hex("#FF80AB").unwrap(),
             error: Color::from_hex("#F8A29A").unwrap(),
-            error_container: Color::from_hex("#B3261E").unwrap(),
+            error_container: Color::from_hex("#58130F").unwrap(),
             warning: Color::from_hex("#FFD54F").unwrap(),
-            warning_container: Color::from_hex("#F57C00").unwrap(),
+            warning_container: Color::from_hex("#693500").unwrap(),
             success: Color::from_hex("#81C784").unwrap(),
-            success_container: Color::from_hex("#1B5E20").unwrap(),
+            success_container: Color::from_hex("#0E3211").unwrap(),
             info: Color::from_hex("#64B5F6").unwrap(),
-            info_container: Color::from_hex("#0D47A1").unwrap(),
+            info_container: Color::from_hex("#06224D").unwrap(),
             surface: Color::from_hex("#0D0D0D").unwrap(),
             surface_variant: Color::from_hex("#1A1A1A").unwrap(),
             surface_dim: Color::from_hex("#000000").unwrap(),
@@ -147,7 +154,9 @@ impl ColorSystem {
             foreground: Color::from_hex("#F5F5F5").unwrap(),
             foreground_secondary: Color::from_hex("#BDBDBD").unwrap(),
             foreground_tertiary: Color::from_hex("#9E9E9E").unwrap(),
-            outline: Color::from_hex("#2D2D2D").unwrap(),
+            // #5F5F5F clears the WCAG 1.4.11 non-text contrast minimum (3:1) against both
+            // surface and background; the previous #2D2D2D only reached ~1.4-1.5:1.
+            outline: Color::from_hex("#5F5F5F").unwrap(),
             outline_variant: Color::from_hex("#1A1A1A").unwrap(),
             theme: ThemeName::OLED,
         }
@@ -157,18 +166,18 @@ impl ColorSystem {
     fn hdr() -> Self {
         Self {
             primary: Color::from_hex("#6EB7FF").unwrap(),
-            primary_container: Color::from_hex("#0A47A9").unwrap(),
+            primary_container: Color::from_hex("#052456").unwrap(),
             secondary: Color::from_hex("#C5B3FF").unwrap(),
-            secondary_container: Color::from_hex("#480D7C").unwrap(),
+            secondary_container: Color::from_hex("#470D7A").unwrap(),
             accent: Color::from_hex("#FF80AB").unwrap(),
             error: Color::from_hex("#F8A29A").unwrap(),
-            error_container: Color::from_hex("#B3261E").unwrap(),
+            error_container: Color::from_hex("#58130F").unwrap(),
             warning: Color::from_hex("#FFD54F").unwrap(),
-            warning_container: Color::from_hex("#F57C00").unwrap(),
+            warning_container: Color::from_hex("#693500").unwrap(),
             success: Color::from_hex("#81C784").unwrap(),
-            success_container: Color::from_hex("#1B5E20").unwrap(),
+            success_container: Color::from_hex("#0E3211").unwrap(),
             info: Color::from_hex("#64B5F6").unwrap(),
-            info_container: Color::from_hex("#0D47A1").unwrap(),
+            info_container: Color::from_hex("#06224D").unwrap(),
             surface: Color::from_hex("#1E1E1E").unwrap(),
             surface_variant: Color::from_hex("#2D2D2D").unwrap(),
             surface_dim: Color::from_hex("#121212").unwrap(),
@@ -176,7 +185,7 @@ impl ColorSystem {
             foreground: Color::from_hex("#F5F5F5").unwrap(),
             foreground_secondary: Color::from_hex("#BDBDBD").unwrap(),
             foreground_tertiary: Color::from_hex("#9E9E9E").unwrap(),
-            outline: Color::from_hex("#424242").unwrap(),
+            outline: Color::from_hex("#696969").unwrap(),
             outline_variant: Color::from_hex("#333333").unwrap(),
             theme: ThemeName::HDR,
         }
