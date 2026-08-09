@@ -6,7 +6,9 @@ Build consistent, accessible GNOME applications using this production-ready desi
 
 Aurora is a production-ready, comprehensive design system for GNOME that brings professional visual consistency, accessibility, and elegance to every application. Aurora provides a complete ecosystem: unified color tokens, typography system, motion language, icon library, and deep GNOME integration.
 
-**Status: v1.0.0 Production Ready | 498 Tests Passing | WCAG-Audited Color System**
+**Status: v1.0.0 Production Ready | WCAG-Audited Color System**
+
+[![CI](https://github.com/Mullassery/aurora/actions/workflows/ci.yml/badge.svg)](https://github.com/Mullassery/aurora/actions/workflows/ci.yml)
 
 ---
 
