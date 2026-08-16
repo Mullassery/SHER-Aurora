@@ -1,7 +1,8 @@
 /// Aurora Badge styles
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]
 pub enum BadgeStyle {
     /// Default badge style
+    #[default]
     Default,
     /// Success state (green)
     Success,
@@ -11,12 +12,6 @@ pub enum BadgeStyle {
     Error,
     /// Info state (blue)
     Info,
-}
-
-impl Default for BadgeStyle {
-    fn default() -> Self {
-        Self::Default
-    }
 }
 
 /// Aurora Badge component

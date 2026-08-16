@@ -2,8 +2,6 @@
 //!
 //! Create web-ready icon fonts (TTF, WOFF2) for efficient icon delivery in web applications.
 
-use std::collections::HashMap;
-
 /// Font format type
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum FontFormat {

@@ -166,7 +166,7 @@ impl Storybook {
 
         self.categories
             .entry(category)
-            .or_insert_with(Vec::new)
+            .or_default()
             .push(id.clone());
 
         self.components.insert(id, component);

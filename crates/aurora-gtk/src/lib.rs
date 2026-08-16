@@ -24,6 +24,7 @@ pub use theme::Theme;
 pub use widgets::{
     remove_tooltip, set_tooltip, AuroraDialog, Badge, BadgeStyle, Button, ButtonState, ButtonStyle,
     Card, CardStyle, Checkbox, DialogResponse, Input, InputType, List, RadioButton, Sidebar,
+    Switch,
 };
 
 /// Aurora GTK4 renderer context

@@ -253,7 +253,7 @@ impl Menu {
 
     /// Is submenu open?
     pub fn is_submenu_open(&self, item_id: &str) -> bool {
-        self.open_submenu.as_ref().map_or(false, |id| id == item_id)
+        self.open_submenu.as_ref().is_some_and(|id| id == item_id)
     }
 
     /// Toggle submenu

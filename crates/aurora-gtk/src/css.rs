@@ -172,7 +172,6 @@ impl CssProvider {
         css.push_str("  color: white;\n");
         css.push_str("  border: none;\n");
         css.push_str("  font-weight: 500;\n");
-        css.push_str("  cursor: pointer;\n");
         css.push_str("  transition: all var(--motion-fast);\n");
         css.push_str("}\n\n");
 
@@ -226,6 +225,30 @@ impl CssProvider {
     /// Get the design tokens
     pub fn tokens(&self) -> &DesignTokens {
         &self.tokens
+    }
+
+    /// Load this provider's generated stylesheet into a real GTK4
+    /// `gtk4::CssProvider` and install it on `display` at application
+    /// priority, so it actually affects how every real widget on that
+    /// display is rendered.
+    ///
+    /// This performs genuine GTK4 CSS-engine work (`gtk_css_provider_load_from_string`
+    /// together with `gtk_style_context_add_provider_for_display`), not a mock.
+    /// Note that the generated stylesheet borrows some web-CSS conventions that
+    /// GTK4's CSS engine may not fully support in every case; any unsupported
+    /// declaration is ignored by GTK's permissive CSS parser (it logs to
+    /// stderr, it does not fail), the same way a browser ignores unknown
+    /// CSS. Bringing the token-derived stylesheet to full GTK4 CSS parity is
+    /// tracked as follow-up work.
+    pub fn install(&self, display: &gtk4::gdk::Display) -> gtk4::CssProvider {
+        let provider = gtk4::CssProvider::new();
+        provider.load_from_string(&self.generate_css());
+        gtk4::style_context_add_provider_for_display(
+            display,
+            &provider,
+            gtk4::STYLE_PROVIDER_PRIORITY_APPLICATION,
+        );
+        provider
     }
 }
 

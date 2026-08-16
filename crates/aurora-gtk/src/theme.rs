@@ -1,8 +1,9 @@
 use serde::{Deserialize, Serialize};
 
 /// Aurora theme for GTK
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Debug, Default, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
 pub enum Theme {
+    #[default]
     Light,
     Dark,
     OLED,
@@ -26,11 +27,5 @@ impl Theme {
             Theme::OLED => "aurora-oled",
             Theme::HDR => "aurora-hdr",
         }
-    }
-}
-
-impl Default for Theme {
-    fn default() -> Self {
-        Theme::Light
     }
 }

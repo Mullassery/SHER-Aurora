@@ -1,6 +1,13 @@
-//! Aurora Icon System - 1000+ Icon Management
+//! Aurora Icon System — organization/metadata layer
 //!
-//! Unified icon system for GNOME applications with SVG templates, color utilities, and sizing.
+//! Unified icon *metadata* system for GNOME applications: categories, tags,
+//! aliases, semantic color context, and sizing conventions. This module
+//! organizes icon identity and presentation rules; the real, renderable SVG
+//! artwork behind these entries lives in the separate `aurora-icons` crate,
+//! which currently ships 24 real hand-authored icons (see
+//! `aurora_icons::ICON_COUNT`). [`IconCategory::target_count`] describes
+//! aspirational long-term category sizes for a future, much larger icon
+//! set — it is explicitly a target, not a count of icons that exist today.
 
 pub mod core;
 pub mod font;
@@ -214,14 +221,14 @@ impl IconLibrary {
         // Add to category index
         self.by_category
             .entry(category_name)
-            .or_insert_with(Vec::new)
+            .or_default()
             .push(icon.id.clone());
 
         // Add to tag index
         for tag in &icon.tags {
             self.by_tag
                 .entry(tag.clone())
-                .or_insert_with(Vec::new)
+                .or_default()
                 .push(icon.id.clone());
         }
 

@@ -215,7 +215,7 @@ impl Tabs {
     }
 
     /// Next tab
-    pub fn next(&mut self) -> bool {
+    pub fn next_tab(&mut self) -> bool {
         for i in (self.active_index + 1)..self.tabs.len() {
             if self.tabs[i].is_enabled() {
                 self.active_index = i;
@@ -343,11 +343,11 @@ mod tests {
         tabs.add_tab(Tab::new("tab2", "Tab 2"));
         tabs.add_tab(Tab::new("tab3", "Tab 3"));
 
-        assert!(tabs.next());
+        assert!(tabs.next_tab());
         assert_eq!(tabs.active_index(), 1);
-        assert!(tabs.next());
+        assert!(tabs.next_tab());
         assert_eq!(tabs.active_index(), 2);
-        assert!(!tabs.next()); // No more tabs
+        assert!(!tabs.next_tab()); // No more tabs
     }
 
     #[test]
@@ -373,7 +373,7 @@ mod tests {
         tabs.add_tab(Tab::new("tab3", "Tab 3"));
 
         // Should skip disabled tab2
-        assert!(tabs.next());
+        assert!(tabs.next_tab());
         assert_eq!(tabs.active_index(), 2); // Jumps to tab3
     }
 
@@ -469,7 +469,7 @@ mod tests {
         assert_eq!(tabs.active_index(), 0);
 
         // Navigate forward (skips disabled tab2)
-        tabs.next();
+        tabs.next_tab();
         assert_eq!(tabs.active_index(), 2); // tab3
 
         // Navigate backward
@@ -491,8 +491,8 @@ mod tests {
 
         // Empty next/prev
         for _ in 0..5 {
-            tabs.next(); // Eventually reaches end
+            tabs.next_tab(); // Eventually reaches end
         }
-        assert!(!tabs.next());
+        assert!(!tabs.next_tab());
     }
 }

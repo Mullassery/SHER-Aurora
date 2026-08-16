@@ -281,7 +281,7 @@ mod tests {
     fn test_spring_animator_progress() {
         let mut animator = SpringAnimator::new(SpringConfig::standard(), 0.0, 1.0).unwrap();
         let initial_progress = animator.progress();
-        assert!(initial_progress >= 0.0 && initial_progress <= 1.0);
+        assert!((0.0..=1.0).contains(&initial_progress));
 
         animator.advance(Duration::from_millis(100));
         let mid_progress = animator.progress();

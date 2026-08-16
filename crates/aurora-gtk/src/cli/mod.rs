@@ -183,7 +183,7 @@ impl Command {
                 let req_str = if arg.is_required() { " (required)" } else { "" };
                 help.push_str(&format!("  {}  {}{}\n", arg.name, arg.description, req_str));
             }
-            help.push_str("\n");
+            help.push('\n');
         }
 
         if !self.flags.is_empty() {

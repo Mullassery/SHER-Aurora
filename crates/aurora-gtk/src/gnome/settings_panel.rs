@@ -1,7 +1,5 @@
 //! GNOME Settings integration panel
 
-use aurora_color::ThemeName;
-
 /// Aurora settings panel for GNOME Settings
 pub struct SettingsPanel {
     title: String,
@@ -32,6 +30,30 @@ pub enum SettingType {
     Integer,
     Double,
     Enum,
+}
+
+impl Setting {
+    /// Setting's dconf/gsettings key
+    pub fn key(&self) -> &str {
+        &self.key
+    }
+
+    /// Human-readable label
+    pub fn label(&self) -> &str {
+        &self.label
+    }
+
+    /// The value's type, used by a real settings UI to pick the right
+    /// control (toggle for `Boolean`, slider for `Double`, dropdown for
+    /// `Enum`, etc.)
+    pub fn value_type(&self) -> SettingType {
+        self.value_type
+    }
+
+    /// Current value, serialized as a string
+    pub fn current_value(&self) -> &str {
+        &self.current_value
+    }
 }
 
 impl SettingsPanel {

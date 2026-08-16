@@ -61,6 +61,14 @@ impl DockItem {
     pub fn icon(&self) -> &str {
         &self.icon
     }
+
+    /// Resolve this item's icon name to real SVG markup from
+    /// `aurora-icons`, if it matches one of that crate's real (currently:
+    /// 24) hand-authored icons. Returns `None` for icon names that don't
+    /// match a real icon yet, rather than fabricating placeholder artwork.
+    pub fn icon_svg(&self) -> std::option::Option<String> {
+        aurora_icons::IconId::from_slug(&self.icon).and_then(aurora_icons::icon_svg)
+    }
     pub fn label(&self) -> &str {
         &self.label
     }
@@ -348,6 +356,23 @@ mod tests {
     fn test_dock_item_active() {
         let item = DockItem::new("home", "home-icon", "Home").active();
         assert!(item.is_active());
+    }
+
+    #[test]
+    fn test_dock_item_resolves_real_icon_svg() {
+        // "home" is one of aurora-icons' 24 real icons.
+        let item = DockItem::new("home", "home", "Home");
+        let svg = item.icon_svg().expect("home should resolve to real SVG");
+        assert!(svg.starts_with("<svg"));
+        assert!(svg.contains("viewBox"));
+    }
+
+    #[test]
+    fn test_dock_item_unknown_icon_has_no_svg() {
+        // Icon names that don't match a real aurora-icons icon yet should
+        // report None rather than fabricated artwork.
+        let item = DockItem::new("custom", "not-a-real-icon-yet", "Custom");
+        assert!(item.icon_svg().is_none());
     }
 
     #[test]

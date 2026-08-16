@@ -285,7 +285,7 @@ Aurora is open source. All contributions welcome. Please read ARCHITECTURE.md fo
 
 ## License
 
-Dual-licensed under MIT and Apache 2.0.
+Proprietary — free to use with explicit attribution to the original author. See the root `LICENSE` file for full terms. (This project moved off the earlier MIT/Apache-2.0 dual-license to this proprietary license; this line was previously out of sync with `Cargo.toml` and the root `LICENSE` file.)
 
 ---
 

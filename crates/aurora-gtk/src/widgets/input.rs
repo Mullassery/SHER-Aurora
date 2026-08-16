@@ -1,7 +1,8 @@
 /// Aurora Input field type
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]
 pub enum InputType {
     /// Standard text input
+    #[default]
     Text,
     /// Password (masked) input
     Password,
@@ -11,12 +12,6 @@ pub enum InputType {
     Email,
     /// Number input
     Number,
-}
-
-impl Default for InputType {
-    fn default() -> Self {
-        Self::Text
-    }
 }
 
 /// Aurora Input component
@@ -103,6 +98,44 @@ impl Input {
     pub fn css_classes(&self) -> &[String] {
         &self.css_classes
     }
+
+    /// Build a real `gtk4::Entry` widget from this descriptor.
+    ///
+    /// Constructs an actual GTK4 text-entry widget: placeholder, initial
+    /// text, sensitivity, visibility (for password fields), and Aurora CSS
+    /// classes are applied through the real `gtk4` widget API. Callers must
+    /// have already initialized GTK before calling this.
+    pub fn build(&self) -> gtk4::Entry {
+        use gtk4::prelude::*;
+
+        let entry = gtk4::Entry::builder()
+            .placeholder_text(self.placeholder.as_str())
+            .text(self.text.as_str())
+            .sensitive(self.sensitive)
+            .visibility(self.input_type != InputType::Password)
+            .build();
+
+        for class in &self.css_classes {
+            entry.add_css_class(class);
+        }
+
+        if self.error {
+            entry.add_css_class("error");
+        }
+
+        match self.input_type {
+            InputType::Search => {
+                entry.set_input_purpose(gtk4::InputPurpose::FreeForm);
+                entry.add_css_class("aurora-search");
+            }
+            InputType::Email => entry.set_input_purpose(gtk4::InputPurpose::Email),
+            InputType::Number => entry.set_input_purpose(gtk4::InputPurpose::Number),
+            InputType::Password => entry.set_input_purpose(gtk4::InputPurpose::Password),
+            InputType::Text => entry.set_input_purpose(gtk4::InputPurpose::FreeForm),
+        }
+
+        entry
+    }
 }
 
 impl Default for Input {
@@ -174,5 +207,35 @@ mod tests {
             .with_placeholder("user@example.com")
             .with_text("test@example.com")
             .set_sensitive(true);
+    }
+
+    // Real GTK4 widget-construction test — see the comment in
+    // `widgets::switch::tests` for why this is gated off macOS and how to
+    // verify real GTK4 rendering locally on macOS instead.
+    #[cfg(not(target_os = "macos"))]
+    mod gtk_real {
+        use super::*;
+
+        #[gtk4::test]
+        fn test_input_build_is_real_gtk4_widget() {
+            use gtk4::prelude::*;
+            let entry = Input::new(InputType::Text)
+                .with_placeholder("Enter text")
+                .with_text("Hello")
+                .build();
+            assert_eq!(entry.text(), "Hello");
+            assert_eq!(entry.placeholder_text().unwrap(), "Enter text");
+            assert!(entry.css_classes().iter().any(|c| c == "aurora-input"));
+        }
+
+        #[gtk4::test]
+        fn test_password_input_hides_text_in_real_gtk4() {
+            use gtk4::prelude::EntryExt;
+            let entry = Input::new(InputType::Password).build();
+            // GTK4's own visibility flag (masks characters), not our struct's
+            assert!(!EntryExt::is_visible(&entry));
+            let plain = Input::new(InputType::Text).build();
+            assert!(EntryExt::is_visible(&plain));
+        }
     }
 }

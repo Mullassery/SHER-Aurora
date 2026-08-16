@@ -153,9 +153,9 @@ impl ColorBlindSimulation {
         }
 
         if let Ok(rgb) = u32::from_str_radix(hex, 16) {
-            let r = (rgb >> 16) & 0xFF as u32;
-            let g = (rgb >> 8) & 0xFF as u32;
-            let b = rgb & 0xFF as u32;
+            let r = (rgb >> 16) & 0xFF_u32;
+            let g = (rgb >> 8) & 0xFF_u32;
+            let b = rgb & 0xFF_u32;
 
             // Standard grayscale formula
             let gray = ((r as f32 * 0.299) + (g as f32 * 0.587) + (b as f32 * 0.114)) as u32;

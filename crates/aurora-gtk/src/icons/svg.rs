@@ -1,6 +1,9 @@
-//! SVG Icon Generation - Render Aurora icons as scalable vector graphics
+//! SVG Icon Generation - generic SVG-building primitives (viewBox, path
+//! elements) for procedurally assembling icon markup.
 //!
-//! Generate production-ready SVG icons from metadata with proper sizing, stroke weights, and colors.
+//! This module is a generic SVG string builder; it does not itself hold any
+//! glyph geometry. Aurora's real, hand-authored icon artwork lives in the
+//! `aurora-icons` crate (`aurora_icons::icon_svg`).
 
 use crate::icons::{IconContext, IconSize};
 
@@ -26,9 +29,11 @@ impl ViewBox {
     pub fn standard() -> Self {
         Self::new(0, 0, 24, 24)
     }
+}
 
-    pub fn to_string(&self) -> String {
-        format!("{} {} {} {}", self.x, self.y, self.width, self.height)
+impl std::fmt::Display for ViewBox {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{} {} {} {}", self.x, self.y, self.width, self.height)
     }
 }
 
@@ -190,7 +195,7 @@ impl SvgIconBuilder {
         let mut svg = String::new();
         svg.push_str(&format!(
             "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"{}\" width=\"{}\" height=\"{}\" class=\"aurora-icon aurora-icon-{}\">\n",
-            self.viewbox.to_string(),
+            self.viewbox,
             self.size.pixels(),
             self.size.pixels(),
             self.name
