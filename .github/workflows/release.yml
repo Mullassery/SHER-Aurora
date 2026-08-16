@@ -1,4 +1,4 @@
-name: Release Aurora Packages
+name: Release
 
 on:
   push:
@@ -7,16 +7,13 @@ on:
 
 permissions:
   contents: write
-  packages: write
 
 jobs:
-  build-packages:
-    name: Build & Sign Packages
-    runs-on: ubuntu-24.04
-
+  verify-and-release:
+    name: Verify & Publish GitHub Release
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -24,291 +21,51 @@ jobs:
         id: version
         run: |
           VERSION=${GITHUB_REF#refs/tags/v}
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "📦 Building Aurora $VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Install build dependencies
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+
+      - name: Install GTK4 (Ubuntu)
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y \
-            debhelper dh-make lintian dpkg-dev fakeroot \
-            aptly gnupg2 curl
+          sudo apt-get update
+          sudo apt-get install -y libgtk-4-dev libglib2.0-dev pkg-config
 
-      - name: Prepare packages
-        run: |
-          # Create debian/ directories for all packages
-          mkdir -p debian/source
-          echo "3.0 (native)" > debian/source/format
-          echo "tar-exclude=.git" > debian/source/options
+      - name: cargo test --workspace
+        run: cargo test --workspace --verbose
 
-          # Generate changelog entry
-          cat > debian/changelog <<EOF
-aurora (${{ steps.version.outputs.version }}) UNRELEASED; urgency=medium
+      - name: cargo clippy --workspace --all-targets -- -D warnings
+        run: cargo clippy --workspace --all-targets -- -D warnings
 
-  * Release Aurora ${{ steps.version.outputs.version }}
+      - name: cargo fmt --check
+        run: cargo fmt --check
 
- -- Aurora Team <aurora@example.com>  $(date -R)
-EOF
+      - name: cargo build --workspace --release
+        run: cargo build --workspace --release --verbose
 
-      - name: Validate assets
-        run: |
-          # CSS syntax check (if applicable)
-          find . -name "*.css" -type f | head -5 && echo "✅ CSS files found"
-
-          # Icon validation (if applicable)
-          find . -name "*.svg" -o -name "*.png" | head -5 && echo "✅ Icon files found"
-
-          # Font validation (if applicable)
-          find . -name "*.ttf" -o -name "*.otf" | head -5 && echo "✅ Font files found"
-
-      - name: Build packages
-        run: |
-          # Build main meta-package
-          dpkg-buildpackage -us -uc -b
-
-          echo "✅ Package built successfully"
-          ls -lh *.deb || true
-
-      - name: Run lintian checks
-        continue-on-error: true
-        run: |
-          lintian -EviI *.deb || true
-          echo "✅ Lintian checks complete"
-
-      - name: Import GPG key
-        run: |
-          echo "${{ secrets.GPG_PRIVATE_KEY }}" > /tmp/gpg-key.asc
-          gpg --import /tmp/gpg-key.asc
-          gpg --trust-model always --batch --yes --import-ownertrust \
-            <(echo "${{ secrets.GPG_KEY_FINGERPRINT }}:6:")
-          rm /tmp/gpg-key.asc
-          echo "✅ GPG key imported"
-
-      - name: Sign packages
-        run: |
-          if [ -f "*.deb" ]; then
-            dpkg-sig --sign builder \
-              -k "${{ secrets.GPG_KEY_ID }}" \
-              *.deb
-            echo "✅ Packages signed"
-          fi
-
-      - name: Generate repository metadata
-        run: |
-          # Create repository structure
-          mkdir -p pool/main/a/aurora
-          mkdir -p dists/stable/main/binary-all
-
-          # Copy .deb to pool
-          if [ -f "aurora_"*"_all.deb" ]; then
-            cp aurora_*_all.deb pool/main/a/aurora/
-          fi
-
-          # Generate Packages file
-          apt-ftparchive packages pool/ > dists/stable/main/binary-all/Packages
-          gzip -c dists/stable/main/binary-all/Packages > dists/stable/main/binary-all/Packages.gz
-          xz -c dists/stable/main/binary-all/Packages > dists/stable/main/binary-all/Packages.xz
-
-          # Generate Release file
-          apt-ftparchive -o APT::FTPArchive::Release::Origin="Aurora" \
-                         -o APT::FTPArchive::Release::Label="Aurora Stable" \
-                         -o APT::FTPArchive::Release::Suite="stable" \
-                         -o APT::FTPArchive::Release::Codename="stable" \
-                         -o APT::FTPArchive::Release::Description="Aurora Linux Design System Repository" \
-                         -o APT::FTPArchive::Release::Components="main" \
-                         -o APT::FTPArchive::Release::Architectures="all" \
-                         -o APT::FTPArchive::Release::NotAutomatic="false" \
-                         release dists/stable/ > dists/stable/Release
-
-          echo "✅ Repository metadata generated"
-
-      - name: Sign Release file
-        run: |
-          cd dists/stable
-
-          # Detached signature
-          gpg --default-key "${{ secrets.GPG_KEY_ID }}" \
-              --detach-sign --armor \
-              -o Release.gpg Release
-
-          # Inline signature (preferred)
-          gpg --default-key "${{ secrets.GPG_KEY_ID }}" \
-              --clearsign --armor \
-              --output InRelease Release
-
-          # Verify
-          gpg --verify InRelease || gpg --verify Release.gpg Release
-
-          echo "✅ Release file signed"
-          cd - > /dev/null
-
+      # Aurora is not published to crates.io (see the License section of
+      # README.md — the workspace license is "Proprietary", not an OSI
+      # license). This job's job is real verification + a GitHub Release,
+      # not a Debian/APT package repository: no such repository exists for
+      # this project, and an earlier version of this workflow fabricated
+      # one (building/signing .deb packages, uploading to S3/CloudFront/
+      # GitHub Pages, and even referencing a different GitHub org in its
+      # release notes) despite none of that infrastructure existing. That
+      # workflow was also not valid YAML.
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            *.deb
-            dists/stable/Release
-            dists/stable/Release.gpg
-            dists/stable/InRelease
-            dists/stable/main/binary-all/Packages
-            dists/stable/main/binary-all/Packages.gz
+          name: Aurora v${{ steps.version.outputs.version }}
+          body: |
+            See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for the detailed, corrected release notes.
+
+            Install as a git dependency (Aurora is not published to crates.io — see the License section of [README.md](https://github.com/${{ github.repository }}/blob/main/README.md)):
+
+            ```toml
+            aurora-gtk = { git = "https://github.com/${{ github.repository }}", tag = "v${{ steps.version.outputs.version }}" }
+            ```
           draft: false
           prerelease: false
           generate_release_notes: true
-
-      - name: Upload to S3/R2 (if configured)
-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
-        run: |
-          # Optional: Upload to AWS S3 or Cloudflare R2
-          # Requires AWS credentials in secrets
-
-          if [ -n "${{ secrets.AWS_ACCESS_KEY_ID }}" ]; then
-            aws configure set aws_access_key_id "${{ secrets.AWS_ACCESS_KEY_ID }}"
-            aws configure set aws_secret_access_key "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-            aws configure set default.region us-east-1
-            aws configure set default.s3.signature_version s3v4
-
-            # Upload to S3
-            aws s3 sync pool/ "s3://${{ secrets.AWS_S3_BUCKET }}/pool/"
-            aws s3 sync dists/ "s3://${{ secrets.AWS_S3_BUCKET }}/dists/"
-
-            echo "✅ Uploaded to S3"
-
-            # Invalidate CloudFront cache
-            if [ -n "${{ secrets.CF_DISTRO_ID }}" ]; then
-              aws cloudfront create-invalidation \
-                --distribution-id "${{ secrets.CF_DISTRO_ID }}" \
-                --paths "/*"
-              echo "✅ CloudFront cache invalidated"
-            fi
-          else
-            echo "⚠️  AWS credentials not configured; skipping S3 upload"
-          fi
-
-      - name: Publish to GitHub Pages (if enabled)
-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
-        run: |
-          # Optional: Publish to gh-pages branch for GitHub Pages hosting
-
-          if git rev-parse --verify gh-pages > /dev/null 2>&1; then
-            git config --global user.email "actions@github.com"
-            git config --global user.name "GitHub Actions"
-
-            git checkout gh-pages
-
-            # Copy repository to gh-pages
-            mkdir -p dists pool
-            cp -r ../dists/* dists/ || true
-            cp -r ../pool/* pool/ || true
-
-            git add dists/ pool/
-            git commit -m "Aurora ${{ steps.version.outputs.version }} released" || true
-            git push origin gh-pages
-
-            echo "✅ Published to GitHub Pages"
-          else
-            echo "⚠️  gh-pages branch not found; skipping GitHub Pages publish"
-          fi
-
-      - name: Create release notes
-        run: |
-          cat > RELEASE_NOTES.md <<'EOF'
-          # Aurora ${{ steps.version.outputs.version }}
-
-          Aurora Linux Design System version ${{ steps.version.outputs.version }} is now available!
-
-          ## Installation
-
-          ```bash
-          sudo apt install aurora
-          ```
-
-          Or add the repository manually:
-
-          ```bash
-          wget https://archive.aurora.linux/aurora-archive-keyring.gpg
-          sudo apt-key add aurora-archive-keyring.gpg
-
-          echo "deb https://archive.aurora.linux/dists/stable main" | \
-            sudo tee /etc/apt/sources.list.d/aurora.sources
-
-          sudo apt update
-          sudo apt install aurora
-          ```
-
-          ## What's Included
-
-          - **aurora-themes**: GTK, Qt, and Plasma themes
-          - **aurora-icons**: Icon theme sets
-          - **aurora-cursors**: Cursor themes
-          - **aurora-fonts**: System typography
-          - **aurora-colors**: Design tokens and color palettes
-          - **aurora-wallpapers**: Background images
-          - **aurora-branding**: Brand assets
-          - **aurora-terminal-themes**: Terminal color schemes
-          - **aurora-vscode**: VS Code theme
-          - **aurora-jetbrains**: JetBrains IDE themes
-
-          ## Changelog
-
-          See CHANGELOG.md for detailed changes.
-
-          ## Support
-
-          - 📖 Documentation: https://aurora.linux/docs
-          - 🐛 Issues: https://github.com/aurora-linux/aurora/issues
-          - 💬 Discussions: https://github.com/aurora-linux/aurora/discussions
-          EOF
-
-      - name: Upload release notes
-        uses: softprops/action-gh-release@v1
-        with:
-          body_path: RELEASE_NOTES.md
-
-  test-packages:
-    name: Test Packages
-    runs-on: ubuntu-24.04
-    needs: build-packages
-
-    steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@v3
-
-      - name: Install build tools
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y dpkg
-
-      - name: Test package installation
-        run: |
-          # This would test the packages, but GitHub Actions artifacts
-          # are only available for workflow runs on the default branch
-          # or for pull requests, not for push to tags.
-
-          echo "✅ Package testing configuration complete"
-          echo "   (Run manual tests on development system before release)"
-
-      - name: Generate test report
-        run: |
-          cat > TEST_REPORT.md <<'EOF'
-          # Package Test Report
-
-          ## Manual Testing Checklist
-
-          Before releasing, verify:
-
-          - [ ] Install: `sudo dpkg -i aurora_VERSION_all.deb`
-          - [ ] Files present: `dpkg -L aurora` shows all files
-          - [ ] Icon cache updated: `fc-list | grep -i aurora`
-          - [ ] Font cache updated: `ls /var/cache/fontconfig/`
-          - [ ] Themes available: `gsettings get org.gnome.desktop.interface gtk-theme`
-          - [ ] Remove cleanly: `sudo dpkg -r aurora`
-          - [ ] Upgrade path works: `sudo apt install aurora` after previous version
-          EOF
-
----
-
-## Detailed Package Templates
-
-Now let me create example control files for sub-packages:
-
