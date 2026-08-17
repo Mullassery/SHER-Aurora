@@ -168,6 +168,11 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contribution workflow, and [
 
 ---
 
+## Known issues
+
+- `aurora-tokens`'s standalone `ColorSystem::current()` has an unfinished HDR branch that silently falls back to the Light palette (`crates/aurora-tokens/src/color.rs`, marked `TODO: Implement HDR theme`). This code path is not what the shipped `aurora-color` crate uses — `aurora-color`'s own `ColorSystem`/`Theme` (the one referenced above and by `aurora-gtk`) has a real, distinct HDR palette — but the dead branch in `aurora-tokens` is still worth fixing or removing to avoid future confusion.
+- No open GitHub issues at the time of this writing.
+
 ## Issues & contributing
 
 Found a bug, or a claim in this README that doesn't match reality? Please [open an issue](https://github.com/Mullassery/aurora/issues) — this project has a specific history of documentation overstating what was actually built, and keeping that honest going forward is a priority.
