@@ -337,9 +337,12 @@ pub enum AccessibilityRole {
 - Magnification support
 
 #### `aurora-core`
-**Unified API**
+**Unified API — status: not yet implemented**
 
-Exposes all subsystems through a single, coherent Rust API:
+The `aurora-core` crate currently contains no real code; this section
+describes the *planned* design, not shipped functionality. Each subsystem
+crate below is real and independently usable today. The sketch below is
+the target shape for a future unified facade:
 
 ```rust
 pub struct Aurora {

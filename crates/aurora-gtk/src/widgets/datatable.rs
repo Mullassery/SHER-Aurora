@@ -194,7 +194,7 @@ impl DataTable {
 
     /// Get total page count
     pub fn page_count(&self) -> u32 {
-        ((self.rows.len() as u32 + self.page_size - 1) / self.page_size).max(1)
+        (self.rows.len() as u32).div_ceil(self.page_size).max(1)
     }
 
     /// Set page size
@@ -304,7 +304,11 @@ impl DataTable {
 
     /// Get CSS class
     pub fn css_class(&self) -> String {
-        format!("aurora-datatable aurora-datatable-selectable")
+        if self.selectable {
+            "aurora-datatable aurora-datatable-selectable".to_string()
+        } else {
+            "aurora-datatable".to_string()
+        }
     }
 
     /// Is sortable?

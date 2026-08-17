@@ -7,10 +7,10 @@ use std::fmt;
 /// Menu item type
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum MenuItemType {
-    Action,      // Regular menu item
-    Toggle,      // Toggleable menu item (checkbox-like)
-    Submenu,     // Item with submenu
-    Divider,     // Separator
+    Action,  // Regular menu item
+    Toggle,  // Toggleable menu item (checkbox-like)
+    Submenu, // Item with submenu
+    Divider, // Separator
 }
 
 /// Menu item state
@@ -18,14 +18,14 @@ pub enum MenuItemType {
 pub enum MenuItemState {
     Normal,
     Disabled,
-    Checked,  // For toggle items
+    Checked, // For toggle items
 }
 
 /// Keyboard shortcut
 #[derive(Debug, Clone)]
 pub struct Shortcut {
-    modifiers: Vec<String>,  // ctrl, shift, alt, meta
-    key: String,             // a, b, c, F1, etc.
+    modifiers: Vec<String>, // ctrl, shift, alt, meta
+    key: String,            // a, b, c, F1, etc.
 }
 
 impl Shortcut {
@@ -253,7 +253,7 @@ impl Menu {
 
     /// Is submenu open?
     pub fn is_submenu_open(&self, item_id: &str) -> bool {
-        self.open_submenu.as_ref().map_or(false, |id| id == item_id)
+        self.open_submenu.as_ref().is_some_and(|id| id == item_id)
     }
 
     /// Toggle submenu
@@ -386,17 +386,14 @@ mod tests {
 
     #[test]
     fn test_menu_item_checked() {
-        let item = MenuItem::new("bold", "Bold")
-            .toggle()
-            .checked();
+        let item = MenuItem::new("bold", "Bold").toggle().checked();
         assert!(item.is_checked());
         assert_eq!(item.state(), MenuItemState::Checked);
     }
 
     #[test]
     fn test_shortcut() {
-        let shortcut = Shortcut::new("S")
-            .with_modifier("Ctrl");
+        let shortcut = Shortcut::new("S").with_modifier("Ctrl");
         assert_eq!(shortcut.key(), "S");
         assert_eq!(shortcut.display(), "Ctrl+S");
     }
@@ -404,8 +401,7 @@ mod tests {
     #[test]
     fn test_menu_item_with_shortcut() {
         let shortcut = Shortcut::new("S").with_modifier("Ctrl");
-        let item = MenuItem::new("save", "Save")
-            .with_shortcut(shortcut);
+        let item = MenuItem::new("save", "Save").with_shortcut(shortcut);
 
         assert!(item.shortcut().is_some());
         assert_eq!(item.shortcut().unwrap().display(), "Ctrl+S");
@@ -413,8 +409,7 @@ mod tests {
 
     #[test]
     fn test_menu_item_with_icon() {
-        let item = MenuItem::new("save", "Save")
-            .with_icon("document-save");
+        let item = MenuItem::new("save", "Save").with_icon("document-save");
         assert_eq!(item.icon(), std::option::Option::Some("document-save"));
     }
 
@@ -474,8 +469,7 @@ mod tests {
     fn test_items_with_shortcuts() {
         let mut menu = Menu::new();
         menu.add_item(
-            MenuItem::new("save", "Save")
-                .with_shortcut(Shortcut::new("S").with_modifier("Ctrl")),
+            MenuItem::new("save", "Save").with_shortcut(Shortcut::new("S").with_modifier("Ctrl")),
         );
         menu.add_item(MenuItem::new("undo", "Undo"));
 
@@ -512,16 +506,28 @@ mod tests {
         let mut menu = Menu::new();
 
         // File menu items
-        menu.add_item(MenuItem::new("new", "New").with_shortcut(Shortcut::new("N").with_modifier("Ctrl")));
-        menu.add_item(MenuItem::new("open", "Open").with_shortcut(Shortcut::new("O").with_modifier("Ctrl")));
-        menu.add_item(MenuItem::new("save", "Save").with_shortcut(Shortcut::new("S").with_modifier("Ctrl")));
+        menu.add_item(
+            MenuItem::new("new", "New").with_shortcut(Shortcut::new("N").with_modifier("Ctrl")),
+        );
+        menu.add_item(
+            MenuItem::new("open", "Open").with_shortcut(Shortcut::new("O").with_modifier("Ctrl")),
+        );
+        menu.add_item(
+            MenuItem::new("save", "Save").with_shortcut(Shortcut::new("S").with_modifier("Ctrl")),
+        );
         menu.add_divider();
         menu.add_item(MenuItem::new("exit", "Exit"));
 
         // Create View submenu
         let mut view_menu = Menu::new();
-        view_menu.add_item(MenuItem::new("zoom-in", "Zoom In").with_shortcut(Shortcut::new("Plus").with_modifier("Ctrl")));
-        view_menu.add_item(MenuItem::new("zoom-out", "Zoom Out").with_shortcut(Shortcut::new("Minus").with_modifier("Ctrl")));
+        view_menu.add_item(
+            MenuItem::new("zoom-in", "Zoom In")
+                .with_shortcut(Shortcut::new("Plus").with_modifier("Ctrl")),
+        );
+        view_menu.add_item(
+            MenuItem::new("zoom-out", "Zoom Out")
+                .with_shortcut(Shortcut::new("Minus").with_modifier("Ctrl")),
+        );
         view_menu.add_item(MenuItem::new("full-screen", "Full Screen").toggle());
 
         menu.add_item(MenuItem::new("view", "View").submenu());

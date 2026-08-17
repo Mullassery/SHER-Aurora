@@ -1,21 +1,28 @@
-//! Aurora Icon System - 1000+ Icon Management
+//! Aurora Icon System — organization/metadata layer
 //!
-//! Unified icon system for GNOME applications with SVG templates, color utilities, and sizing.
+//! Unified icon *metadata* system for GNOME applications: categories, tags,
+//! aliases, semantic color context, and sizing conventions. This module
+//! organizes icon identity and presentation rules; the real, renderable SVG
+//! artwork behind these entries lives in the separate `aurora-icons` crate,
+//! which currently ships 24 real hand-authored icons (see
+//! `aurora_icons::ICON_COUNT`). [`IconCategory::target_count`] describes
+//! aspirational long-term category sizes for a future, much larger icon
+//! set — it is explicitly a target, not a count of icons that exist today.
 
 pub mod core;
-pub mod svg;
 pub mod font;
+pub mod svg;
 
 use std::collections::HashMap;
 
 /// Icon size categories
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum IconSize {
-    ExtraSmall,  // 16px
-    Small,       // 24px
-    Medium,      // 32px
-    Large,       // 48px
-    ExtraLarge,  // 64px
+    ExtraSmall, // 16px
+    Small,      // 24px
+    Medium,     // 32px
+    Large,      // 48px
+    ExtraLarge, // 64px
 }
 
 impl IconSize {
@@ -56,11 +63,11 @@ impl IconSize {
 /// Icon category
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum IconCategory {
-    Navigation,   // 50+ icons: back, forward, home, menu, search
-    Actions,      // 80+ icons: save, delete, edit, copy, paste
-    Status,       // 60+ icons: success, error, warning, info, loading
-    Media,        // 40+ icons: play, pause, volume, brightness
-    System,       // 30+ icons: settings, user, battery, network
+    Navigation,  // 50+ icons: back, forward, home, menu, search
+    Actions,     // 80+ icons: save, delete, edit, copy, paste
+    Status,      // 60+ icons: success, error, warning, info, loading
+    Media,       // 40+ icons: play, pause, volume, brightness
+    System,      // 30+ icons: settings, user, battery, network
     Application, // 100+ icons: mail, calendar, contacts, files
 }
 
@@ -93,24 +100,24 @@ impl IconCategory {
 /// Icon semantic color context
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum IconContext {
-    Primary,      // Actions, primary buttons
-    Success,      // Completion, confirmation
-    Warning,      // Caution, attention needed
-    Error,        // Destructive, failure
-    Info,         // Information, help
-    Neutral,      // Disabled, secondary
+    Primary, // Actions, primary buttons
+    Success, // Completion, confirmation
+    Warning, // Caution, attention needed
+    Error,   // Destructive, failure
+    Info,    // Information, help
+    Neutral, // Disabled, secondary
 }
 
 impl IconContext {
     /// Get hex color for this context
     pub fn color(&self) -> &str {
         match self {
-            IconContext::Primary => "#003D99",    // Blue
-            IconContext::Success => "#004400",    // Green
-            IconContext::Warning => "#994400",    // Orange
-            IconContext::Error => "#990000",      // Red
-            IconContext::Info => "#0066CC",       // Light Blue
-            IconContext::Neutral => "#666666",    // Gray
+            IconContext::Primary => "#003D99", // Blue
+            IconContext::Success => "#004400", // Green
+            IconContext::Warning => "#994400", // Orange
+            IconContext::Error => "#990000",   // Red
+            IconContext::Info => "#0066CC",    // Light Blue
+            IconContext::Neutral => "#666666", // Gray
         }
     }
 
@@ -135,7 +142,7 @@ pub struct IconMetadata {
     category: IconCategory,
     tags: Vec<String>,
     context: IconContext,
-    aliases: Vec<String>,  // Material Design "home", "house", etc.
+    aliases: Vec<String>, // Material Design "home", "house", etc.
 }
 
 impl IconMetadata {
@@ -170,12 +177,24 @@ impl IconMetadata {
     }
 
     /// Getters
-    pub fn id(&self) -> &str { &self.id }
-    pub fn name(&self) -> &str { &self.name }
-    pub fn category(&self) -> IconCategory { self.category }
-    pub fn tags(&self) -> &[String] { &self.tags }
-    pub fn context(&self) -> IconContext { self.context }
-    pub fn aliases(&self) -> &[String] { &self.aliases }
+    pub fn id(&self) -> &str {
+        &self.id
+    }
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+    pub fn category(&self) -> IconCategory {
+        self.category
+    }
+    pub fn tags(&self) -> &[String] {
+        &self.tags
+    }
+    pub fn context(&self) -> IconContext {
+        self.context
+    }
+    pub fn aliases(&self) -> &[String] {
+        &self.aliases
+    }
 }
 
 /// Icon library
@@ -202,14 +221,14 @@ impl IconLibrary {
         // Add to category index
         self.by_category
             .entry(category_name)
-            .or_insert_with(Vec::new)
+            .or_default()
             .push(icon.id.clone());
 
         // Add to tag index
         for tag in &icon.tags {
             self.by_tag
                 .entry(tag.clone())
-                .or_insert_with(Vec::new)
+                .or_default()
                 .push(icon.id.clone());
         }
 
@@ -231,11 +250,7 @@ impl IconLibrary {
         let category_name = category.name();
         self.by_category
             .get(category_name)
-            .map(|ids| {
-                ids.iter()
-                    .filter_map(|id| self.icons.get(id))
-                    .collect()
-            })
+            .map(|ids| ids.iter().filter_map(|id| self.icons.get(id)).collect())
             .unwrap_or_default()
     }
 
@@ -243,11 +258,7 @@ impl IconLibrary {
     pub fn by_tag(&self, tag: &str) -> Vec<&IconMetadata> {
         self.by_tag
             .get(tag)
-            .map(|ids| {
-                ids.iter()
-                    .filter_map(|id| self.icons.get(id))
-                    .collect()
-            })
+            .map(|ids| ids.iter().filter_map(|id| self.icons.get(id)).collect())
             .unwrap_or_default()
     }
 
@@ -358,14 +369,8 @@ mod tests {
     #[test]
     fn test_icon_library_by_tag() {
         let mut library = IconLibrary::new();
-        library.register(
-            IconMetadata::new("save", "Save", IconCategory::Actions)
-                .with_tag("file"),
-        );
-        library.register(
-            IconMetadata::new("new", "New", IconCategory::Actions)
-                .with_tag("file"),
-        );
+        library.register(IconMetadata::new("save", "Save", IconCategory::Actions).with_tag("file"));
+        library.register(IconMetadata::new("new", "New", IconCategory::Actions).with_tag("file"));
 
         let file_icons = library.by_tag("file");
         assert_eq!(file_icons.len(), 2);
@@ -374,10 +379,12 @@ mod tests {
     #[test]
     fn test_icon_library_search() {
         let mut library = IconLibrary::new();
-        library.register(IconMetadata::new("home", "Home", IconCategory::Navigation)
-            .with_tag("navigation"));
-        library.register(IconMetadata::new("house", "House", IconCategory::Navigation)
-            .with_tag("home"));
+        library.register(
+            IconMetadata::new("home", "Home", IconCategory::Navigation).with_tag("navigation"),
+        );
+        library.register(
+            IconMetadata::new("house", "House", IconCategory::Navigation).with_tag("home"),
+        );
 
         let results = library.search("home");
         assert_eq!(results.len(), 2); // "home" in name + "home" in tags

@@ -93,9 +93,7 @@ mod tests {
 
     #[test]
     fn test_list_add_item() {
-        let list = List::new()
-            .add_item("Item 1")
-            .add_item("Item 2");
+        let list = List::new().add_item("Item 1").add_item("Item 2");
         assert_eq!(list.len(), 2);
         assert_eq!(list.items()[0], "Item 1");
     }

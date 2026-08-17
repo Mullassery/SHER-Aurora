@@ -4,11 +4,11 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, PartialOrd, Ord)]
 #[repr(u16)]
 pub enum AnimationDuration {
-    Instant = 80,    // Micro-interactions, tooltips
-    Fast = 120,      // Quick feedback, hover states
-    Normal = 220,    // Standard transitions, state changes
-    Slow = 350,      // Complex animations, entrance animations
-    Dramatic = 500,  // Page transitions, full-screen changes
+    Instant = 80,   // Micro-interactions, tooltips
+    Fast = 120,     // Quick feedback, hover states
+    Normal = 220,   // Standard transitions, state changes
+    Slow = 350,     // Complex animations, entrance animations
+    Dramatic = 500, // Page transitions, full-screen changes
 }
 
 impl AnimationDuration {
@@ -24,9 +24,9 @@ impl AnimationDuration {
 /// Spring physics configuration
 #[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub struct SpringConfig {
-    pub mass: f32,      // Typically 1.0
-    pub tension: f32,   // Stiffness (280 is standard)
-    pub friction: f32,  // Damping (60 is standard)
+    pub mass: f32,     // Typically 1.0
+    pub tension: f32,  // Stiffness (280 is standard)
+    pub friction: f32, // Damping (60 is standard)
 }
 
 impl Default for SpringConfig {

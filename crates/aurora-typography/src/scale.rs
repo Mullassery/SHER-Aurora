@@ -1,5 +1,5 @@
 use crate::errors::{TypographyError, TypographyResult};
-use crate::font::{FontFamily, FontWeight, FontVariant};
+use crate::font::{FontFamily, FontVariant, FontWeight};
 use serde::{Deserialize, Serialize};
 
 /// Text level in the hierarchy
@@ -29,12 +29,12 @@ impl TextLevel {
 /// Complete typography style
 #[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub struct TypographyStyle {
-    pub font_size: u16,           // Base font size in pixels
+    pub font_size: u16, // Base font size in pixels
     pub font_weight: FontWeight,
     pub font_variant: FontVariant,
-    pub line_height: f32,         // Multiplier (e.g., 1.5 = 150% of font size)
-    pub letter_spacing: f32,      // In pixels or em
-    pub contrast_ratio: f32,      // Minimum WCAG AAA compliance
+    pub line_height: f32,    // Multiplier (e.g., 1.5 = 150% of font size)
+    pub letter_spacing: f32, // In pixels or em
+    pub contrast_ratio: f32, // Minimum WCAG AAA compliance
 }
 
 impl TypographyStyle {
@@ -216,9 +216,10 @@ impl TypeScale {
             ("Micro", self.micro),
         ] {
             if style.line_height <= 0.0 {
-                return Err(TypographyError::ValidationError(
-                    format!("{} has invalid line height", name),
-                ));
+                return Err(TypographyError::ValidationError(format!(
+                    "{} has invalid line height",
+                    name
+                )));
             }
         }
 

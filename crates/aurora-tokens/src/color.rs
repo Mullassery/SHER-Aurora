@@ -51,10 +51,7 @@ impl Color {
     }
 
     pub fn to_hex(&self) -> String {
-        format!(
-            "#{:02x}{:02x}{:02x}",
-            self.r, self.g, self.b
-        )
+        format!("#{:02x}{:02x}{:02x}", self.r, self.g, self.b)
     }
 
     pub fn to_rgba(&self) -> String {
@@ -175,8 +172,18 @@ impl SemanticColor {
     /// Validate contrast ratios (WCAG AAA)
     pub fn validate_contrast(&self) -> TokenResult<()> {
         let checks = vec![
-            ("foreground on background", self.foreground, self.background, 7.0),
-            ("foreground_secondary on background", self.foreground_secondary, self.background, 4.5),
+            (
+                "foreground on background",
+                self.foreground,
+                self.background,
+                7.0,
+            ),
+            (
+                "foreground_secondary on background",
+                self.foreground_secondary,
+                self.background,
+                4.5,
+            ),
             ("primary on surface", self.primary, self.surface, 3.0),
             ("error on background", self.error, self.background, 3.0),
         ];

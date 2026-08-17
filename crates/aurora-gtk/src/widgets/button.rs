@@ -1,7 +1,8 @@
 /// Aurora Button styles
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]
 pub enum ButtonStyle {
     /// Solid fill with primary color
+    #[default]
     Filled,
     /// Tinted background with primary color
     Tinted,
@@ -9,12 +10,6 @@ pub enum ButtonStyle {
     Outlined,
     /// Transparent with text only
     Ghost,
-}
-
-impl Default for ButtonStyle {
-    fn default() -> Self {
-        Self::Filled
-    }
 }
 
 /// Aurora Button states
@@ -137,6 +132,40 @@ impl Button {
     pub fn animate_hover_out(&self) {
         // Animation would be handled by GTK4 renderer
     }
+
+    /// Build a real `gtk4::Button` widget from this descriptor.
+    ///
+    /// This constructs an actual GTK4 widget object (not a mock or a
+    /// stand-in struct): the label, sensitivity, and Aurora style are all
+    /// applied through the real `gtk4` crate widget API. Callers must have
+    /// already initialized GTK (e.g. via `gtk4::init()` or by running
+    /// inside a `gtk4::Application`) before calling this.
+    pub fn build(&self) -> gtk4::Button {
+        use gtk4::prelude::*;
+
+        let button = gtk4::Button::builder()
+            .label(self.label.as_str())
+            .sensitive(self.sensitive && !matches!(self.state, ButtonState::Disabled))
+            .build();
+
+        for class in &self.css_classes {
+            button.add_css_class(class);
+        }
+
+        match self.style {
+            ButtonStyle::Filled => button.add_css_class("suggested-action"),
+            ButtonStyle::Tinted => button.add_css_class("aurora-tinted"),
+            ButtonStyle::Outlined => button.add_css_class("aurora-outlined"),
+            ButtonStyle::Ghost => button.add_css_class("flat"),
+        }
+
+        if matches!(self.state, ButtonState::Loading) {
+            button.add_css_class("aurora-loading");
+            button.set_sensitive(false);
+        }
+
+        button
+    }
 }
 
 impl Default for Button {
@@ -224,5 +253,31 @@ mod tests {
             .add_css_class("test-class")
             .set_sensitive(true);
         // If this compiles, chaining works
+    }
+
+    // Real GTK4 widget-construction test — see the comment in
+    // `widgets::switch::tests` for why this is gated off macOS and how to
+    // verify real GTK4 rendering locally on macOS instead.
+    #[cfg(not(target_os = "macos"))]
+    mod gtk_real {
+        use super::*;
+
+        #[gtk4::test]
+        fn test_button_build_is_real_gtk4_widget() {
+            use gtk4::prelude::*;
+            let button = Button::new("Real GTK4")
+                .with_style(ButtonStyle::Filled)
+                .build();
+            assert_eq!(button.label().unwrap(), "Real GTK4");
+            assert!(button.css_classes().iter().any(|c| c == "aurora-button"));
+            assert!(button.css_classes().iter().any(|c| c == "suggested-action"));
+            assert!(button.is_sensitive());
+        }
+
+        #[gtk4::test]
+        fn test_button_disabled_is_insensitive_in_real_gtk4() {
+            let button = Button::new("Test").set_sensitive(false).build();
+            assert!(!button.is_sensitive());
+        }
     }
 }

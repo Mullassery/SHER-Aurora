@@ -71,6 +71,29 @@ impl Checkbox {
     pub fn css_classes(&self) -> &[String] {
         &self.css_classes
     }
+
+    /// Build a real `gtk4::CheckButton` widget from this descriptor.
+    ///
+    /// Constructs an actual GTK4 checkbox widget: label, checked / inconsistent
+    /// state, sensitivity, and Aurora CSS classes are applied through the real
+    /// `gtk4` widget API. Callers must have already initialized GTK before
+    /// calling this.
+    pub fn build(&self) -> gtk4::CheckButton {
+        use gtk4::prelude::*;
+
+        let check = gtk4::CheckButton::builder()
+            .label(self.label.as_str())
+            .active(self.checked)
+            .inconsistent(self.inconsistent)
+            .sensitive(self.sensitive)
+            .build();
+
+        for class in &self.css_classes {
+            check.add_css_class(class);
+        }
+
+        check
+    }
 }
 
 impl Default for Checkbox {
@@ -109,8 +132,7 @@ mod tests {
 
     #[test]
     fn test_checkbox_label_update() {
-        let checkbox = Checkbox::new("Initial")
-            .with_label("Updated");
+        let checkbox = Checkbox::new("Initial").with_label("Updated");
         assert_eq!(checkbox.label(), "Updated");
     }
 
@@ -127,5 +149,22 @@ mod tests {
             .inconsistent(false)
             .set_sensitive(true)
             .add_css_class("test");
+    }
+
+    // Real GTK4 widget-construction test — see the comment in
+    // `widgets::switch::tests` for why this is gated off macOS and how to
+    // verify real GTK4 rendering locally on macOS instead.
+    #[cfg(not(target_os = "macos"))]
+    mod gtk_real {
+        use super::*;
+
+        #[gtk4::test]
+        fn test_checkbox_build_is_real_gtk4_widget() {
+            use gtk4::prelude::*;
+            let check = Checkbox::new("Accept terms").checked(true).build();
+            assert_eq!(check.label().unwrap(), "Accept terms");
+            assert!(check.is_active());
+            assert!(check.css_classes().iter().any(|c| c == "aurora-checkbox"));
+        }
     }
 }

@@ -78,9 +78,9 @@ impl Script {
 
         // RTL detection (Arabic, Hebrew)
         if text.chars().any(|c| {
-            matches!(c as u32,
-                0x0600..=0x06FF |   // Arabic
-                0x0590..=0x05FF     // Hebrew
+            matches!(
+                c as u32,
+                0x0590..=0x06FF // Hebrew and Arabic (contiguous range)
             )
         }) {
             return Script::RTL;
@@ -88,8 +88,9 @@ impl Script {
 
         // Devanagari
         if text.chars().any(|c| {
-            matches!(c as u32,
-                0x0900..=0x097F     // Devanagari
+            matches!(
+                c as u32,
+                0x0900..=0x097F // Devanagari
             )
         }) {
             return Script::Devanagari;
@@ -97,8 +98,9 @@ impl Script {
 
         // Thai
         if text.chars().any(|c| {
-            matches!(c as u32,
-                0x0E00..=0x0E7F     // Thai
+            matches!(
+                c as u32,
+                0x0E00..=0x0E7F // Thai
             )
         }) {
             return Script::Thai;
@@ -121,7 +123,11 @@ pub struct ScriptAdjustment {
 }
 
 impl ScriptAdjustment {
-    pub fn new(line_height_multiplier: f32, optimal_line_length: u16, prefers_serifs: bool) -> Self {
+    pub fn new(
+        line_height_multiplier: f32,
+        optimal_line_length: u16,
+        prefers_serifs: bool,
+    ) -> Self {
         Self {
             line_height_multiplier,
             optimal_line_length,

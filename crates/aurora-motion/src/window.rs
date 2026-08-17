@@ -207,23 +207,16 @@ impl WindowAnimation {
         }
 
         // Update state
-        if self.event == WindowEvent::Open {
-            if self.is_finished() {
-                self.state = WindowState::Visible;
-            }
-        } else if self.event == WindowEvent::Close {
-            if self.is_finished() {
-                self.state = WindowState::Hidden;
-            }
+        if self.event == WindowEvent::Open && self.is_finished() {
+            self.state = WindowState::Visible;
+        } else if self.event == WindowEvent::Close && self.is_finished() {
+            self.state = WindowState::Hidden;
         }
     }
 
     /// Get current scale (0.0–1.0)
     pub fn scale(&self) -> f32 {
-        self.scale_anim
-            .as_ref()
-            .map(|a| a.current())
-            .unwrap_or(1.0)
+        self.scale_anim.as_ref().map(|a| a.current()).unwrap_or(1.0)
     }
 
     /// Get current opacity (0.0–1.0)
@@ -246,9 +239,9 @@ impl WindowAnimation {
 
     /// Is animation finished?
     pub fn is_finished(&self) -> bool {
-        let scale_done = self.scale_anim.as_ref().map_or(true, |a| a.is_finished());
-        let opacity_done = self.opacity_anim.as_ref().map_or(true, |a| a.is_finished());
-        let pos_done = self.position_anim.as_ref().map_or(true, |a| a.is_finished());
+        let scale_done = self.scale_anim.as_ref().is_none_or(|a| a.is_finished());
+        let opacity_done = self.opacity_anim.as_ref().is_none_or(|a| a.is_finished());
+        let pos_done = self.position_anim.as_ref().is_none_or(|a| a.is_finished());
 
         scale_done && opacity_done && pos_done
     }

@@ -3,12 +3,12 @@
 //! This crate defines all design tokens that drive Aurora's visual system.
 //! Tokens are the single source of truth for spacing, colors, motion, and typography.
 
-pub mod spacing;
-pub mod radius;
-pub mod elevation;
-pub mod motion;
 pub mod color;
+pub mod elevation;
 pub mod errors;
+pub mod motion;
+pub mod radius;
+pub mod spacing;
 
 pub use color::{Color, ColorSystem, Theme};
 pub use elevation::{Elevation, ElevationLevel};

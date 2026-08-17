@@ -3,11 +3,11 @@ use serde::{Deserialize, Serialize};
 /// Elevation level — semantic shadow definitions
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, PartialOrd, Ord)]
 pub enum ElevationLevel {
-    Level1,  // Subtle hover states, tooltips
-    Level2,  // Popovers, dropdowns, cards
-    Level3,  // Modals, floating windows
-    Level4,  // Prominent surfaces, app windows
-    Level5,  // Full-screen overlays, system alerts
+    Level1, // Subtle hover states, tooltips
+    Level2, // Popovers, dropdowns, cards
+    Level3, // Modals, floating windows
+    Level4, // Prominent surfaces, app windows
+    Level5, // Full-screen overlays, system alerts
 }
 
 /// Shadow definition (CSS box-shadow compatible)
@@ -17,7 +17,7 @@ pub struct Shadow {
     pub offset_y: u16,
     pub blur: u16,
     pub spread: u16,
-    pub color: String,  // rgba format
+    pub color: String, // rgba format
 }
 
 impl Shadow {

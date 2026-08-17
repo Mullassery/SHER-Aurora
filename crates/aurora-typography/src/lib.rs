@@ -10,14 +10,14 @@
 
 pub mod errors;
 pub mod font;
-pub mod scale;
 pub mod responsive;
+pub mod scale;
 pub mod script;
 
 pub use errors::{TypographyError, TypographyResult};
-pub use font::{Font, FontFamily, FontWeight, FontVariant};
-pub use scale::{TypeScale, TypographyStyle, TextLevel};
-pub use responsive::{ResponsiveTypography, Breakpoint, ViewportSize};
+pub use font::{Font, FontFamily, FontVariant, FontWeight};
+pub use responsive::{Breakpoint, ResponsiveTypography, ViewportSize};
+pub use scale::{TextLevel, TypeScale, TypographyStyle};
 pub use script::{Script, ScriptAdjustment};
 
 /// Unified typography system
@@ -47,14 +47,15 @@ impl Typography {
     /// Get the typography style for a text level at a given viewport
     pub fn get_style(&self, level: TextLevel, viewport: ViewportSize) -> TypographyStyle {
         let mut style = self.type_scale.get_style(level);
-        self.responsive.apply_responsive_adjustments(&mut style, viewport);
+        self.responsive
+            .apply_responsive_adjustments(&mut style, viewport);
         style
     }
 
     /// Adjust typography for a specific script (CJK, RTL, etc.)
     pub fn adjust_for_script(&self, style: &mut TypographyStyle, script: Script) {
         let adjustment = script.adjustment();
-        style.line_height = adjustment.line_height_multiplier * style.line_height;
+        style.line_height *= adjustment.line_height_multiplier;
     }
 
     /// Get optimal line length for a script in characters

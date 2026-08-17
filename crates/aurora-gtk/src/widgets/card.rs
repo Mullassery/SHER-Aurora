@@ -1,18 +1,13 @@
 /// Aurora Card styles
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]
 pub enum CardStyle {
     /// Solid fill with surface color
+    #[default]
     Filled,
     /// Border only, transparent background
     Outlined,
     /// Elevated with shadow
     Elevated,
-}
-
-impl Default for CardStyle {
-    fn default() -> Self {
-        Self::Filled
-    }
 }
 
 /// Aurora Card component
@@ -83,6 +78,43 @@ impl Card {
     pub fn css_classes(&self) -> &[String] {
         &self.css_classes
     }
+
+    /// Build a real `gtk4::Box` container widget from this descriptor.
+    ///
+    /// Constructs an actual GTK4 vertical box acting as the card surface:
+    /// spacing, margins, and Aurora CSS classes (including the per-style
+    /// class used to select filled/outlined/elevated appearance in the
+    /// generated stylesheet) are applied through the real `gtk4` widget
+    /// API. Callers must have already initialized GTK before calling this.
+    /// Any real GTK4 widgets to be shown inside the card can be packed in
+    /// with `gtk4::prelude::BoxExt::append` on the returned box.
+    pub fn build(&self) -> gtk4::Box {
+        use gtk4::prelude::*;
+
+        let container = gtk4::Box::builder()
+            .orientation(gtk4::Orientation::Vertical)
+            .spacing(self.spacing)
+            .margin_top(self.margin)
+            .margin_bottom(self.margin)
+            .margin_start(self.margin)
+            .margin_end(self.margin)
+            .build();
+
+        for class in &self.css_classes {
+            container.add_css_class(class);
+        }
+
+        match self.style {
+            CardStyle::Filled => container.add_css_class("aurora-card-filled"),
+            CardStyle::Outlined => {
+                container.add_css_class("aurora-card-outlined");
+                container.add_css_class("frame");
+            }
+            CardStyle::Elevated => container.add_css_class("aurora-card-elevated"),
+        }
+
+        container
+    }
 }
 
 impl Default for Card {
@@ -145,5 +177,35 @@ mod tests {
             .with_margin(8)
             .add_css_class("custom");
         // If this compiles, chaining works
+    }
+
+    // Real GTK4 widget-construction test — see the comment in
+    // `widgets::switch::tests` for why this is gated off macOS and how to
+    // verify real GTK4 rendering locally on macOS instead.
+    #[cfg(not(target_os = "macos"))]
+    mod gtk_real {
+        use super::*;
+
+        #[gtk4::test]
+        fn test_card_build_is_real_gtk4_widget() {
+            use gtk4::prelude::*;
+            let card = Card::new()
+                .with_style(CardStyle::Elevated)
+                .with_spacing(12)
+                .build();
+            assert_eq!(card.spacing(), 12);
+            assert_eq!(card.orientation(), gtk4::Orientation::Vertical);
+            assert!(card.css_classes().iter().any(|c| c == "aurora-card"));
+            assert!(card
+                .css_classes()
+                .iter()
+                .any(|c| c == "aurora-card-elevated"));
+
+            // Pack a real child widget in, proving this is a genuine GTK4
+            // container that real widgets can be appended to.
+            let label = gtk4::Label::new(Some("Inside the card"));
+            card.append(&label);
+            assert!(card.first_child().is_some());
+        }
     }
 }

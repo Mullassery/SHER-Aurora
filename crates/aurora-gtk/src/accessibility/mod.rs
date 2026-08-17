@@ -5,10 +5,10 @@
 /// Colorblind vision type
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ColorBlindType {
-    Protanopia,     // Red-blind (1% of males)
-    Deuteranopia,   // Green-blind (1% of males)
-    Tritanopia,     // Blue-yellow blind (rare)
-    Achromatopsia,  // Complete color blindness (very rare)
+    Protanopia,    // Red-blind (1% of males)
+    Deuteranopia,  // Green-blind (1% of males)
+    Tritanopia,    // Blue-yellow blind (rare)
+    Achromatopsia, // Complete color blindness (very rare)
 }
 
 impl ColorBlindType {
@@ -153,9 +153,9 @@ impl ColorBlindSimulation {
         }
 
         if let Ok(rgb) = u32::from_str_radix(hex, 16) {
-            let r = (rgb >> 16) & 0xFF as u32;
-            let g = (rgb >> 8) & 0xFF as u32;
-            let b = rgb & 0xFF as u32;
+            let r = (rgb >> 16) & 0xFF_u32;
+            let g = (rgb >> 8) & 0xFF_u32;
+            let b = rgb & 0xFF_u32;
 
             // Standard grayscale formula
             let gray = ((r as f32 * 0.299) + (g as f32 * 0.587) + (b as f32 * 0.114)) as u32;
@@ -166,17 +166,21 @@ impl ColorBlindSimulation {
         }
     }
 
-    pub fn original(&self) -> &str { &self.normal_hex }
-    pub fn simulated(&self) -> &str { &self.simulated_hex }
+    pub fn original(&self) -> &str {
+        &self.normal_hex
+    }
+    pub fn simulated(&self) -> &str {
+        &self.simulated_hex
+    }
 }
 
 /// Dyslexia-friendly font options
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum DyslexiaFont {
-    Default,        // Standard system font
-    OpenDyslexic,   // Open Dyslexic font family
-    Verdana,        // Sans-serif alternative
-    Comic,          // Comic Sans (helps some)
+    Default,      // Standard system font
+    OpenDyslexic, // Open Dyslexic font family
+    Verdana,      // Sans-serif alternative
+    Comic,        // Comic Sans (helps some)
 }
 
 impl DyslexiaFont {
@@ -207,7 +211,7 @@ impl DyslexiaFont {
 #[derive(Debug, Clone)]
 pub struct HighContrastMode {
     enabled: bool,
-    min_contrast_ratio: f32,  // WCAG AAA = 7.0
+    min_contrast_ratio: f32, // WCAG AAA = 7.0
     focus_color: String,
     text_color: String,
     bg_color: String,
@@ -217,7 +221,7 @@ impl HighContrastMode {
     pub fn new() -> Self {
         Self {
             enabled: false,
-            min_contrast_ratio: 7.0,  // WCAG AAA
+            min_contrast_ratio: 7.0, // WCAG AAA
             focus_color: "#0066FF".to_string(),
             text_color: "#000000".to_string(),
             bg_color: "#FFFFFF".to_string(),
@@ -275,9 +279,21 @@ impl HighContrastMode {
             let g = ((rgb >> 8) & 0xFF) as f32 / 255.0;
             let b = (rgb & 0xFF) as f32 / 255.0;
 
-            let rs = if r <= 0.03928 { r / 12.92 } else { ((r + 0.055) / 1.055).powf(2.4) };
-            let gs = if g <= 0.03928 { g / 12.92 } else { ((g + 0.055) / 1.055).powf(2.4) };
-            let bs = if b <= 0.03928 { b / 12.92 } else { ((b + 0.055) / 1.055).powf(2.4) };
+            let rs = if r <= 0.03928 {
+                r / 12.92
+            } else {
+                ((r + 0.055) / 1.055).powf(2.4)
+            };
+            let gs = if g <= 0.03928 {
+                g / 12.92
+            } else {
+                ((g + 0.055) / 1.055).powf(2.4)
+            };
+            let bs = if b <= 0.03928 {
+                b / 12.92
+            } else {
+                ((b + 0.055) / 1.055).powf(2.4)
+            };
 
             0.2126 * rs + 0.7152 * gs + 0.0722 * bs
         } else {
@@ -364,7 +380,10 @@ mod tests {
     #[test]
     fn test_colorblind_type_names() {
         assert_eq!(ColorBlindType::Protanopia.name(), "Protanopia (Red-Blind)");
-        assert_eq!(ColorBlindType::Deuteranopia.name(), "Deuteranopia (Green-Blind)");
+        assert_eq!(
+            ColorBlindType::Deuteranopia.name(),
+            "Deuteranopia (Green-Blind)"
+        );
     }
 
     #[test]
@@ -384,7 +403,10 @@ mod tests {
 
     #[test]
     fn test_dyslexia_font_families() {
-        assert_eq!(DyslexiaFont::OpenDyslexic.family(), "OpenDyslexic, sans-serif");
+        assert_eq!(
+            DyslexiaFont::OpenDyslexic.family(),
+            "OpenDyslexic, sans-serif"
+        );
         assert_eq!(DyslexiaFont::Verdana.family(), "Verdana, sans-serif");
     }
 

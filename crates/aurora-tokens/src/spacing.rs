@@ -3,14 +3,14 @@ use serde::{Deserialize, Serialize};
 /// Spacing scale — 8px baseline grid
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
 pub struct SpacingScale {
-    pub xxs: u16,   // 2px — micro adjustments
-    pub xs: u16,    // 4px — tight spacing
-    pub sm: u16,    // 8px — grid unit
-    pub md: u16,    // 12px — standard padding
-    pub lg: u16,    // 16px — section spacing
-    pub xl: u16,    // 24px — large spacing
-    pub xxl: u16,   // 32px — layout spacing
-    pub xxxl: u16,  // 48px — screen margins
+    pub xxs: u16,  // 2px — micro adjustments
+    pub xs: u16,   // 4px — tight spacing
+    pub sm: u16,   // 8px — grid unit
+    pub md: u16,   // 12px — standard padding
+    pub lg: u16,   // 16px — section spacing
+    pub xl: u16,   // 24px — large spacing
+    pub xxl: u16,  // 32px — layout spacing
+    pub xxxl: u16, // 48px — screen margins
 }
 
 impl Default for SpacingScale {

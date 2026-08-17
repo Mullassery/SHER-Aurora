@@ -3,6 +3,15 @@
 Cargo.lock
 **/*.rs.bk
 
+# Compiled binaries accidentally built/placed at the repo root
+# (a compiled macOS binary was previously committed here by mistake —
+# see CHANGELOG / remediation notes)
+/aurora_calendar
+/aurora_files
+/aurora_music
+/aurora_settings
+/showcase
+
 # IDE and editor files
 .vscode/
 .idea/

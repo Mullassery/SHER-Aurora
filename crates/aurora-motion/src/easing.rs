@@ -51,9 +51,7 @@ impl EasingFunction {
                     -1.0 + (4.0 - 2.0 * t) * t
                 }
             }
-            EasingFunction::CubicBezier(x1, y1, x2, y2) => {
-                cubic_bezier(t, *x1, *y1, *x2, *y2)
-            }
+            EasingFunction::CubicBezier(x1, y1, x2, y2) => cubic_bezier(t, *x1, *y1, *x2, *y2),
         }
     }
 

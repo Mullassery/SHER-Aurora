@@ -2,14 +2,12 @@
 //!
 //! Create web-ready icon fonts (TTF, WOFF2) for efficient icon delivery in web applications.
 
-use std::collections::HashMap;
-
 /// Font format type
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum FontFormat {
-    TTF,      // TrueType Font
-    WOFF2,    // Web Open Font Format 2 (recommended)
-    WOFF,     // Web Open Font Format
+    TTF,   // TrueType Font
+    WOFF2, // Web Open Font Format 2 (recommended)
+    WOFF,  // Web Open Font Format
 }
 
 impl FontFormat {
@@ -47,11 +45,21 @@ impl IconGlyph {
         }
     }
 
-    pub fn icon_id(&self) -> &str { &self.icon_id }
-    pub fn codepoint(&self) -> u32 { self.codepoint }
-    pub fn codepoint_hex(&self) -> String { format!("{:04X}", self.codepoint) }
-    pub fn name(&self) -> &str { &self.name }
-    pub fn css_class(&self) -> String { format!(".aurora-icon-{}", self.icon_id) }
+    pub fn icon_id(&self) -> &str {
+        &self.icon_id
+    }
+    pub fn codepoint(&self) -> u32 {
+        self.codepoint
+    }
+    pub fn codepoint_hex(&self) -> String {
+        format!("{:04X}", self.codepoint)
+    }
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+    pub fn css_class(&self) -> String {
+        format!(".aurora-icon-{}", self.icon_id)
+    }
 }
 
 /// Icon font configuration
@@ -73,16 +81,28 @@ impl IconFontConfig {
             copyright: "Copyright (c) 2026 Aurora Design System".to_string(),
             manufacturer: "Aurora Project".to_string(),
             license: "MIT/Apache 2.0".to_string(),
-            start_codepoint: 0xE000,  // Private use area
+            start_codepoint: 0xE000, // Private use area
         }
     }
 
-    pub fn family_name(&self) -> &str { &self.family_name }
-    pub fn font_version(&self) -> &str { &self.font_version }
-    pub fn copyright(&self) -> &str { &self.copyright }
-    pub fn manufacturer(&self) -> &str { &self.manufacturer }
-    pub fn license(&self) -> &str { &self.license }
-    pub fn start_codepoint(&self) -> u32 { self.start_codepoint }
+    pub fn family_name(&self) -> &str {
+        &self.family_name
+    }
+    pub fn font_version(&self) -> &str {
+        &self.font_version
+    }
+    pub fn copyright(&self) -> &str {
+        &self.copyright
+    }
+    pub fn manufacturer(&self) -> &str {
+        &self.manufacturer
+    }
+    pub fn license(&self) -> &str {
+        &self.license
+    }
+    pub fn start_codepoint(&self) -> u32 {
+        self.start_codepoint
+    }
 }
 
 impl Default for IconFontConfig {
@@ -166,7 +186,10 @@ impl IconFontBuilder {
         let mut html = String::new();
 
         html.push_str("<div class='aurora-icon-showcase'>\n");
-        html.push_str(&format!("<h2>{} Icon Font</h2>\n", self.config.family_name()));
+        html.push_str(&format!(
+            "<h2>{} Icon Font</h2>\n",
+            self.config.family_name()
+        ));
         html.push_str(&format!("<p>Version {}</p>\n", self.config.font_version()));
 
         html.push_str("<h3>Usage Examples</h3>\n");
@@ -177,7 +200,10 @@ impl IconFontBuilder {
 
         for glyph in &self.glyphs {
             html.push_str("  <div class='icon-item'>\n");
-            html.push_str(&format!("    <i class=\"aurora-icon {}\"></i>\n", glyph.css_class()));
+            html.push_str(&format!(
+                "    <i class=\"aurora-icon {}\"></i>\n",
+                glyph.css_class()
+            ));
             html.push_str(&format!("    <span>{}</span>\n", glyph.name()));
             html.push_str(&format!("    <code>{}</code>\n", glyph.icon_id()));
             html.push_str("  </div>\n");
@@ -193,9 +219,18 @@ impl IconFontBuilder {
     pub fn generate_metadata(&self) -> String {
         let mut json = String::from("{\n");
         json.push_str(&format!("  \"name\": \"{}\",\n", self.config.family_name()));
-        json.push_str(&format!("  \"version\": \"{}\",\n", self.config.font_version()));
-        json.push_str(&format!("  \"copyright\": \"{}\",\n", self.config.copyright()));
-        json.push_str(&format!("  \"manufacturer\": \"{}\",\n", self.config.manufacturer()));
+        json.push_str(&format!(
+            "  \"version\": \"{}\",\n",
+            self.config.font_version()
+        ));
+        json.push_str(&format!(
+            "  \"copyright\": \"{}\",\n",
+            self.config.copyright()
+        ));
+        json.push_str(&format!(
+            "  \"manufacturer\": \"{}\",\n",
+            self.config.manufacturer()
+        ));
         json.push_str(&format!("  \"license\": \"{}\",\n", self.config.license()));
         json.push_str(&format!("  \"glyphCount\": {},\n", self.glyphs.len()));
         json.push_str("  \"glyphs\": [\n");
@@ -204,7 +239,10 @@ impl IconFontBuilder {
             json.push_str("    {\n");
             json.push_str(&format!("      \"id\": \"{}\",\n", glyph.icon_id()));
             json.push_str(&format!("      \"name\": \"{}\",\n", glyph.name()));
-            json.push_str(&format!("      \"codepoint\": \"U+{}\"\n", glyph.codepoint_hex()));
+            json.push_str(&format!(
+                "      \"codepoint\": \"U+{}\"\n",
+                glyph.codepoint_hex()
+            ));
 
             if i < self.glyphs.len() - 1 {
                 json.push_str("    },\n");
