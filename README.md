@@ -168,6 +168,18 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contribution workflow, and [
 
 ---
 
+## Relationship to the SHER family
+
+This repo is listed on GitHub as `SHER-Aurora`, grouping it with `SHER-Kernel`,
+`SHER-Graphics`, `SHER-Display`, and `SHER-Input` — but that's organizational
+naming only. Verified by reading every `Cargo.toml` in the family: this repo
+has **zero Cargo-level dependency** on any of the other four, and none of
+them depend on it. Aurora is a standalone GTK/Qt/Web design-system toolkit;
+its workspace (`crates/aurora-*`) is self-contained. If you're looking for
+the actual cross-repo-coupled subsystems (Kernel → Graphics → Display,
+Input → Display), see those repos' own READMEs — this one isn't part of
+that build graph.
+
 ## Known issues
 
 - `aurora-tokens`'s standalone `ColorSystem::current()` has an unfinished HDR branch that silently falls back to the Light palette (`crates/aurora-tokens/src/color.rs`, marked `TODO: Implement HDR theme`). This code path is not what the shipped `aurora-color` crate uses — `aurora-color`'s own `ColorSystem`/`Theme` (the one referenced above and by `aurora-gtk`) has a real, distinct HDR palette — but the dead branch in `aurora-tokens` is still worth fixing or removing to avoid future confusion.
