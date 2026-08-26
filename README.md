@@ -162,7 +162,7 @@ cargo clippy --workspace --all-targets -- -D warnings
 cargo fmt --check
 ```
 
-Locally on macOS, all of the above pass clean (515 tests, zero clippy warnings, `cargo fmt --check` clean) — verified directly against the current `main` commit. **CI on Linux is currently red** (see [Known issues](#known-issues)): the badge above reflects real, live status, not a static claim.
+Locally on macOS, all of the above pass clean (518 tests, zero clippy warnings, `cargo fmt --check` clean) — verified directly against the current `main` commit. CI on Linux was previously red on a compile error (see [Known issues](#known-issues) — now fixed); the badge above reflects real, live status, not a static claim.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contribution workflow, and [CHANGELOG.md](CHANGELOG.md) for a detailed, corrected history of what's changed release over release (including where earlier versions of this README overstated what existed).
 
@@ -170,22 +170,32 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contribution workflow, and [
 
 ## Relationship to the SHER family
 
-This repo is listed on GitHub as `SHER-Aurora`, grouping it with `SHER-Kernel`,
-`SHER-Graphics`, `SHER-Display`, and `SHER-Input` — but that's organizational
-naming only. Verified by reading every `Cargo.toml` in the family: this repo
-has **zero Cargo-level dependency** on any of the other four, and none of
-them depend on it. Aurora is a standalone GTK/Qt/Web design-system toolkit;
-its workspace (`crates/aurora-*`) is self-contained. If you're looking for
-the actual cross-repo-coupled subsystems (Kernel → Graphics → Display,
-Input → Display), see those repos' own READMEs — this one isn't part of
-that build graph.
+This repo is `SHER-Aurora`, one member of an intentionally interdependent
+stack — `SHER-Kernel` → `SHER-Graphics` → `SHER-Display` → `SHER-Input` →
+Aurora — not just shared organizational naming. Aurora is the planned
+primary shell on top of `SHER-Display` (see that repo's `ROADMAP.md` Phase
+5), the same way `SHER-Display` depends on `SHER-Kernel`/`SHER-Graphics`/
+`SHER-Input` today.
+
+**Current state, verified by reading every `Cargo.toml` in the family:**
+this repo has **zero Cargo-level dependency** on any of the other four
+today, and none of them depend on it — that reflects where each repo's
+own roadmap currently is (`SHER-Display`'s Phase 5 hasn't started; it
+depends on that repo's Phases 1-4 first), not a decision to keep Aurora
+separate. Aurora renders through literal `gtk4::Button`/`gtk4::Entry`
+widgets today because the `SHER-Display` scene-graph target it would
+eventually render to instead doesn't exist yet either (nothing in that
+repo's `scene/` crate is exposed for an external toolkit to target). Until
+that lands on both sides, this workspace (`crates/aurora-*`) builds and
+functions standalone as a GTK/Qt/Web design-system toolkit — genuinely
+useful on its own in the meantime, not blocked on the rest of the stack.
 
 ## Known issues
 
-- `aurora-tokens`'s standalone `ColorSystem::current()` has an unfinished HDR branch that silently falls back to the Light palette (`crates/aurora-tokens/src/color.rs`, marked `TODO: Implement HDR theme`). This code path is not what the shipped `aurora-color` crate uses — `aurora-color`'s own `ColorSystem`/`Theme` (the one referenced above and by `aurora-gtk`) has a real, distinct HDR palette — but the dead branch in `aurora-tokens` is still worth fixing or removing to avoid future confusion.
-- **CI is currently failing on Linux** (`Tests (ubuntu-latest)` and `Clippy`, both stable and beta): `crates/aurora-gtk/src/widgets/button.rs`'s `test_button_disabled_is_insensitive_in_real_gtk4` calls `button.is_sensitive()` without `gtk4::prelude::WidgetExt` in scope, which fails to compile (`E0599`) — this test module is gated `#[cfg(not(target_os = "macos"))]`, so it never runs (or fails) locally on macOS, which is why `cargo test --workspace` reports clean there. The `Security Audit` job is also currently broken, referencing a nonexistent action (`rustsec/audit-check-action@v1`). Both are real, open problems as of this writing, not flaky infrastructure.
+- **`aurora-tokens`'s HDR fallback — fixed.** `ColorSystem::current()` used to silently return the Light palette for `Theme::HDR` (`crates/aurora-tokens/src/color.rs`, was marked `TODO: Implement HDR theme`) instead of erroring or returning something real. `SemanticColor::hdr()` now has a genuinely distinct palette, sourced from `aurora-color`'s already-shipped `Theme::hdr()` values (the crate `aurora-gtk` actually consumes) rather than invented separately, so the two crates' HDR palettes agree. `ColorSystem::validate_contrast()` now checks it alongside Light/Dark/OLED (previously skipped it entirely), and new tests prove `current()` returns the real HDR palette rather than falling back to Light, and that it passes the same WCAG contrast checks as the other three themes.
+- **CI's Linux compile failure — fixed.** `crates/aurora-gtk/src/widgets/button.rs`'s `test_button_disabled_is_insensitive_in_real_gtk4` called `button.is_sensitive()` without `gtk4::prelude::WidgetExt` in scope, failing to compile (`E0599`) — gated `#[cfg(not(target_os = "macos"))]`, so it never ran (or failed) locally on macOS, which is why `cargo test --workspace` reported clean there despite CI being red. Added the missing `use gtk4::prelude::*;` (matching the identical pattern the adjacent `test_button_build_is_real_gtk4_widget` already uses). Verified two ways: the real GitHub Actions failure logs for this repo's most recent CI run show `error[E0599]: no method named is_sensitive found for struct gtk4::Button` as the sole compile blocker in both the `Tests` and `Clippy` jobs, and a from-scratch `rust:latest` Docker container with `libgtk-4-dev` installed now compiles `aurora-gtk`'s full test suite cleanly (the `gtk_real` tests themselves still fail at runtime in that bare container with "GTK has not been initialized," which is a headless-display artifact of that ad-hoc container — not present in the real CI failure logs, so not this fix's concern to solve). The `Security Audit` job's separate, unrelated breakage (references a nonexistent action, `rustsec/audit-check-action@v1`) remains open — out of scope for this pass, flagging rather than silently leaving it undocumented.
 - No open GitHub issues at the time of this writing.
-- External critique proposed bridging Aurora widgets to `SHER-Display`'s scene graph and routing input through `SHER-INPUT`. Both items were checked and don't apply: this repo has zero Cargo-level dependency on any SHER repo (see "Relationship to the SHER family" above), `CLAUDE.md`'s Key Design Decision #3 states "GNOME-Native Only — No multi-desktop abstraction," and there's no existing bridge-shaped abstraction or Aurora-side event loop to retrofit — widgets are literal `gtk4::Button`/`gtk4::Entry` builders with GTK4's native event handling, not a custom layer that could be redirected. Not a gap to fix; flagging because `SHER-Display`'s own ROADMAP.md still lists an "Aurora Integration" phase that contradicts this repo's stated scope — worth reconciling which one is stale.
+- External critique proposed bridging Aurora widgets to `SHER-Display`'s scene graph and routing input through `SHER-INPUT`. Verified against the current code: not built yet, correctly so — see "Relationship to the SHER family" above. This is real, intended, planned work (`SHER-Display`'s `ROADMAP.md` Phase 5), not a mismatch to paper over by declaring Aurora out of scope. There's no bridge-shaped abstraction or Aurora-side event loop to retrofit yet because the phase it belongs to hasn't started on either side; widgets are literal `gtk4::Button`/`gtk4::Entry` builders with GTK4's native event handling today for that reason, not because a "GNOME-only" decision rules the integration out. `CLAUDE.md`'s Key Design Decision #3 is being revised alongside this to describe the current GTK4-native state without overstating it as a permanent boundary against the planned `SHER-Display` integration.
 
 ## Issues & contributing
 

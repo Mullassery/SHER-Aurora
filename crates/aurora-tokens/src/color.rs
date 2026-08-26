@@ -169,6 +169,39 @@ impl SemanticColor {
         }
     }
 
+    /// HDR theme: real, distinct values, not a Light-palette fallback (see
+    /// `ColorSystem::current`). Sourced from `aurora-color`'s already-shipped
+    /// `Theme::hdr()` (`crates/aurora-color/src/theme.rs`) — the crate
+    /// `aurora-gtk` actually consumes — so this crate's HDR palette agrees
+    /// with the one already in real use rather than inventing a second,
+    /// divergent set of values. `aurora-color`'s field set doesn't map
+    /// 1:1 onto `SemanticColor`'s; the surface/foreground/accent fields
+    /// carry over directly, and `surface_inverse`/`foreground_inverse`/
+    /// `background_secondary` follow the same derivation `oled()` above
+    /// uses (surface_inverse = own foreground, foreground_inverse = own
+    /// background) rather than being separately invented.
+    pub fn hdr() -> Self {
+        Self {
+            surface: Color::from_hex("#1e1e1e").unwrap(),
+            surface_variant: Color::from_hex("#2d2d2d").unwrap(),
+            surface_inverse: Color::from_hex("#f5f5f5").unwrap(),
+            background: Color::from_hex("#121212").unwrap(),
+            background_secondary: Color::from_hex("#1a1a1a").unwrap(),
+            foreground: Color::from_hex("#f5f5f5").unwrap(),
+            foreground_secondary: Color::from_hex("#bdbdbd").unwrap(),
+            foreground_tertiary: Color::from_hex("#9e9e9e").unwrap(),
+            foreground_inverse: Color::from_hex("#121212").unwrap(),
+            primary: Color::from_hex("#6eb7ff").unwrap(),
+            secondary: Color::from_hex("#c5b3ff").unwrap(),
+            accent: Color::from_hex("#ff80ab").unwrap(),
+            success: Color::from_hex("#81c784").unwrap(),
+            warning: Color::from_hex("#ffd54f").unwrap(),
+            error: Color::from_hex("#f8a29a").unwrap(),
+            info: Color::from_hex("#64b5f6").unwrap(),
+            outline: Color::from_hex("#696969").unwrap(),
+        }
+    }
+
     /// Validate contrast ratios (WCAG AAA)
     pub fn validate_contrast(&self) -> TokenResult<()> {
         let checks = vec![
@@ -208,6 +241,7 @@ pub struct ColorSystem {
     light: SemanticColor,
     dark: SemanticColor,
     oled: SemanticColor,
+    hdr: SemanticColor,
     active_theme: Theme,
 }
 
@@ -223,6 +257,7 @@ impl ColorSystem {
             light: SemanticColor::light(),
             dark: SemanticColor::dark(),
             oled: SemanticColor::oled(),
+            hdr: SemanticColor::hdr(),
             active_theme: theme,
         }
     }
@@ -240,7 +275,7 @@ impl ColorSystem {
             Theme::Light => &self.light,
             Theme::Dark => &self.dark,
             Theme::OLED => &self.oled,
-            Theme::HDR => &self.light, // TODO: Implement HDR theme
+            Theme::HDR => &self.hdr,
         }
     }
 
@@ -248,6 +283,7 @@ impl ColorSystem {
         self.light.validate_contrast()?;
         self.dark.validate_contrast()?;
         self.oled.validate_contrast()?;
+        self.hdr.validate_contrast()?;
         Ok(())
     }
 }
@@ -303,5 +339,30 @@ mod tests {
     fn test_semantic_color_validation() {
         let colors = SemanticColor::light();
         assert!(colors.validate_contrast().is_ok());
+    }
+
+    #[test]
+    fn test_semantic_color_hdr_validation() {
+        let colors = SemanticColor::hdr();
+        assert!(colors.validate_contrast().is_ok());
+    }
+
+    #[test]
+    fn test_color_system_current_returns_the_real_hdr_palette_not_a_light_fallback() {
+        // Regression test: `current()` used to silently return the Light
+        // palette for `Theme::HDR` instead of a real, distinct one.
+        let system = ColorSystem::new(Theme::HDR);
+        assert_eq!(system.current().background, SemanticColor::hdr().background);
+        assert_ne!(
+            system.current().background,
+            SemanticColor::light().background,
+            "HDR must not fall back to the Light palette"
+        );
+    }
+
+    #[test]
+    fn test_color_system_validate_contrast_covers_all_four_themes() {
+        let system = ColorSystem::default();
+        assert!(system.validate_contrast().is_ok());
     }
 }

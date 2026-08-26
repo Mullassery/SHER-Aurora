@@ -83,7 +83,7 @@ crates/
 
 2. **Deep libadwaita Integration** — Build on GNOME's modern toolkit, not around it. Leverage GTK4 + libadwaita for consistency and maintenance.
 
-3. **GNOME-Native Only** — Focus exclusively on GNOME. No multi-desktop abstraction. Deep integration with GNOME Shell, Settings, dconf, and notifications.
+3. **GNOME-Native Today, SHER-Display Next** — GTK4/libadwaita is the current, real rendering target (deep integration with GNOME Shell, Settings, dconf, and notifications). Aurora is also the planned primary shell for `SHER-Display` (see that repo's `ROADMAP.md` Phase 5) — part of one interdependent stack from `SHER-Kernel` through Aurora, not a permanently GNOME-only project. That integration hasn't started (it depends on `SHER-Display` exposing a scene-graph API this repo's rendering backend can target, and on that repo's own earlier phases), so today's actual code is GTK4-only — but that's sequencing, not a design decision to stay that way.
 
 4. **GNOME Application Consistency** — All GNOME apps (Files, Settings, Calendar, Music, etc.) follow the same design language. Achieved through:
    - Shared design tokens

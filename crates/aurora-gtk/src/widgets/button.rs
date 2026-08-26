@@ -276,6 +276,7 @@ mod tests {
 
         #[gtk4::test]
         fn test_button_disabled_is_insensitive_in_real_gtk4() {
+            use gtk4::prelude::*;
             let button = Button::new("Test").set_sensitive(false).build();
             assert!(!button.is_sensitive());
         }

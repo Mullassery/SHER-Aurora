@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-08-26
+
+### Fixed
+
+- `aurora-tokens::ColorSystem::current()` silently returned the Light palette for `Theme::HDR` instead of a real one (`TODO: Implement HDR theme`). `SemanticColor::hdr()` now has a genuinely distinct palette, sourced from `aurora-color`'s already-shipped `Theme::hdr()` values so the two crates' HDR palettes agree rather than diverging. `ColorSystem::validate_contrast()` now checks the HDR palette alongside Light/Dark/OLED (previously skipped it silently); new tests prove `current()` returns the real HDR palette and that it passes the same WCAG contrast checks as the other three themes.
+- CI's Linux compile failure (`error[E0599]: no method named is_sensitive found for struct gtk4::Button`, blocking both the `Tests` and `Clippy` jobs): `crates/aurora-gtk/src/widgets/button.rs`'s `test_button_disabled_is_insensitive_in_real_gtk4` was missing `use gtk4::prelude::*;` (the adjacent, near-identical test already had it). Verified against the real GitHub Actions failure logs and a from-scratch Linux/GTK4 Docker build.
+- Verified the "bridge Aurora to SHER-Display's scene graph / route input through SHER-INPUT" external critique against the actual code (again): still doesn't apply, for the reasons already documented in the "Relationship to the SHER family" section. `SHER-Display`'s `ROADMAP.md` previously repeated the same stale integration claim as a planned phase; that's now fixed on that repo's side too (renamed "Phase 5 — Aurora Integration" to "Desktop Shell Integration," Aurora explicitly named as not the target).
+
 ## [1.2.0] - 2026-08-16
 
 ### Added
