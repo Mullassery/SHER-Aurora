@@ -209,7 +209,7 @@ Found a bug, or a claim in this README that doesn't match reality? Please [open 
 
 ## License
 
-Aurora is source-available under a **Proprietary license — free to use with explicit attribution to the original author**. See the [LICENSE](LICENSE) file for full terms. Because of this license, Aurora is not published to crates.io; consume it as a git dependency as shown above.
+This project is licensed under the [Apache License 2.0](LICENSE).
 
 ---
 
