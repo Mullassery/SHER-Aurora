@@ -174,7 +174,7 @@ cargo clippy --workspace --all-targets -- -D warnings
 cargo fmt --check
 ```
 
-Locally on macOS, all of the above pass clean (518 tests, zero clippy warnings, `cargo fmt --check` clean) — verified directly against the current `main` commit. CI on Linux was red for a long history of runs (see [Known issues](#known-issues)) on a compile error and, once that was fixed, a second real problem it had been hiding (`gtk4::init()` needs a display server `ubuntu-latest` doesn't have by default) — both now fixed. `Security Audit` had a separate, unrelated root cause (`Cargo.lock` was gitignored instead of committed, see [Known issues](#known-issues)) — also fixed in this pass, pending CI confirmation. The badge above reflects real, live status, not a static claim.
+Locally on macOS, all of the above pass clean (518 tests, zero clippy warnings, `cargo fmt --check` clean) — verified directly against the current `main` commit. CI on Linux was red for a long history of runs (see [Known issues](#known-issues)) on a compile error and, once that was fixed, a second real problem it had been hiding (`gtk4::init()` needs a display server `ubuntu-latest` doesn't have by default) — both now fixed. `Security Audit` had a separate, unrelated root cause (`Cargo.lock` was gitignored instead of committed, see [Known issues](#known-issues)) — also fixed in this pass, and CI is now fully green across all 9 jobs. The badge above reflects real, live status, not a static claim.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contribution workflow, and [CHANGELOG.md](CHANGELOG.md) for a detailed, corrected history of what's changed release over release (including where earlier versions of this README overstated what existed).
 
