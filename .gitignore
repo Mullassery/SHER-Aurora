@@ -1,6 +1,5 @@
 # Rust build artifacts
 /target/
-Cargo.lock
 **/*.rs.bk
 
 # Compiled binaries accidentally built/placed at the repo root
