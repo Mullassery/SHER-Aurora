@@ -8,6 +8,18 @@ Aurora gives GNOME app developers a single, consistent source of truth for spaci
 
 ---
 
+## Use cases
+
+- **A consistent design system across multiple GNOME apps** — one source
+  of truth for spacing/color/typography/motion instead of each app
+  reinventing it.
+- **Real GTK4 widgets with an automated WCAG accessibility audit built
+  in**, not a design-only spec you re-implement per app.
+- **Not yet a good fit for:** bridging Aurora widgets into `SHER-Display`'s
+  scene graph — real, intended, planned work, but not started yet (see
+  [Relationship to the SHER family](#relationship-to-the-sher-family)
+  below). Widgets are literal GTK4-native today.
+
 ## What's real today
 
 | Layer | Status |
@@ -197,7 +209,7 @@ useful on its own in the meantime, not blocked on the rest of the stack.
   1. `crates/aurora-gtk/src/widgets/button.rs`'s `test_button_disabled_is_insensitive_in_real_gtk4` called `button.is_sensitive()` without `gtk4::prelude::WidgetExt` in scope, failing to compile (`E0599`) — gated `#[cfg(not(target_os = "macos"))]`, so it never ran (or failed) locally on macOS, which is why `cargo test --workspace` reported clean there despite CI being red. Added the missing `use gtk4::prelude::*;` (matching the adjacent `test_button_build_is_real_gtk4_widget`, which already had it).
   2. Once that compiled, the real `Tests (ubuntu-latest)` jobs still failed at runtime: `gtk4::init()` needs a display server to connect to, and `ubuntu-latest` runners have none by default — every `gtk_real` test panicked with "GTK has not been initialized." `widgets/switch.rs`'s comment claiming "On Linux ... this restriction does not exist, so these run for real there" had never actually been verified, since the compile error always blocked reaching this point before. Fixed by installing `xvfb` and running the Linux test step under `xvfb-run -a`.
 
-  Both verified against real infrastructure, not just locally: the actual GitHub Actions run right after each fix confirmed it (first `Build`/`Clippy` going green, then `Tests (ubuntu-latest, *)` going green), and a from-scratch `rust:latest` Docker container with `libgtk-4-dev`/`xvfb` installed reproduced both the original failure and the fix. `main`'s CI is fully green as of this pass except `Security Audit`, a separate, unrelated, pre-existing breakage (references a nonexistent action, `rustsec/audit-check-action@v1`) — still open, out of scope for this pass, flagged rather than silently left undocumented.
+  Both verified against real infrastructure, not just locally: the actual GitHub Actions run right after each fix confirmed it (first `Build`/`Clippy` going green, then `Tests (ubuntu-latest, *)` going green), and a from-scratch `rust:latest` Docker container with `libgtk-4-dev`/`xvfb` installed reproduced both the original failure and the fix. **`Security Audit` — also fixed, in this pass:** it referenced a nonexistent action, `rustsec/audit-check-action@v1` (the real action is `rustsec/audit-check`, not `-action`), so it failed at the "resolve action" step before running at all. Corrected to `rustsec/audit-check@v2.0.0` and verified with `cargo audit` directly against this repo's `Cargo.lock` (89 crate dependencies) — clean, zero vulnerabilities, so this fix should make `main`'s CI fully green.
 - No open GitHub issues at the time of this writing.
 - External critique proposed bridging Aurora widgets to `SHER-Display`'s scene graph and routing input through `SHER-INPUT`. Verified against the current code: not built yet, correctly so — see "Relationship to the SHER family" above. This is real, intended, planned work (`SHER-Display`'s `ROADMAP.md` Phase 5), not a mismatch to paper over by declaring Aurora out of scope. There's no bridge-shaped abstraction or Aurora-side event loop to retrofit yet because the phase it belongs to hasn't started on either side; widgets are literal `gtk4::Button`/`gtk4::Entry` builders with GTK4's native event handling today for that reason, not because a "GNOME-only" decision rules the integration out. `CLAUDE.md`'s Key Design Decision #3 is being revised alongside this to describe the current GTK4-native state without overstating it as a permanent boundary against the planned `SHER-Display` integration.
 
