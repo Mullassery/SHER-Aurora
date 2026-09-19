@@ -46,8 +46,7 @@ jobs:
         run: cargo build --workspace --release --verbose
 
       # Aurora is not published to crates.io (see the License section of
-      # README.md — the workspace license is "Proprietary", not an OSI
-      # license). This job's job is real verification + a GitHub Release,
+      # README.md). This job's job is real verification + a GitHub Release,
       # not a Debian/APT package repository: no such repository exists for
       # this project, and an earlier version of this workflow fabricated
       # one (building/signing .deb packages, uploading to S3/CloudFront/
@@ -55,7 +54,7 @@ jobs:
       # release notes) despite none of that infrastructure existing. That
       # workflow was also not valid YAML.
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           name: Aurora v${{ steps.version.outputs.version }}
           body: |

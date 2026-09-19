@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+> **Editorial note on `[1.0.0]` and `[1.1.0]` below, added during a later
+> honesty pass:** both entries predate this project's documentation
+> honesty rewrite (see `[1.2.0]`/`[1.3.0]` below and `docs/archive/`) and
+> contain claims that don't hold up: an "Aurora CLI" with 6 runnable
+> commands (there is no `[[bin]]` target or `clap` dependency in this
+> workspace — `aurora-gtk::cli` is a data-model struct, not a runnable
+> tool), "GNOME Shell integration with dconf settings" (no crate here has
+> ever depended on `gio`/dconf/D-Bus), "full WCAG AAA compliance," and
+> "111 tests, 100% passing" / "example applications (Settings, Files,
+> Calendar, Music)" that a later entry (`[1.2.0]`) confirms were deleted
+> because they never compiled or had no `fn main`. `[1.1.0]`'s release
+> date (`2027-03-31`) is also later than `[1.2.0]`'s (`2026-08-16`) and
+> `[1.3.0]`'s (`2026-08-26`) — an impossible ordering. We can't
+> reconstruct the true original dates or exact original state at this
+> distance, so the entries are left as originally written below rather
+> than silently rewritten, but do not treat anything in `[1.0.0]` or
+> `[1.1.0]` as a reliable description of what shipped. See
+> `ROADMAP_HONEST.md` for the current, verified state.
+
 ## [1.3.0] - 2026-08-26
 
 ### Fixed
@@ -145,47 +164,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Planned Features
-
-- Qt6 renderer for cross-platform support
-- Web/WASM renderer for browser-based apps
-- Extended component library (40+ widgets)
-- Figma library export
-- Theme customization UI
-- AI-powered component suggestions
-- Mobile optimizations
-- Advanced animation tools
-
----
-
-## Version History Summary
-
-- **v1.1.0** (2027-03-31): Enhanced components, icon system, developer tools, accessibility layer
-- **v1.0.0** (2027-01-15): Initial production release with core components and design system
-
-## Upgrade Paths
-
-### From v1.0 to v1.1
-
-No breaking changes. Simply update the version in Cargo.toml:
-
-```toml
-aurora-gtk = "1.1"
-```
-
-All v1.0 code will continue to work without modification. Optionally, adopt new v1.1 features like Icon Dock and DataTable components.
+No changes merged to `main` since `[1.3.0]` at the time of this writing.
+For what's not built and has no committed timeline (a Qt or web renderer,
+a larger widget library, etc.), see the "Not built" bucket in
+`ROADMAP_HONEST.md` rather than this section — nothing below is a
+commitment, and several items previously listed here (Figma export,
+"AI-powered component suggestions") were never started and had no actual
+plan behind them.
 
 ## Support
 
 - For issues, visit: https://github.com/Mullassery/aurora/issues
 - For discussions, visit: https://github.com/Mullassery/aurora/discussions
-- For security concerns, email: mullassery@gmail.com
-
-## Contributors
-
-- Georgi Mammen Mullassery (Lead)
-- Community contributors (see GitHub contributors)
-
----
-
-Generated with care for the Aurora community. ❤️
+- For security concerns, see `SECURITY.md`

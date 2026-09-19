@@ -204,6 +204,12 @@ useful on its own in the meantime, not blocked on the rest of the stack.
 
 ## Known issues
 
+For the full, current list of bugs, security notes, and unbuilt/broken
+features — including several found in a later documentation-honesty pass
+that aren't detailed below — see [`ROADMAP_HONEST.md`](ROADMAP_HONEST.md).
+That file is the single source of truth for open issues; the entries
+below are kept as a historical record of specific fixes already made.
+
 - **`aurora-tokens`'s HDR fallback — fixed.** `ColorSystem::current()` used to silently return the Light palette for `Theme::HDR` (`crates/aurora-tokens/src/color.rs`, was marked `TODO: Implement HDR theme`) instead of erroring or returning something real. `SemanticColor::hdr()` now has a genuinely distinct palette, sourced from `aurora-color`'s already-shipped `Theme::hdr()` values (the crate `aurora-gtk` actually consumes) rather than invented separately, so the two crates' HDR palettes agree. `ColorSystem::validate_contrast()` now checks it alongside Light/Dark/OLED (previously skipped it entirely), and new tests prove `current()` returns the real HDR palette rather than falling back to Light, and that it passes the same WCAG contrast checks as the other three themes.
 - **CI's Linux failures — fixed, and CI is now green.** Two separate, real problems, the second only visible once the first was out of the way:
   1. `crates/aurora-gtk/src/widgets/button.rs`'s `test_button_disabled_is_insensitive_in_real_gtk4` called `button.is_sensitive()` without `gtk4::prelude::WidgetExt` in scope, failing to compile (`E0599`) — gated `#[cfg(not(target_os = "macos"))]`, so it never ran (or failed) locally on macOS, which is why `cargo test --workspace` reported clean there despite CI being red. Added the missing `use gtk4::prelude::*;` (matching the adjacent `test_button_build_is_real_gtk4_widget`, which already had it).

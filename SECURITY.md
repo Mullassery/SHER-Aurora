@@ -17,13 +17,10 @@ We will investigate all security reports and work with you to determine the seve
 
 ## Supported Versions
 
-Aurora uses semantic versioning (MAJOR.MINOR.PATCH):
-
-| Version | Status | Support |
-|---------|--------|---------|
-| 1.1.x | Current | Full support |
-| 1.0.x | Previous | Limited support (critical fixes only) |
-| < 1.0 | Deprecated | No support |
+This is a single-maintainer project with no formal LTS policy. Only the
+latest release (currently `1.3.x` — see `Cargo.toml`'s
+`[workspace.package] version`) receives fixes. Older releases are not
+patched; upgrade to the latest tag if you need a fix.
 
 ## Security Best Practices
 
@@ -31,17 +28,22 @@ When using Aurora in your applications:
 
 1. Keep Aurora and its dependencies updated to the latest versions
 2. Review security advisories regularly
-3. Use Aurora's WCAG AAA accessibility features to protect user data
-4. Follow secure coding practices in your applications
-5. Report any security issues you discover responsibly
+3. Follow secure coding practices in your applications
+4. Report any security issues you discover responsibly
 
 ## Dependencies
 
-Aurora's dependencies are audited regularly using `cargo audit`. All dependencies are tracked in `Cargo.lock` for reproducible builds.
+`Cargo.lock` is committed (see `ROADMAP_HONEST.md` for why that wasn't
+always true) so builds are reproducible. Every push and pull request runs
+`rustsec/audit-check` against `Cargo.lock` in the `Security Audit` job of
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) — this is a real,
+running CI job, not an aspirational claim; check its status via the CI
+badge in `README.md`.
 
-To check for known vulnerabilities in the dependency tree:
+To check for known vulnerabilities in the dependency tree yourself:
 
 ```bash
+cargo install cargo-audit
 cargo audit
 ```
 

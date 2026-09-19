@@ -1,291 +1,105 @@
-# Aurora: GNOME Enhancement Design System
+# Aurora
 
-**The most polished GNOME experience ever built.**
+A Rust workspace providing a GNOME-facing design system — design tokens,
+typography, color, motion, sound, accessibility auditing, and a growing
+set of real GTK4 widgets. This file is guidance for anyone (human or AI)
+working in this codebase. For current, verified project status, always
+defer to the root [`README.md`](README.md), [`CHANGELOG.md`](CHANGELOG.md),
+and [`ROADMAP_HONEST.md`](ROADMAP_HONEST.md) over anything below — this
+file describes design intent and conventions, not a status report.
 
-Aurora is an open-source design system and visual enhancement layer for GNOME that delivers professional-grade visual polish, consistency, motion, and accessibility while being deeply integrated with GNOME's existing infrastructure (GTK4, libadwaita, dconf, GNOME Settings).
+**Do not add marketing language to this repo's docs** ("production
+ready", "most polished", "enterprise-grade", etc.) unless it is backed by
+a runnable command whose output you have actually checked. This project's
+git history contains multiple corrections of exactly this kind of
+overclaiming (see `CHANGELOG.md` and `docs/archive/README.md`) — don't
+reintroduce it.
 
-## Philosophy
+## What this actually is (and isn't)
 
-**Not a theme. A design language layer on top of GNOME.**
+- A library, not an application or a desktop distribution. There is no
+  installer, no theme daemon, no GNOME Shell extension.
+- GTK4-only today. `libadwaita` is **not** a dependency of any crate in
+  this workspace (only `gtk4` and `glib`). Do not write or accept docs
+  that claim libadwaita integration.
+- No system integration. Nothing in this workspace calls into `dconf`,
+  `gsettings`, D-Bus, or any GNOME daemon. `crates/aurora-gtk/src/gnome/`
+  (`dconf.rs`, `notifications.rs`, `observer.rs`, `settings_panel.rs`)
+  defines Rust data structures that *model* what such integration would
+  look like (e.g. `DConfSchema::schema_xml()` returns a hardcoded XML
+  string) — none of it performs real I/O against the OS. See
+  `ROADMAP_HONEST.md` before describing these modules as "integration."
+- `crates/aurora-gtk/src/cli/` defines `Command`/`CommandType` data
+  structures matching an imagined `aurora new/add/generate/theme/export/
+  init` CLI. There is no `[[bin]]` target anywhere in this workspace, no
+  `clap` (or any arg-parsing) dependency, and no `fn main` that reads
+  `std::env::args()`. It is not a runnable CLI.
+- Icon set is real but small: 24 hand-authored SVGs in `aurora-icons`, not
+  "1000+" or "2000+" (that number appears in archived docs and was never
+  backed by real assets).
+- Not published to crates.io. Consumed as a git dependency only (see
+  README `Install` section).
 
-Aurora enhances GNOME by defining a unified design language, typography system, motion language, color system, and accessibility framework. The goal: make GNOME the most beautiful, polished, and professional desktop environment on Linux while preserving Linux's openness.
-
-### Core Principles
-
-- **GNOME-native integration** — Deep integration with GNOME, not platform-agnostic design
-- **Consistency over customization** — All GNOME apps follow the same design language
-- **Design systems over themes** — Tokens and semantic abstractions, not cosmetic themes
-- **Motion over decoration** — Every animation clarifies interaction and feedback
-- **Typography over visual effects** — Text is the primary interface; make it exceptional
-- **Accessibility over aesthetics** — WCAG AAA compliance by default, not an afterthought
-- **Polish over complexity** — Visual excellence over feature-richness
-- **libadwaita integration** — Build on GNOME's modern toolkit, not around it
-
-### Anti-Patterns
-
-- Ignoring libadwaita or fighting GNOME's design patterns
-- Excessive customization that breaks GNOME integration
-- Visual effects without functional purpose
-- Inconsistent widget styling within GNOME apps
-- Hardcoded color values (all derive from semantic tokens)
-
-## Architecture
-
-```
-GNOME Applications (Nautilus, Settings, Calendar, Music, Gedit, etc.)
-        ↓
-Aurora Enhancement Layer
-├── Design Tokens (aurora-tokens)
-│   └── Spacing, radius, elevation, motion, semantic colors
-├── Typography Engine (aurora-typography)
-│   └── Responsive scales, i18n, optical sizing
-├── Color System (aurora-color)
-│   └── Light, Dark, OLED themes with semantic tokens
-├── Motion Engine (aurora-motion)
-│   └── Spring physics, gesture tracking, animations
-├── Icon System (aurora-icons)
-│   └── GNOME icon set (1000+ system and app icons)
-├── Sound System (aurora-sound)
-│   └── Semantic notification and interaction sounds
-├── Accessibility Layer (aurora-a11y)
-│   └── WCAG AAA, high contrast, screen readers
-├── Component Library (aurora-gtk)
-│   └── GTK4 widgets and patterns built on libadwaita
-└── GNOME Integration
-    ├── Settings panel (GNOME Settings, dconf)
-    ├── Shell theming (GTK theme, GNOME Shell CSS)
-    ├── GDM integration (login screen theming)
-    └── Notification system (GNOME Notification Daemon)
-        ↓
-GTK4 + libadwaita (GNOME's modern toolkit)
-        ↓
-Wayland Compositor (GNOME Shell)
-```
-
-## Workspace Structure
+## Workspace structure
 
 ```
 crates/
-├── aurora-tokens/       # Design token definitions and codegen
-├── aurora-typography/   # Typography engine with variable fonts
-├── aurora-color/        # Color system, semantic tokens, themes
-├── aurora-motion/       # Animation engine with spring physics
-├── aurora-icons/        # Icon system and font generation
-├── aurora-sound/        # Sound design definitions
-├── aurora-a11y/         # Accessibility layer
-├── aurora-core/         # Unified API over all subsystems
-└── aurora-gtk/          # GTK4/libadwaita theme engine and components
+├── aurora-tokens/       # Spacing/radius/elevation/motion/color tokens — real, tested
+├── aurora-typography/   # Type scales, i18n/script-aware adjustments — real, tested
+├── aurora-color/        # Color system, semantic tokens, 4 themes — real, tested
+├── aurora-motion/       # Spring-physics/easing math — real, tested
+├── aurora-icons/        # 24 real SVG icons — real, tested
+├── aurora-sound/        # Semantic sound-event *definitions* (no audio playback) — real, tested
+├── aurora-a11y/         # Automated WCAG contrast audit over color tokens — real, tested
+├── aurora-gtk/          # GTK4 widgets, CSS provider, gnome::*/cli data models (see above)
+├── aurora-core/         # Unimplemented — stub crate, no facade logic written
+├── aurora-qt/           # Unimplemented — stub crate, no Qt/QML code written
+└── aurora-web/          # Unimplemented — stub crate, no WASM/web code written
 ```
 
-## Key Design Decisions
+Dependency direction: `aurora-gtk` depends on `aurora-tokens`,
+`aurora-typography`, `aurora-motion`, `aurora-color`, `aurora-sound`,
+`aurora-icons`. `aurora-a11y` depends on `aurora-color`. The other token
+crates (`aurora-tokens`, `aurora-typography`, `aurora-color`,
+`aurora-motion`, `aurora-icons`, `aurora-sound`) have no dependencies on
+each other. See [`docs/architecture/README.md`](docs/architecture/README.md)
+for a diagram.
 
-1. **Token-Driven Everything** — No hardcoded values. Every spacing, color, motion value comes from tokens. GNOME apps consume semantic tokens only (e.g., `surface`, `primary`, not `#f0f0f0`).
+## Design principles actually reflected in the code
 
-2. **Deep libadwaita Integration** — Build on GNOME's modern toolkit, not around it. Leverage GTK4 + libadwaita for consistency and maintenance.
+- **Token-driven color** — application code consumes semantic tokens
+  (`surface`, `primary`, `success`, `error`, …), never raw hex. Enforced
+  by convention in `aurora-color`/`aurora-tokens`, not by a compiler
+  check.
+- **Four real themes** — Light, Dark, OLED, HDR, each with its own
+  contrast-audited palette (`aurora-a11y`).
+- **Spring-physics motion**, not linear easing, in `aurora-motion`.
+- **Accessibility is measured, not asserted** — `aurora-a11y` computes
+  real WCAG contrast ratios against the shipped palettes and fails its
+  own tests if a future palette regresses below threshold. It does not
+  check keyboard navigation, screen-reader behavior, or anything outside
+  color contrast — don't describe it as broader than that.
 
-3. **GNOME-Native Today, SHER-Display Next** — GTK4/libadwaita is the current, real rendering target (deep integration with GNOME Shell, Settings, dconf, and notifications). Aurora is also the planned primary shell for `SHER-Display` (see that repo's `ROADMAP.md` Phase 5) — part of one interdependent stack from `SHER-Kernel` through Aurora, not a permanently GNOME-only project. That integration hasn't started (it depends on `SHER-Display` exposing a scene-graph API this repo's rendering backend can target, and on that repo's own earlier phases), so today's actual code is GTK4-only — but that's sequencing, not a design decision to stay that way.
+## Before claiming something works
 
-4. **GNOME Application Consistency** — All GNOME apps (Files, Settings, Calendar, Music, etc.) follow the same design language. Achieved through:
-   - Shared design tokens
-   - Unified typography scales
-   - Consistent motion language
-   - Semantic color system
-   - Standard component library
-
-5. **Performance Targets**
-   - Design token resolution: <1ms
-   - Animation smoothness: 60fps minimum, 120fps preferred
-   - Window animations: Fluid, responsive
-   - Memory overhead: Minimal (no extra system load)
-
-6. **Accessibility as First-Class** — WCAG AAA by default, not an afterthought:
-   - High contrast mode
-   - Reduced motion mode (respect `prefers-reduced-motion`)
-   - Screen reader support (Linux accessibility bus)
-   - 100% keyboard navigation
-   - Magnification support
-   - Assistive technology integration
-
-## Development Phases (GNOME-Focused)
-
-### Phase 1: Foundation (Design Language) ✅ COMPLETE
-- [x] Design language specification
-- [x] Typography system (Inter with fallbacks)
-- [x] Color system (Light, Dark, OLED)
-- [x] Motion language (spring physics)
-- [x] Design tokens and codegen
-- [x] Design documentation
-
-### Phase 2: GTK4 Components & GNOME Integration (Aug–Oct 2026)
-- [ ] GTK4 component library (Button, Card, Input, Dialog, etc.)
-- [ ] GNOME Shell integration (GTK theme, CSS, dconf)
-- [ ] GDM theme (GNOME login screen)
-- [ ] Motion engine in GTK4 (CSS animations)
-- [ ] Icon system (SVG, 1000+ system and application icons)
-- [ ] libadwaita widget implementation
-
-### Phase 3: Color System & GNOME App Enhancement (Nov–Dec 2026)
-- [ ] Color engine (semantic tokens, HDR support)
-- [ ] GNOME core app integration (Nautilus, Settings, Calendar, GNOME Music, Epiphany)
-- [ ] Sound design system (notification, interaction, event sounds)
-- [ ] Theme management (dconf, gsettings, GTK theme system)
-
-### Phase 4: Accessibility & GNOME Refinement (Jan–Feb 2027)
-- [ ] Accessibility layer (WCAG AAA compliance)
-- [ ] High contrast mode (increased color contrast for vision impairment)
-- [ ] Reduced motion mode (respect GNOME's `prefers-reduced-motion` setting)
-- [ ] Screen reader testing (Orca integration)
-- [ ] Full keyboard navigation audit (no mouse required)
-
-### Phase 5: Polish & GNOME v1.0 Launch (Mar–Apr 2027)
-- [ ] Final refinement and optimization for GNOME
-- [ ] GNOME community feedback integration
-- [ ] Comprehensive documentation and user guides
-- [ ] v1.0 release (GNOME-native design system)
-
-## Design Subsystems
-
-### Design Tokens
-Everything is a token. Define and maintain:
-- **Spacing**: xxs (2px), xs (4px), sm (8px), md (12px), lg (16px), xl (24px), xxl (32px), xxxl (48px)
-- **Radius**: xs (4px), sm (8px), md (12px), lg (16px), xl (24px)
-- **Elevation**: level1–level5 (shadow definitions)
-- **Motion**: instant (80ms), fast (120ms), normal (220ms), slow (350ms), dramatic (500ms)
-- **Semantic Colors**: surface, surfaceVariant, background, foreground, primary, secondary, accent, success, warning, error, info
-
-### Typography System
-
-**Highest-priority subsystem.** Every interaction is typography-first.
-
-Requirements:
-- Variable font support (single file, multiple weights/widths)
-- Optical sizing (size-responsive adjustments)
-- Responsive typography (scale with viewport)
-- High-DPI optimization (subpixel rendering)
-- Accessibility scaling (user preference override)
-- i18n support (CJK, RTL, complex scripts)
-
-Type scales:
-- **Display** — Large, attention-grabbing headlines
-- **Headline** — Section headings
-- **Title** — Card titles, dialog titles
-- **Body** — Primary reading content
-- **Caption** — Secondary, supplementary text
-- **Micro** — Tags, badges, labels
-
-For each scale, define:
-- Font size (base + responsive variants)
-- Font weight (400, 500, 600, 700)
-- Letter spacing (tracking)
-- Line height (1.4x–1.6x for body, tighter for display)
-- Contrast ratio (WCAG AAA minimum)
-
-### Motion Design Engine
-
-Motion is a first-class system. Every interaction must feel intentional.
-
-Implement:
-- **Window Actions** — Open, close, minimize, maximize, restore
-- **Desktop Actions** — Workspace switching, app launching, notifications
-- **Menu Actions** — Dropdowns, context menus, tooltips, dialogs
-- **Transition Actions** — Focus changes, state transitions, data loading
-
-Motion language:
-- Spring physics (overshoot, damping) — primary animation language
-- Velocity-aware transitions (inherit momentum from gestures)
-- GPU acceleration (transform, opacity only—avoid layout thrashing)
-- Easing curves (custom, not linear)
-
-### Color System
-
-Support four themes:
-- **Light** — Default for daytime
-- **Dark** — Low-light environments
-- **OLED** — True blacks for OLED displays
-- **HDR** — Wide color gamut for HDR-capable displays
-
-Semantic color tokens (never raw hex values to applications):
-- `surface` — Interactive element backgrounds
-- `surfaceVariant` — Secondary surface (cards, sidebars)
-- `background` — Canvas background
-- `foreground` — Primary text
-- `primary` — Brand color, primary actions
-- `secondary` — Secondary actions
-- `accent` — Highlights, selected states
-- `success`, `warning`, `error`, `info` — Semantic states
-
-Applications compose from semantic tokens only. Raw color values are internal rendering concern.
-
-### Icon System
-
-Build a modern, scalable icon family:
-- **1000+ icons** covering system, application, and interaction needs
-- **SVG native** — infinitely scalable
-- **Consistent geometry** — same visual weight across all icons
-- **Consistent stroke width** — typically 1.5–2px at 24x24
-- **Pixel-perfect rendering** — subpixel alignment for common sizes
-
-Inspired by SF Symbols and Fluent Icons. Deliver:
-- System icons (file, folder, settings, etc.)
-- Application icons (browser, terminal, editor, etc.)
-- Symbol library (for app developers)
-- Figma plugin for design tool integration
-
-### Sound Design System
-
-Sounds are UI feedback, not entertainment. Define:
-- **Notifications** — Alerts, messages
-- **Success** — Confirmation sounds
-- **Error** — Attention, something went wrong
-- **Warnings** — Caution, proceeding carefully
-- **Window Interactions** — Open, close, focus
-- **Workspace Transitions** — Switch workspace, app launch
-
-Requirements:
-- Subtle and non-intrusive (optional, disabled by default)
-- Spatial audio capable
-- Support Bluetooth, USB, built-in speakers
-- Accessible, not necessary for understanding (always paired with visual feedback)
-
-### Accessibility Layer (WCAG AAA)
-
-Accessibility is mandatory, not optional. Support:
-- **High Contrast Mode** — Increased color contrast for vision impairment
-- **Reduced Motion Mode** — Disable spring animations, respect `prefers-reduced-motion`
-- **Screen Reader Integration** — Semantic HTML, ARIA labels, announcements
-- **Keyboard Navigation** — Full keyboard support, no mouse requirement
-- **Voice Interaction** — Voice commands for accessibility (future)
-- **Magnification** — OS-level zoom support
-
-Target WCAG AAA where possible. Measure accessibility compliance regularly.
-
-## Success Criteria
-
-Aurora succeeds when:
-
-1. **Visual Cohesion** — All GNOME applications (Files, Settings, Calendar, Music, etc.) feel visually consistent and premium
-2. **User Perception** — Users describe GNOME as "as polished as any commercial desktop, but open"
-3. **Developer Adoption** — >70% of GNOME applications adopt Aurora components
-4. **Accessibility Excellence** — WCAG AAA compliance throughout, exceeding commercial desktop environments
-5. **Stability** — Design language remains stable for years without breaking GNOME apps
-6. **Ecosystem Impact** — GNOME becomes recognized as the most beautiful desktop environment on Linux
-
-## References
-
-- **Typography**: SF Pro, Inter, IBM Plex Sans, Noto Sans
-- **Design Systems**: Material Design (Google), Fluent Design (Microsoft), design system best practices
-- **Motion**: Framer Motion, Spring easing references
-- **Color Science**: WCAG, color-contrast-analyzer
-- **Icons**: SF Symbols, Fluent Icons
-- **Accessibility**: WCAG 2.1, ARIA Authoring Practices
-
-## Contributing
-
-Aurora is open source. All contributions welcome. Please read ARCHITECTURE.md for technical guidelines.
+1. Run the actual command (`cargo test --workspace`, `cargo clippy
+   --workspace --all-targets -- -D warnings`, `cargo fmt --check`) and
+   quote its real output/exit code.
+2. If a widget's status is being described, check whether it has a
+   `.build()` method that constructs a real `gtk4` object — the README's
+   "What's real today" table is the source of truth for this, keep it in
+   sync with any widget you add or change.
+3. If you find a doc making a claim you can't verify against the code,
+   fix the doc (or move it to `docs/archive/` with a note) rather than
+   propagating the claim further.
 
 ## License
 
-Proprietary — free to use with explicit attribution to the original author. See the root `LICENSE` file for full terms. (This project moved off the earlier MIT/Apache-2.0 dual-license to this proprietary license; this line was previously out of sync with `Cargo.toml` and the root `LICENSE` file.)
+Apache License 2.0 — see the root `LICENSE` file and `Cargo.toml`'s
+`[workspace.package] license = "Apache-2.0"`. (This repo was previously
+marked "Proprietary" for a period, then relicensed to Apache-2.0; if you
+find a doc anywhere still saying "Proprietary" or "MIT/Apache dual
+license," that doc is stale — fix it.)
 
 ---
 

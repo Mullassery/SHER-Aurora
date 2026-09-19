@@ -18,9 +18,9 @@ Aurora is built by the community, for the community. We welcome contributions fr
 ### Prerequisites
 
 - Rust 1.70+ ([install here](https://rustup.rs))
-- GTK4 development libraries
-- Libadwaita
-- GLib
+- System GTK4 (>= 4.12) development libraries — this workspace links
+  against the real `gtk4` crate. **`libadwaita` is not a dependency** of
+  any crate here; don't install it expecting it to be used.
 - Build tools and pkg-config
 
 ### Install Dependencies
@@ -28,20 +28,25 @@ Aurora is built by the community, for the community. We welcome contributions fr
 **Ubuntu/Debian:**
 ```bash
 sudo apt install -y \
-    libgtk-4-dev libadwaita-1-dev libglib2.0-dev \
+    libgtk-4-dev libglib2.0-dev \
     build-essential pkg-config rustc cargo
 ```
 
 **Fedora/RHEL:**
 ```bash
 sudo dnf install -y \
-    gtk4-devel libadwaita-devel glib2-devel \
+    gtk4-devel glib2-devel \
     gcc make pkg-config rust cargo
 ```
 
 **Arch:**
 ```bash
-sudo pacman -S gtk4 libadwaita glib2 base-devel rust
+sudo pacman -S gtk4 glib2 base-devel rust
+```
+
+**macOS:**
+```bash
+brew install gtk4
 ```
 
 ### Build Aurora
@@ -49,20 +54,19 @@ sudo pacman -S gtk4 libadwaita glib2 base-devel rust
 ```bash
 cd aurora
 
-# Register Aurora with GNOME
-sudo cp crates/aurora-gtk/schemas/org.gnome.desktop.interface.aurora.gschema.xml \
-    /usr/share/glib-2.0/schemas/
-sudo glib-compile-schemas /usr/share/glib-2.0/schemas/
-
 # Build
-cargo build --release
+cargo build --workspace
 
 # Run tests
-cargo test --lib
+cargo test --workspace
 
 # Generate documentation
 cargo doc --no-deps --open
 ```
+
+There is no dconf/GSettings schema to install — `aurora-gtk` does not
+integrate with the real GNOME Settings system today (see `CLAUDE.md` and
+`ROADMAP_HONEST.md`). If you see a doc claiming otherwise, it's stale.
 
 ---
 
@@ -82,7 +86,7 @@ cargo doc --no-deps --open
 1. Open an issue first to discuss the feature
 2. Create a branch: `git checkout -b feature/feature-name`
 3. Implement the feature with comprehensive tests
-4. Ensure WCAG AAA accessibility compliance
+4. If the feature touches color tokens, run the `aurora-a11y` contrast audit (see Accessibility below)
 5. Update documentation
 6. Commit with clear message: `feat: Brief description of feature`
 7. Push and create a Pull Request
@@ -104,10 +108,10 @@ Documentation improvements are highly valued:
 - Create guides for specific use cases
 
 **Documentation Files:**
-- User guides: `docs/`
-- API docs: Inline Rust doc comments
-- Architecture: `docs/APT_DISTRIBUTION_ARCHITECTURE.md`
-- Design philosophy: `CLAUDE.md`
+- API docs: Inline Rust doc comments (`cargo doc --no-deps --open`)
+- Architecture: `docs/architecture/README.md`
+- Design philosophy and conventions: `CLAUDE.md`
+- Historical/superseded docs: `docs/archive/` (do not treat as current)
 
 ### Design Contributions
 
@@ -122,13 +126,11 @@ Create an issue with screenshots or design mockups to discuss your ideas.
 
 ### Accessibility Contributions
 
-Aurora must maintain WCAG AAA compliance:
-
 - Review components for accessibility issues
-- Test with screen readers (Orca on GNOME)
-- Test keyboard navigation
+- Test with screen readers (Orca on GNOME) — manually; there is no automated screen-reader test in CI today
+- Test keyboard navigation — manually; there is no automated keyboard-navigation test in CI today
 - Suggest high-contrast improvements
-- Test with colorblind simulations
+- Contribute an automated test for any of the above — this is a real, open gap (see `ROADMAP_HONEST.md`)
 
 ---
 
@@ -143,10 +145,10 @@ Follow Rust conventions:
 cargo fmt
 
 # Lint
-cargo clippy --all-targets --all-features
+cargo clippy --workspace --all-targets -- -D warnings
 
 # Both together
-cargo fmt && cargo clippy --all-targets --all-features
+cargo fmt && cargo clippy --workspace --all-targets -- -D warnings
 ```
 
 ### Writing Tests
@@ -172,7 +174,8 @@ mod tests {
 }
 ```
 
-Test coverage targets: 95%+
+There is no enforced coverage threshold; write tests that actually
+exercise the behavior you changed rather than targeting a percentage.
 
 ### Documentation
 
@@ -204,14 +207,15 @@ pub fn my_function(input: T) -> Result<U, Error> {
 
 ### Accessibility
 
-All UI components must be accessible:
-
-- Semantic HTML/GTK (proper widget types)
-- ARIA labels for screen readers
-- High contrast support (4.5:1 minimum ratio)
-- Keyboard navigation (no mouse required)
-- Reduced motion support (respect prefers-reduced-motion)
-- Color not sole differentiator
+`aurora-a11y` mechanically checks one thing today: WCAG contrast ratios
+for every semantic color-token pairing in every theme (7:1 normal text,
+4.5:1 large text, 3:1 non-text UI components — the real WCAG thresholds,
+not a single "AAA everywhere" bar). If you add or change a color token,
+run `cargo test -p aurora-a11y` and make sure the audit still passes.
+Keyboard navigation, screen-reader behavior, and reduced-motion support
+are design goals for widgets but are **not** currently covered by any
+automated test — treat claims about them as unverified until a real test
+exists.
 
 ---
 
@@ -245,9 +249,9 @@ Types:
 Before submitting a PR:
 
 1. Ensure your branch is up to date: `git fetch upstream && git rebase upstream/main`
-2. Run all tests: `cargo test --lib`
+2. Run all tests: `cargo test --workspace`
 3. Format code: `cargo fmt`
-4. Lint: `cargo clippy --all-targets --all-features`
+4. Lint: `cargo clippy --workspace --all-targets -- -D warnings`
 5. Verify accessibility
 
 PR guidelines:
@@ -264,9 +268,9 @@ PR guidelines:
 
 All PRs go through review:
 
-1. Automated checks (tests, linting, formatting)
+1. Automated checks (tests, linting, formatting — see `.github/workflows/ci.yml`)
 2. Code review (functionality, quality, standards)
-3. Accessibility review (WCAG AAA compliance)
+3. Accessibility review (contrast audit if color tokens changed; manual review otherwise)
 4. Documentation review
 
 ---
@@ -275,7 +279,7 @@ All PRs go through review:
 
 All contributions should follow Aurora's design philosophy:
 
-**GNOME-native integration** — Deep integration with GNOME, not platform-agnostic design
+**GTK4-native today** — widgets construct real `gtk4` objects rather than a platform-agnostic abstraction; deeper GNOME Shell/dconf/D-Bus integration is a design goal, not something built yet (see `CLAUDE.md`)
 
 **Consistency over customization** — All GNOME apps follow the same design language
 
@@ -285,13 +289,11 @@ All contributions should follow Aurora's design philosophy:
 
 **Typography over visual effects** — Text is the primary interface; make it exceptional
 
-**Accessibility over aesthetics** — WCAG AAA compliance by default, not an afterthought
+**Accessibility over aesthetics** — measured contrast compliance by default, not an afterthought (see the Accessibility section above for exactly what's checked today)
 
 **Polish over complexity** — Visual excellence over feature-richness
 
-**libadwaita integration** — Build on GNOME's modern toolkit, not around it
-
-See CLAUDE.md for full design philosophy.
+See CLAUDE.md for the full, current design guidance — it takes precedence over any older doc under `docs/archive/`.
 
 ---
 
@@ -338,7 +340,7 @@ Aurora is committed to providing a welcoming and inclusive environment for all c
 
 ## License
 
-By contributing to Aurora, you agree that your contributions will be licensed under the same license as the project (MIT/Apache 2.0).
+By contributing to Aurora, you agree that your contributions will be licensed under the project's license, [Apache License 2.0](LICENSE).
 
 ---
 

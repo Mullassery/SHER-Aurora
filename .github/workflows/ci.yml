@@ -31,7 +31,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y \
             libgtk-4-dev \
-            libadwaita-1-dev \
             libglib2.0-dev \
             pkg-config \
             xvfb
@@ -39,22 +38,22 @@ jobs:
       - name: Install dependencies (macOS)
         if: runner.os == 'macOS'
         run: |
-          brew install gtk4 libadwaita pkg-config
+          brew install gtk4 pkg-config
 
       - name: Cache cargo registry
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cargo/registry
           key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Cache cargo index
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cargo/git
           key: ${{ runner.os }}-cargo-git-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Cache cargo build
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: target
           key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
@@ -99,7 +98,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y \
             libgtk-4-dev \
-            libadwaita-1-dev \
             libglib2.0-dev \
             pkg-config
 
@@ -136,14 +134,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y \
             libgtk-4-dev \
-            libadwaita-1-dev \
             libglib2.0-dev \
             pkg-config
 
       - name: Install dependencies (macOS)
         if: runner.os == 'macOS'
         run: |
-          brew install gtk4 libadwaita pkg-config
+          brew install gtk4 pkg-config
 
       - name: Build release
         run: cargo build --release --verbose
