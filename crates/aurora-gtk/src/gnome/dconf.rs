@@ -1,4 +1,9 @@
 //! dconf schema for Aurora GNOME integration
+//!
+//! NOTE: no real system I/O. This module only builds and returns an
+//! in-memory XML string; it never writes a schema file to disk, never
+//! invokes `glib-compile-schemas`, and never reads or writes any real
+//! dconf key. See `ROADMAP_HONEST.md` for details.
 
 /// Aurora dconf schema builder
 pub struct DConfSchema;

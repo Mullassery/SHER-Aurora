@@ -1,4 +1,8 @@
 //! GNOME Settings integration panel
+//!
+//! NOTE: no real system I/O. This is an in-memory data structure with no
+//! hooks into the actual GNOME Settings application or OS. See
+//! `ROADMAP_HONEST.md` for details.
 
 /// Aurora settings panel for GNOME Settings
 pub struct SettingsPanel {

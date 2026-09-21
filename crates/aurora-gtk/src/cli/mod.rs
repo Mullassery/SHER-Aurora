@@ -1,6 +1,12 @@
 //! Aurora CLI - Project Setup and Development Tools
 //!
 //! Command-line interface for creating Aurora projects, scaffolding components, and managing design tokens.
+//!
+//! NOTE: this is not a runnable CLI. This module only defines the
+//! `Command`/`CommandType` data model; there is no `[[bin]]` target, no
+//! `clap` (or other arg-parsing) dependency, and no `fn main` anywhere
+//! in this workspace that reads `std::env::args()`. See
+//! `ROADMAP_HONEST.md` for details.
 
 use std::collections::HashMap;
 

@@ -16,6 +16,14 @@ fetch the RustSec advisory database. CI's `Security Audit` job
 (`rustsec/audit-check`) runs this on every push/PR in a real GitHub
 Actions runner — its live status is what to trust, not this sandbox.
 
+**Quick-fix pass, `2026-09-21`:** re-verified locally (`cargo build
+--workspace`, `cargo test --workspace` — 518 tests, 0 failed, `cargo
+clippy --workspace --all-targets -- -D warnings` — 0 warnings, `cargo
+fmt --check` — clean) after fixing the two items marked FIXED below (the
+hex-literal `.unwrap()` pattern and the missing GNOME/CLI doc-comment
+disclosure). No other items in this file were touched — everything else
+below is carried forward unchanged from the `2026-09-19` pass.
+
 ---
 
 ## 1. Built but not independently re-verified live on GitHub
@@ -134,32 +142,26 @@ Actions runner — its live status is what to trust, not this sandbox.
 
 ## Technical debt (concrete, file:line where possible)
 
-- **`.unwrap()` on parsed hex-color literals in production code, not just
-  tests.** `crates/aurora-color/src/theme.rs`: 88 occurrences of
-  `Color::from_hex("#literal").unwrap()` in the theme-construction
-  functions (lines 72–189, before the `#[cfg(test)] mod tests` at line
-  252). `crates/aurora-tokens/src/color.rs`: 69 occurrences, same pattern
-  (lines 108 onward). In practice these operate on compile-time string
-  constants so they don't panic today, but a single-character typo in any
-  of these hex strings (e.g. `"#g5f5f5"`) would compile fine and panic at
-  runtime on first construction of that theme, with no compile-time
-  check. Not urgent (no such typo currently exists — all these themes are
-  exercised by the passing test suite), but worth a dedicated follow-up:
-  either a `const fn` hex parser validated at compile time, or at minimum
-  a `.expect("valid built-in hex constant")` with a message, so a future
-  typo fails loudly with context instead of a bare `unwrap()` panic
-  message.
-- **`crates/aurora-gtk/src/gnome/` and `crates/aurora-gtk/src/cli/` are
-  exported public API (`pub mod gnome; pub mod cli;` in `lib.rs`) with no
-  doc-comment disclosure that they perform no real system I/O.** This is
-  now documented in `CLAUDE.md`, `docs/architecture/README.md`, and this
-  file, but the in-source doc comments (`//! GNOME Settings integration
-  panel` in `settings_panel.rs`, `//! dconf schema for Aurora GNOME
-  integration` in `dconf.rs`) still read as if real integration exists.
-  **Recommend a dedicated follow-up session** to either add explicit
-  `//! NOTE: no real system I/O — see ROADMAP_HONEST.md` doc comments at
-  the top of each file, or `#[doc(hidden)]`/feature-gate them until real
-  I/O is implemented.
+- **FIXED (2026-09-21, quick-fix pass):** `.unwrap()` on parsed hex-color
+  literals in production code, not just tests. `crates/aurora-color/src/theme.rs`
+  (88 occurrences, lines 72–189) and `crates/aurora-tokens/src/color.rs`
+  (68 occurrences, lines 108 onward) now use
+  `.expect("valid built-in hex constant")` instead of bare `.unwrap()`,
+  so a future typo in a built-in hex literal fails loudly with context
+  instead of a bare panic. This is the "at minimum" mitigation named
+  below, not the `const fn` compile-time-checked parser — that larger
+  alternative is still not built and would need a dedicated follow-up if
+  wanted.
+- **FIXED (2026-09-21, quick-fix pass):** `crates/aurora-gtk/src/gnome/`
+  and `crates/aurora-gtk/src/cli/` are exported public API (`pub mod
+  gnome; pub mod cli;` in `lib.rs`) and previously had no doc-comment
+  disclosure that they perform no real system I/O / aren't a runnable
+  CLI. Added explicit `//! NOTE: no real system I/O` (or equivalent)
+  doc comments to the top of `dconf.rs`, `notifications.rs`,
+  `observer.rs`, `settings_panel.rs`, and `cli/mod.rs`, pointing at this
+  file. This was the "cheap" disclosure option named below; actually
+  implementing real dconf/D-Bus/CLI behavior is still not done and would
+  need a dedicated follow-up if wanted.
 - **No `[[bin]]` targets or installable binary anywhere in the
   workspace**, despite a `CHANGELOG.md` `[1.3.0]` entry justifying
   committing `Cargo.lock` partly by reference to "real binaries
@@ -198,17 +200,19 @@ Actions runner — its live status is what to trust, not this sandbox.
 
 ## Recommended priority for a dedicated follow-up session
 
-1. **Highest:** decide what to do with `aurora-gtk::gnome` and
-   `aurora-gtk::cli` — either disclose loudly in-source (cheap) or
-   actually implement real dconf/D-Bus/CLI behavior (real work). Shipping
-   silent no-op "integration" code is the kind of gap most likely to
-   surprise a downstream consumer.
+1. **Highest, partially done:** the in-source doc-comment disclosure for
+   `aurora-gtk::gnome`/`aurora-gtk::cli` was added in the 2026-09-21
+   quick-fix pass (see Technical debt section above). Actually
+   implementing real dconf/D-Bus/CLI behavior is still real work and
+   still needs a dedicated follow-up if wanted.
 2. **Medium:** cut a `v1.3.0` tag/GitHub Release so `README.md`'s install
    instructions actually deliver the HDR-fallback and CI fixes already on
    `main`.
-3. **Medium:** the hex-literal `.unwrap()` pattern in `aurora-color` and
-   `aurora-tokens` — low risk today, but a compile-time-checked
-   alternative would remove an entire class of future panic risk cheaply.
+3. **Done (2026-09-21 quick-fix pass):** the hex-literal `.unwrap()`
+   pattern in `aurora-color` and `aurora-tokens` now uses
+   `.expect("valid built-in hex constant")`. A `const fn`
+   compile-time-checked parser would still be a stronger alternative but
+   is a larger change, left undone.
 4. **Low:** mine `docs/archive/` for any narrowly-accurate technical
    content worth restoring in a corrected form (typography scale specs,
    component spec structure) rather than leaving the archive as the only

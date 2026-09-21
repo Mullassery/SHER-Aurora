@@ -164,13 +164,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-No changes merged to `main` since `[1.3.0]` at the time of this writing.
 For what's not built and has no committed timeline (a Qt or web renderer,
 a larger widget library, etc.), see the "Not built" bucket in
 `ROADMAP_HONEST.md` rather than this section — nothing below is a
 commitment, and several items previously listed here (Figma export,
 "AI-powered component suggestions") were never started and had no actual
 plan behind them.
+
+### Fixed
+
+- `crates/aurora-color/src/theme.rs` (88 occurrences, lines 72-189) and
+  `crates/aurora-tokens/src/color.rs` (68 occurrences, lines 108 onward):
+  replaced bare `Color::from_hex("#literal").unwrap()` with
+  `.expect("valid built-in hex constant")` in theme-construction code, so
+  a future typo in a built-in hex literal fails loudly with context
+  instead of a bare `unwrap()` panic. Behavior is unchanged for all
+  current (valid) literals — verified by the full test suite still
+  passing.
+- Added explicit `//! NOTE: no real system I/O` doc comments to the top
+  of `crates/aurora-gtk/src/gnome/dconf.rs`, `notifications.rs`,
+  `observer.rs`, `settings_panel.rs`, and `crates/aurora-gtk/src/cli/mod.rs`,
+  so the in-source documentation no longer reads as if real GNOME/D-Bus
+  integration or a runnable CLI exists. No behavior change.
 
 ## Support
 

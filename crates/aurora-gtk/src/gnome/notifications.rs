@@ -1,4 +1,9 @@
 //! GNOME notification styling integration
+//!
+//! NOTE: no real system I/O. This module only models notification
+//! urgency as in-memory data (e.g. `as_dbus_int()` returns a plain
+//! `i32`); no D-Bus connection is ever opened anywhere in this
+//! workspace. See `ROADMAP_HONEST.md` for details.
 
 use aurora_color::ThemeName;
 

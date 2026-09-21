@@ -1,4 +1,8 @@
 //! Theme observer for dynamic GNOME theme switching
+//!
+//! NOTE: no real system I/O. This is an in-memory callback registry with
+//! no hooks into any actual GNOME/GTK settings-change signal or OS
+//! event. See `ROADMAP_HONEST.md` for details.
 
 use aurora_color::ThemeName;
 
