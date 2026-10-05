@@ -202,6 +202,27 @@ that lands on both sides, this workspace (`crates/aurora-*`) builds and
 functions standalone as a GTK/Qt/Web design-system toolkit — genuinely
 useful on its own in the meantime, not blocked on the rest of the stack.
 
+## Linux / Ubuntu compatibility
+
+Verified 2026-10 (see org-wide `SHER-LINUX-RUST-COMPATIBILITY.md`):
+
+- **Ubuntu**: 24.04 LTS and 26.04 LTS, confirmed via real Docker containers (`cargo check`
+  with `libgtk-4-dev` installed; full test suite already verified on `ubuntu-latest` CI
+  with `xvfb`, per "Known issues" below).
+- **Architecture**: x86_64 and arm64, both confirmed.
+- **GTK4/gtk-rs version**: pinned at `gtk4` 0.11.4 (current release line as of Oct 2026, full
+  `gtk4-sys`/`gdk4-sys`/`gsk4-sys` dep tree). No usage of any API GTK4 has deprecated ahead
+  of GTK5 (Assistant, EntryCompletion, ListStore) — confirmed by audit, not assumed.
+  Zero `unsafe`/FFI in this repo's own code; all GTK4 access goes through gtk-rs's safe
+  bindings.
+  - 518/518 tests pass, no regression.
+- **Widget completeness**: exactly 5 of 17 planned widgets (Button, Card, Checkbox, Input,
+  Switch) construct real `gtk4` objects via `.build()`; the other 12 have real Rust
+  logic/tests but no GTK4 rendering yet. This is accurately disclosed in this README and
+  `ROADMAP_HONEST.md` already — an external audit claim restating "5 of 17" was verified
+  accurate, but the "unusable for production" framing overstates it (the 5 real widgets
+  work today).
+
 ## Known issues
 
 For the full, current list of bugs, security notes, and unbuilt/broken
