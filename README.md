@@ -1,10 +1,19 @@
-# Aurora
+# SHER Aurora
 
 **A GNOME design system for Rust: design tokens, typography, color, motion, and a growing set of real GTK4 widgets — all backed by an automated WCAG accessibility audit.**
 
-[![CI](https://github.com/Mullassery/aurora/actions/workflows/ci.yml/badge.svg)](https://github.com/Mullassery/aurora/actions/workflows/ci.yml)
+[![CI](https://github.com/Mullassery/SHER-Aurora/actions/workflows/ci.yml/badge.svg)](https://github.com/Mullassery/SHER-Aurora/actions/workflows/ci.yml)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![GTK4](https://img.shields.io/badge/gtk4-0.11-orange.svg)](Cargo.toml)
 
 Aurora gives GNOME app developers a single, consistent source of truth for spacing, color, typography, motion, sound, and iconography — instead of every app inventing its own. Where a widget is listed below as "renders on real GTK4," it means exactly that: it constructs a genuine `gtk4` crate object, not a mock or a CSS-only description.
+
+**Contents:** [Use cases](#use-cases) · [What's real today](#whats-real-today) ·
+[Install](#install) · [Quick start](#quick-start) · [Icons](#icons) ·
+[Themes & accessibility](#themes--accessibility) · [Development](#development) ·
+[Linux / Ubuntu compatibility](#linux--ubuntu-compatibility) ·
+[Relationship to the SHER family](#relationship-to-the-sher-family) ·
+[Known issues](#known-issues) · [License](#license)
 
 ---
 
@@ -41,17 +50,19 @@ That's 5 of 17 planned widgets rendering on real GTK4 right now. The rest have w
 
 ## Install
 
-Aurora is not yet published to crates.io (see [License](#license)). Use it as a Cargo git dependency:
+Aurora is not yet published to crates.io, and there are no tagged releases yet (see [License](#license) and `CHANGELOG.md`) — use it as a Cargo git dependency pinned to a commit, not a tag that doesn't exist:
 
 ```toml
 [dependencies]
-aurora-gtk = { git = "https://github.com/Mullassery/aurora", tag = "v1.2.0" }
-aurora-color = { git = "https://github.com/Mullassery/aurora", tag = "v1.2.0" }
-aurora-tokens = { git = "https://github.com/Mullassery/aurora", tag = "v1.2.0" }
-aurora-motion = { git = "https://github.com/Mullassery/aurora", tag = "v1.2.0" }
+aurora-gtk = { git = "https://github.com/Mullassery/SHER-Aurora", rev = "<commit-sha>" }
+aurora-color = { git = "https://github.com/Mullassery/SHER-Aurora", rev = "<commit-sha>" }
+aurora-tokens = { git = "https://github.com/Mullassery/SHER-Aurora", rev = "<commit-sha>" }
+aurora-motion = { git = "https://github.com/Mullassery/SHER-Aurora", rev = "<commit-sha>" }
 gtk4 = { version = "0.11", features = ["v4_12"] }
 glib = "0.22"
 ```
+
+Pick `<commit-sha>` from the [commit history](https://github.com/Mullassery/SHER-Aurora/commits/main) — pin to a specific commit rather than `branch = "main"` so your build doesn't change under you on an unrelated push.
 
 You'll also need the system GTK4 library (>= 4.12) installed, since `aurora-gtk` links against it:
 
@@ -72,8 +83,8 @@ sudo pacman -S gtk4 glib2 base-devel
 Or, to build and hack on Aurora itself:
 
 ```bash
-git clone https://github.com/Mullassery/aurora.git
-cd aurora
+git clone https://github.com/Mullassery/SHER-Aurora.git
+cd SHER-Aurora
 cargo build --workspace
 cargo test --workspace
 ```
@@ -183,14 +194,30 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contribution workflow, and [
 ## Relationship to the SHER family
 
 This repo is `SHER-Aurora`, one member of an intentionally interdependent
-stack — `SHER-Kernel` → `SHER-Graphics` → `SHER-Display` → `SHER-Input` →
-Aurora — not just shared organizational naming. Aurora is the planned
-primary shell on top of `SHER-Display` (see that repo's `ROADMAP.md` Phase
-5), the same way `SHER-Display` depends on `SHER-Kernel`/`SHER-Graphics`/
-`SHER-Input` today.
+stack under the Mullassery org — not just shared organizational naming.
+The full family, for anyone (human or AI) landing on this repo and wanting
+to discover the rest:
+
+| Repo | Role |
+|---|---|
+| [SHER-KERNEL](https://github.com/Mullassery/SHER-KERNEL) | Foundation: capability-based object model, scheduler, memory, driver lifecycle |
+| [SHER-Graphics](https://github.com/Mullassery/SHER-Graphics) | GPU abstraction + software/Vulkan rendering backends |
+| [SHER-Display](https://github.com/Mullassery/SHER-Display) | Compositor, window management, Wayland/X11 compatibility |
+| [SHER-INPUT](https://github.com/Mullassery/SHER-INPUT) | Canonical input-event pipeline (keyboard/pointer/touch/tablet/gamepad) |
+| [SHER-Process-Explorer](https://github.com/Mullassery/SHER-Process-Explorer) | Linux process telemetry, investigation, and history (standalone — no Cargo dependency on the rest of the family) |
+| **SHER-Aurora** (this repo) | GNOME/GTK4-oriented design system — the planned primary shell on top of SHER-Display |
+
+The intended dependency chain is `SHER-KERNEL` → `SHER-Graphics` →
+`SHER-Display` → `SHER-INPUT` → Aurora. Aurora is the planned primary shell
+on top of `SHER-Display` (see that repo's `ROADMAP.md` Phase 5), the same
+way `SHER-Display` depends on `SHER-KERNEL`/`SHER-Graphics`/`SHER-INPUT`
+today. `SHER-Process-Explorer` sits outside that chain entirely — it's a
+standalone Linux process-telemetry tool with no Cargo-level relationship to
+either side of it, included above for discoverability, not because it
+integrates with Aurora.
 
 **Current state, verified by reading every `Cargo.toml` in the family:**
-this repo has **zero Cargo-level dependency** on any of the other four
+this repo has **zero Cargo-level dependency** on any of the other five
 today, and none of them depend on it — that reflects where each repo's
 own roadmap currently is (`SHER-Display`'s Phase 5 hasn't started; it
 depends on that repo's Phases 1-4 first), not a decision to keep Aurora
@@ -242,7 +269,7 @@ below are kept as a historical record of specific fixes already made.
 
 ## Issues & contributing
 
-Found a bug, or a claim in this README that doesn't match reality? Please [open an issue](https://github.com/Mullassery/aurora/issues) — this project has a specific history of documentation overstating what was actually built, and keeping that honest going forward is a priority.
+Found a bug, or a claim in this README that doesn't match reality? Please [open an issue](https://github.com/Mullassery/SHER-Aurora/issues) — this project has a specific history of documentation overstating what was actually built, and keeping that honest going forward is a priority.
 
 ---
 
