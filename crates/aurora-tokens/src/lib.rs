@@ -18,7 +18,7 @@ pub use radius::{Radius, RadiusScale};
 pub use spacing::{Spacing, SpacingScale};
 
 /// Unified design token system
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct DesignTokens {
     pub spacing: SpacingScale,
     pub radius: RadiusScale,
@@ -63,9 +63,8 @@ impl DesignTokens {
 
     /// Export all tokens as JSON
     pub fn to_json(&self) -> TokenResult<String> {
-        // Note: Requires serde(derive) on DesignTokens struct
-        // For now, return placeholder
-        Ok("{}".to_string())
+        serde_json::to_string_pretty(self)
+            .map_err(|e| TokenError::SerializationError(e.to_string()))
     }
 }
 
@@ -100,7 +99,15 @@ mod tests {
     #[test]
     fn test_tokens_to_json() {
         let tokens = DesignTokens::new();
-        let json = tokens.to_json();
-        assert!(json.is_ok());
+        let json = tokens.to_json().expect("to_json should succeed");
+
+        assert_ne!(json, "{}");
+        let parsed: serde_json::Value = serde_json::from_str(&json).expect("valid JSON");
+        assert_eq!(parsed["spacing"]["xxs"], 2);
+        assert_eq!(parsed["spacing"]["sm"], 8);
+        assert!(parsed["radius"].is_object());
+        assert!(parsed["elevation"].is_object());
+        assert!(parsed["motion"].is_object());
+        assert!(parsed["color_system"].is_object());
     }
 }

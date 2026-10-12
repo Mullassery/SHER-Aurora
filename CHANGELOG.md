@@ -173,6 +173,13 @@ plan behind them.
 
 ### Fixed
 
+- `crates/aurora-tokens/src/lib.rs`: `DesignTokens::to_json()` was a
+  placeholder that returned the hardcoded string `"{}"` regardless of the
+  token values, and its test only asserted `.is_ok()` so the no-op passed.
+  It now really serializes the token system (`DesignTokens` derives
+  `serde::Serialize`; `serde_json` added as a dependency) and the test
+  parses the output and checks real spacing/radius/elevation/motion/
+  color-system values.
 - `crates/aurora-color/src/theme.rs` (88 occurrences, lines 72-189) and
   `crates/aurora-tokens/src/color.rs` (68 occurrences, lines 108 onward):
   replaced bare `Color::from_hex("#literal").unwrap()` with
