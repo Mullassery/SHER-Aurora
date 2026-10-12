@@ -109,3 +109,5 @@ docs/_build/
 # Windows
 Thumbs.db
 ehthumbs.db
+
+graphify-out/
