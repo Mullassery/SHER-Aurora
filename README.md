@@ -1,5 +1,7 @@
 # SHER Aurora
 
+[![Grapify](https://img.shields.io/badge/Grapify-Code%20Scan-purple)](https://grapify.ai)
+
 **A GNOME design system for Rust: design tokens, typography, color, motion, and a growing set of real GTK4 widgets — all backed by an automated WCAG accessibility audit.**
 
 [![CI](https://github.com/Mullassery/SHER-Aurora/actions/workflows/ci.yml/badge.svg)](https://github.com/Mullassery/SHER-Aurora/actions/workflows/ci.yml)
