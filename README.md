@@ -1,58 +1,63 @@
 # SHER Aurora
 
-[![Graphify](https://img.shields.io/badge/Graphify-knowledge%20graph-blue)](https://github.com/Graphify-Labs/graphify)
+A GNOME design system for Rust: design tokens, typography, color, motion, sound, icons, and a growing set of real GTK4 widgets — backed by an automated WCAG accessibility audit.
 
-**A GNOME design system for Rust: design tokens, typography, color, motion, and a growing set of real GTK4 widgets — all backed by an automated WCAG accessibility audit.**
-
-[![CI](https://github.com/Mullassery/SHER-Aurora/actions/workflows/ci.yml/badge.svg)](https://github.com/Mullassery/SHER-Aurora/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
-[![GTK4](https://img.shields.io/badge/gtk4-0.11-orange.svg)](Cargo.toml)
+[![CI](https://github.com/Mullassery/SHER-Aurora/actions/workflows/ci.yml/badge.svg)](https://github.com/Mullassery/SHER-Aurora/actions/workflows/ci.yml)
 
-Aurora gives GNOME app developers a single, consistent source of truth for spacing, color, typography, motion, sound, and iconography — instead of every app inventing its own. Where a widget is listed below as "renders on real GTK4," it means exactly that: it constructs a genuine `gtk4` crate object, not a mock or a CSS-only description.
+## What it is
 
-**Contents:** [Use cases](#use-cases) · [What's real today](#whats-real-today) ·
-[Install](#install) · [Quick start](#quick-start) · [Icons](#icons) ·
-[Themes & accessibility](#themes--accessibility) · [Development](#development) ·
-[Linux / Ubuntu compatibility](#linux--ubuntu-compatibility) ·
-[Relationship to the SHER family](#relationship-to-the-sher-family) ·
-[Known issues](#known-issues) · [License](#license)
+Aurora gives GNOME app developers a single, consistent source of truth for spacing, color, typography, motion, sound, and iconography — instead of every app inventing its own. It is a Rust workspace of design-token crates plus a GTK4 widget layer, where a widget listed as "renders on real GTK4" constructs a genuine `gtk4` crate object, not a mock or a CSS-only description.
 
----
+Aurora is one member of the SHER family and is the planned primary shell on top of SHER-Display, but today it has zero Cargo-level dependency on any sibling and builds and functions standalone as a GTK/Qt/Web design-system toolkit.
 
-## Use cases
+## Features / Highlights
 
-- **A consistent design system across multiple GNOME apps** — one source
-  of truth for spacing/color/typography/motion instead of each app
-  reinventing it.
-- **Real GTK4 widgets with an automated WCAG accessibility audit built
-  in**, not a design-only spec you re-implement per app.
-- **Not yet a good fit for:** bridging Aurora widgets into `SHER-Display`'s
-  scene graph — real, intended, planned work, but not started yet (see
-  [Relationship to the SHER family](#relationship-to-the-sher-family)
-  below). Widgets are literal GTK4-native today.
+- **Design tokens** — spacing, radius, elevation, and motion as a consistent, unit-tested source of truth (`aurora-tokens`).
+- **Typography** — responsive type scales with internationalization and script-aware adjustments (`aurora-typography`).
+- **Color system** — semantic tokens (`surface`, `primary`, `success`, `error`, …) across four themes: Light, Dark, OLED, and HDR (`aurora-color`).
+- **Motion** — spring-physics and easing math rather than linear easing (`aurora-motion`).
+- **Sound** — semantic sound-event definitions (`aurora-sound`; no audio playback).
+- **Accessibility audit** — `aurora-a11y` computes real WCAG contrast ratios across every token pairing in every theme (7:1 / 4.5:1 / 3:1 thresholds), and its regression tests fail if a future palette change reintroduces a sub-threshold pairing.
+- **Icons** — 24 real, hand-authored 24×24 stroke-based SVGs across navigation, actions, status, media, and system (`aurora-icons`).
+- **GTK4 widgets** — 5 of 17 planned widgets render as real `gtk4` objects via `.build()` today: Button, Input, Checkbox, Card, Switch.
+- **Runnable proofs** — `gtk4_harness` (assertion-driven, constructs real GTK4 objects and reads state back) and `showcase` (a real interactive window).
 
-## What's real today
+## Who it's for / Use cases
+
+- **Keeping a consistent design system across multiple GNOME apps** — one source of truth for spacing/color/typography/motion instead of each app reinventing it.
+- **Using real GTK4 widgets with an automated WCAG accessibility audit built in**, rather than a design-only spec you re-implement per app.
+- **Learning from a measured, not asserted, accessibility approach** — `aurora-a11y` computes real contrast ratios against the shipped palettes.
+
+## What it is not
+
+- **Not a full widget set yet.** Only 5 of 17 planned widgets construct real GTK4 objects. The other 12 (DataTable, Tabs, Menu, Dialog, List, Select, Sidebar, Badge, Breadcrumb, Radio, Tooltip, IconDock) have working Rust logic/tests but no `.build()` yet.
+- **Not an application or desktop distribution.** There is no installer, no theme daemon, and no GNOME Shell extension; it is a library workspace.
+- **Not libadwaita-based.** `libadwaita` is not a dependency of any crate — only `gtk4` and `glib`.
+- **No system integration.** Nothing calls into `dconf`, `gsettings`, D-Bus, or any GNOME daemon; `aurora-gtk`'s `gnome/` modules model what such integration would look like but perform no OS I/O.
+- **No runnable CLI.** `aurora-gtk/src/cli/` defines `Command`/`CommandType` data structures, but there is no `[[bin]]` target, no argument parser, and no `fn main` that reads `std::env::args()`.
+- **Not multi-backend yet.** `aurora-qt` (Qt/QML), `aurora-web` (WASM/web), and `aurora-core` (unified facade) are placeholder crates with no implementation.
+- **Not published to crates.io** and no tagged releases; use it as a pinned Cargo git dependency.
+- **Not the claimed icon count in older docs.** The set is 24 real SVGs, not "2000+" (that older claim was never backed by assets).
+
+## Project status
 
 | Layer | Status |
 |---|---|
-| Design tokens (spacing, radius, elevation) | Real, unit-tested (`aurora-tokens`) |
-| Typography (responsive scales, i18n, script detection) | Real, unit-tested (`aurora-typography`) |
-| Color (Light/Dark/OLED/HDR themes, semantic tokens) | Real, unit-tested (`aurora-color`) |
-| Motion (spring physics, easing) | Real, unit-tested (`aurora-motion`) |
-| Sound (semantic feedback definitions) | Real, unit-tested (`aurora-sound`) |
-| Accessibility (`aurora-a11y`) | Real automated WCAG contrast audit over every theme's color tokens |
-| Icons (`aurora-icons`) | 24 real, hand-authored SVG icons (navigation, actions, status, media, system) — not 2000+, see [Icons](#icons) below |
+| Design tokens, typography, color, motion, sound | Real, unit-tested |
+| Accessibility (`aurora-a11y`) | Real automated WCAG contrast audit over every theme's tokens |
+| Icons (`aurora-icons`) | 24 real hand-authored SVGs |
 | GTK4 widgets — Button, Input, Checkbox, Card, Switch | Render as real `gtk4` objects via `.build()` |
-| GTK4 widgets — DataTable, Tabs, Menu, Dialog, List, Select, Sidebar, Badge, Breadcrumb, Radio, Tooltip, IconDock | Styling/state logic only — no `.build()` yet, do not construct real GTK4 objects |
-| `aurora-qt` (Qt/QML backend), `aurora-web` (WASM/web backend), `aurora-core` (unified facade) | Not implemented — placeholder crates for future work |
+| GTK4 widgets — DataTable, Tabs, Menu, Dialog, List, Select, Sidebar, Badge, Breadcrumb, Radio, Tooltip, IconDock | Styling/state logic only — no `.build()` yet |
+| `aurora-qt`, `aurora-web`, `aurora-core` | Not implemented — placeholder crates |
 
-That's 5 of 17 planned widgets rendering on real GTK4 right now. The rest have working Rust logic (state, styling rules, tests) but nothing that touches the screen yet — growing that list is the main open work in this project.
+- **Tests:** about 518 tests pass locally with zero clippy warnings and `cargo fmt --check` clean.
+- **CI:** green across jobs after fixing a Linux compile error and a headless-display issue (tests run under `xvfb-run` on Linux).
+- **Not started:** growing the GTK4 widget list; the `aurora-qt`/`aurora-web` backends; bridging widgets into SHER-Display's scene graph (a real, planned integration, blocked on both sides' roadmaps).
 
----
+## Installation
 
-## Install
-
-Aurora is not yet published to crates.io, and there are no tagged releases yet (see [License](#license) and `CHANGELOG.md`) — use it as a Cargo git dependency pinned to a commit, not a tag that doesn't exist:
+Aurora is not yet published to crates.io and has no tagged releases — use it as a Cargo git dependency pinned to a commit (pick a `<commit-sha>` from the [commit history](https://github.com/Mullassery/SHER-Aurora/commits/main); pinning to a commit rather than `branch = "main"` keeps your build from changing on an unrelated push):
 
 ```toml
 [dependencies]
@@ -64,9 +69,7 @@ gtk4 = { version = "0.11", features = ["v4_12"] }
 glib = "0.22"
 ```
 
-Pick `<commit-sha>` from the [commit history](https://github.com/Mullassery/SHER-Aurora/commits/main) — pin to a specific commit rather than `branch = "main"` so your build doesn't change under you on an unrelated push.
-
-You'll also need the system GTK4 library (>= 4.12) installed, since `aurora-gtk` links against it:
+You also need the system GTK4 library (>= 4.12), since `aurora-gtk` links against it:
 
 ```bash
 # macOS
@@ -82,7 +85,7 @@ sudo dnf install -y gtk4-devel glib2-devel gcc make pkg-config
 sudo pacman -S gtk4 glib2 base-devel
 ```
 
-Or, to build and hack on Aurora itself:
+To build and hack on Aurora itself:
 
 ```bash
 git clone https://github.com/Mullassery/SHER-Aurora.git
@@ -90,8 +93,6 @@ cd SHER-Aurora
 cargo build --workspace
 cargo test --workspace
 ```
-
----
 
 ## Quick start
 
@@ -142,26 +143,21 @@ fn main() {
 }
 ```
 
-Two complete, runnable versions of this ship in the repo itself:
+## Usage
+
+Two complete, runnable examples ship in the repo:
 
 ```bash
-# Non-interactive, assertion-driven proof that these widgets construct real
-# gtk4 objects (initializes real GTK4, builds real widgets, installs real
-# CSS, realizes a real window, and asserts on state read back through the
-# real GTK4 API):
+# Non-interactive, assertion-driven proof that widgets construct real gtk4 objects
 cargo run --example gtk4_harness -p aurora-gtk
 
-# A real, interactive GTK4 window using the widgets above:
+# A real, interactive GTK4 window using the widgets above
 cargo run --example showcase -p aurora-gtk
 ```
 
-(On macOS, `gtk4::init()` must run on the process's actual OS main thread, which is why widget-construction tests are `#[cfg(not(target_os = "macos"))]` in this repo — `gtk4_harness.rs` is the macOS-compatible proof, and it runs for real via `cargo run`, not inside the `#[test]` harness.)
+On macOS, `gtk4::init()` must run on the process's actual OS main thread, so widget-construction tests are `#[cfg(not(target_os = "macos"))]`; `gtk4_harness` is the macOS-compatible proof and runs via `cargo run` rather than inside the `#[test]` harness.
 
----
-
-## Icons
-
-`aurora-icons` ships **24 real, hand-authored SVG icons** across five categories (navigation, actions, status, media, system) — each a complete, valid 24×24 stroke-based SVG document, not a placeholder. Earlier project documentation claimed "2000+ icons"; that was never backed by actual SVG assets and has been corrected. Growing this set is real future work, tracked honestly rather than pre-claimed.
+Icons:
 
 ```rust
 use aurora_icons::{icon_svg, IconId};
@@ -170,15 +166,7 @@ let svg = icon_svg(IconId::Home).unwrap();
 assert!(svg.starts_with("<svg"));
 ```
 
----
-
-## Themes & accessibility
-
-Four themes ship today — Light, Dark, OLED, HDR — each defined as semantic color tokens (`surface`, `primary`, `success`, `error`, etc.), never raw hex values in application code. `aurora-a11y` runs an automated WCAG contrast audit over every token pairing in every theme (not a manual claim): normal reading text, large text, and non-text UI components are checked against their real WCAG thresholds (7:1 / 4.5:1 / 3:1), and the audit's own regression tests fail if a future palette change reintroduces a sub-threshold pairing.
-
----
-
-## Development
+Development commands:
 
 ```bash
 cargo build --workspace
@@ -187,93 +175,30 @@ cargo clippy --workspace --all-targets -- -D warnings
 cargo fmt --check
 ```
 
-Locally on macOS, all of the above pass clean (518 tests, zero clippy warnings, `cargo fmt --check` clean) — verified directly against the current `main` commit. CI on Linux was red for a long history of runs (see [Known issues](#known-issues)) on a compile error and, once that was fixed, a second real problem it had been hiding (`gtk4::init()` needs a display server `ubuntu-latest` doesn't have by default) — both now fixed. `Security Audit` had a separate, unrelated root cause (`Cargo.lock` was gitignored instead of committed, see [Known issues](#known-issues)) — also fixed in this pass, and CI is now fully green across all 9 jobs. The badge above reflects real, live status, not a static claim.
+## Documentation
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contribution workflow, and [CHANGELOG.md](CHANGELOG.md) for a detailed, corrected history of what's changed release over release (including where earlier versions of this README overstated what existed).
+- [`CHANGELOG.md`](CHANGELOG.md) — corrected history of what has changed release over release
+- [`ROADMAP_HONEST.md`](ROADMAP_HONEST.md) — the single source of truth for open issues and technical debt
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) — the full contribution workflow
+- [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md)
+- [`SECURITY.md`](SECURITY.md) — how to report a vulnerability
+- [`CLAUDE.md`](CLAUDE.md) — design intent and conventions for contributors
+- [`docs/architecture/README.md`](docs/architecture/README.md) — architecture diagram
+- [`docs/archive/`](docs/archive/) — older docs kept for history
 
----
+## Contributing
 
-## Relationship to the SHER family
+Found a bug, or a claim in these docs that does not match reality? Please [open an issue](https://github.com/Mullassery/SHER-Aurora/issues) — this project has a specific history of documentation overstating what was actually built, and keeping that honest going forward is a priority. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the workflow and [`ROADMAP_HONEST.md`](ROADMAP_HONEST.md) for the current open-issue list.
 
-This repo is `SHER-Aurora`, one member of an intentionally interdependent
-stack under the Mullassery org — not just shared organizational naming.
-The full family, for anyone (human or AI) landing on this repo and wanting
-to discover the rest:
+## Related projects
 
-| Repo | Role |
-|---|---|
-| [SHER-KERNEL](https://github.com/Mullassery/SHER-KERNEL) | Foundation: capability-based object model, scheduler, memory, driver lifecycle |
-| [SHER-Graphics](https://github.com/Mullassery/SHER-Graphics) | GPU abstraction + software/Vulkan rendering backends |
-| [SHER-Display](https://github.com/Mullassery/SHER-Display) | Compositor, window management, Wayland/X11 compatibility |
-| [SHER-INPUT](https://github.com/Mullassery/SHER-INPUT) | Canonical input-event pipeline (keyboard/pointer/touch/tablet/gamepad) |
-| [SHER-Process-Explorer](https://github.com/Mullassery/SHER-Process-Explorer) | Linux process telemetry, investigation, and history (standalone — no Cargo dependency on the rest of the family) |
-| **SHER-Aurora** (this repo) | GNOME/GTK4-oriented design system — the planned primary shell on top of SHER-Display |
-
-The intended dependency chain is `SHER-KERNEL` → `SHER-Graphics` →
-`SHER-Display` → `SHER-INPUT` → Aurora. Aurora is the planned primary shell
-on top of `SHER-Display` (see that repo's `ROADMAP.md` Phase 5), the same
-way `SHER-Display` depends on `SHER-KERNEL`/`SHER-Graphics`/`SHER-INPUT`
-today. `SHER-Process-Explorer` sits outside that chain entirely — it's a
-standalone Linux process-telemetry tool with no Cargo-level relationship to
-either side of it, included above for discoverability, not because it
-integrates with Aurora.
-
-**Current state, verified by reading every `Cargo.toml` in the family:**
-this repo has **zero Cargo-level dependency** on any of the other five
-today, and none of them depend on it — that reflects where each repo's
-own roadmap currently is (`SHER-Display`'s Phase 5 hasn't started; it
-depends on that repo's Phases 1-4 first), not a decision to keep Aurora
-separate. Aurora renders through literal `gtk4::Button`/`gtk4::Entry`
-widgets today because the `SHER-Display` scene-graph target it would
-eventually render to instead doesn't exist yet either (nothing in that
-repo's `scene/` crate is exposed for an external toolkit to target). Until
-that lands on both sides, this workspace (`crates/aurora-*`) builds and
-functions standalone as a GTK/Qt/Web design-system toolkit — genuinely
-useful on its own in the meantime, not blocked on the rest of the stack.
-
-## Linux / Ubuntu compatibility
-
-Verified 2026-10 (see org-wide `SHER-LINUX-RUST-COMPATIBILITY.md`):
-
-- **Ubuntu**: 24.04 LTS and 26.04 LTS, confirmed via real Docker containers (`cargo check`
-  with `libgtk-4-dev` installed; full test suite already verified on `ubuntu-latest` CI
-  with `xvfb`, per "Known issues" below).
-- **Architecture**: x86_64 and arm64, both confirmed.
-- **GTK4/gtk-rs version**: pinned at `gtk4` 0.11.4 (current release line as of Oct 2026, full
-  `gtk4-sys`/`gdk4-sys`/`gsk4-sys` dep tree). No usage of any API GTK4 has deprecated ahead
-  of GTK5 (Assistant, EntryCompletion, ListStore) — confirmed by audit, not assumed.
-  Zero `unsafe`/FFI in this repo's own code; all GTK4 access goes through gtk-rs's safe
-  bindings.
-  - 518/518 tests pass, no regression.
-- **Widget completeness**: exactly 5 of 17 planned widgets (Button, Card, Checkbox, Input,
-  Switch) construct real `gtk4` objects via `.build()`; the other 12 have real Rust
-  logic/tests but no GTK4 rendering yet. This is accurately disclosed in this README and
-  `ROADMAP_HONEST.md` already — an external audit claim restating "5 of 17" was verified
-  accurate, but the "unusable for production" framing overstates it (the 5 real widgets
-  work today).
-
-## Known issues
-
-For the full, current list of bugs, security notes, and unbuilt/broken
-features — including several found in a later documentation-honesty pass
-that aren't detailed below — see [`ROADMAP_HONEST.md`](ROADMAP_HONEST.md).
-That file is the single source of truth for open issues; the entries
-below are kept as a historical record of specific fixes already made.
-
-- **`aurora-tokens`'s HDR fallback — fixed.** `ColorSystem::current()` used to silently return the Light palette for `Theme::HDR` (`crates/aurora-tokens/src/color.rs`, was marked `TODO: Implement HDR theme`) instead of erroring or returning something real. `SemanticColor::hdr()` now has a genuinely distinct palette, sourced from `aurora-color`'s already-shipped `Theme::hdr()` values (the crate `aurora-gtk` actually consumes) rather than invented separately, so the two crates' HDR palettes agree. `ColorSystem::validate_contrast()` now checks it alongside Light/Dark/OLED (previously skipped it entirely), and new tests prove `current()` returns the real HDR palette rather than falling back to Light, and that it passes the same WCAG contrast checks as the other three themes.
-- **CI's Linux failures — fixed, and CI is now green.** Two separate, real problems, the second only visible once the first was out of the way:
-  1. `crates/aurora-gtk/src/widgets/button.rs`'s `test_button_disabled_is_insensitive_in_real_gtk4` called `button.is_sensitive()` without `gtk4::prelude::WidgetExt` in scope, failing to compile (`E0599`) — gated `#[cfg(not(target_os = "macos"))]`, so it never ran (or failed) locally on macOS, which is why `cargo test --workspace` reported clean there despite CI being red. Added the missing `use gtk4::prelude::*;` (matching the adjacent `test_button_build_is_real_gtk4_widget`, which already had it).
-  2. Once that compiled, the real `Tests (ubuntu-latest)` jobs still failed at runtime: `gtk4::init()` needs a display server to connect to, and `ubuntu-latest` runners have none by default — every `gtk_real` test panicked with "GTK has not been initialized." `widgets/switch.rs`'s comment claiming "On Linux ... this restriction does not exist, so these run for real there" had never actually been verified, since the compile error always blocked reaching this point before. Fixed by installing `xvfb` and running the Linux test step under `xvfb-run -a`.
-
-  Both verified against real infrastructure, not just locally: the actual GitHub Actions run right after each fix confirmed it (first `Build`/`Clippy` going green, then `Tests (ubuntu-latest, *)` going green), and a from-scratch `rust:latest` Docker container with `libgtk-4-dev`/`xvfb` installed reproduced both the original failure and the fix. **`Security Audit` — two separate bugs, both fixed.** First, it referenced a nonexistent action, `rustsec/audit-check-action@v1` (the real action is `rustsec/audit-check`, not `-action`), so it failed at the "resolve action" step before running at all — corrected to `rustsec/audit-check@v2.0.0`. That fix alone wasn't enough: `Cargo.lock` was listed in `.gitignore` and had never been committed, so once the action started resolving, it failed with `Couldn't load ./Cargo.lock` (entity not found). For a workspace that produces real binaries (`aurora_calendar`, `aurora_files`, `aurora_music`, `aurora_settings`, plus the `showcase` example — not a pure library published to crates.io), the lockfile should be committed for reproducible builds anyway, independent of this CI job needing it. Removed `Cargo.lock` from `.gitignore`, regenerated it with `cargo generate-lockfile` (89 crate dependencies), and verified locally with `cargo audit` — clean, zero vulnerabilities.
-- No open GitHub issues at the time of this writing.
-- External critique proposed bridging Aurora widgets to `SHER-Display`'s scene graph and routing input through `SHER-INPUT`. Verified against the current code: not built yet, correctly so — see "Relationship to the SHER family" above. This is real, intended, planned work (`SHER-Display`'s `ROADMAP.md` Phase 5), not a mismatch to paper over by declaring Aurora out of scope. There's no bridge-shaped abstraction or Aurora-side event loop to retrofit yet because the phase it belongs to hasn't started on either side; widgets are literal `gtk4::Button`/`gtk4::Entry` builders with GTK4's native event handling today for that reason, not because a "GNOME-only" decision rules the integration out. `CLAUDE.md`'s Key Design Decision #3 is being revised alongside this to describe the current GTK4-native state without overstating it as a permanent boundary against the planned `SHER-Display` integration.
-
-## Issues & contributing
-
-Found a bug, or a claim in this README that doesn't match reality? Please [open an issue](https://github.com/Mullassery/SHER-Aurora/issues) — this project has a specific history of documentation overstating what was actually built, and keeping that honest going forward is a priority.
-
----
+- [SHER-KERNEL](https://github.com/Mullassery/SHER-KERNEL) — AI-native operating-system kernel with zero-trust security
+- [SHER-Display](https://github.com/Mullassery/SHER-Display) — display server, compositor, and window manager for the SHER OS family
+- [SHER-Graphics](https://github.com/Mullassery/SHER-Graphics) — native graphics architecture (software GPU + Vulkan backend)
+- [SHER-INPUT](https://github.com/Mullassery/SHER-INPUT) — input subsystem that normalizes device activity into a canonical event stream
+- [SHER-Aurora](https://github.com/Mullassery/aurora) — GNOME design system for Rust
+- [SHER-Process-Explorer](https://github.com/Mullassery/SHER-Process-Explorer) — evidence-based Linux process explorer
+- [Browse all projects](https://github.com/Mullassery?tab=repositories)
 
 ## License
 
