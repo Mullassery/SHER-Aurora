@@ -279,17 +279,17 @@ impl HighContrastMode {
             let g = ((rgb >> 8) & 0xFF) as f32 / 255.0;
             let b = (rgb & 0xFF) as f32 / 255.0;
 
-            let rs = if r <= 0.03928 {
+            let rs = if r <= 0.04045 {
                 r / 12.92
             } else {
                 ((r + 0.055) / 1.055).powf(2.4)
             };
-            let gs = if g <= 0.03928 {
+            let gs = if g <= 0.04045 {
                 g / 12.92
             } else {
                 ((g + 0.055) / 1.055).powf(2.4)
             };
-            let bs = if b <= 0.03928 {
+            let bs = if b <= 0.04045 {
                 b / 12.92
             } else {
                 ((b + 0.055) / 1.055).powf(2.4)
