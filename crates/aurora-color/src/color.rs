@@ -43,19 +43,19 @@ impl Color {
         let g = self.g as f32 / 255.0;
         let b = self.b as f32 / 255.0;
 
-        let r = if r <= 0.03928 {
+        let r = if r <= 0.04045 {
             r / 12.92
         } else {
             ((r + 0.055) / 1.055).powf(2.4)
         };
 
-        let g = if g <= 0.03928 {
+        let g = if g <= 0.04045 {
             g / 12.92
         } else {
             ((g + 0.055) / 1.055).powf(2.4)
         };
 
-        let b = if b <= 0.03928 {
+        let b = if b <= 0.04045 {
             b / 12.92
         } else {
             ((b + 0.055) / 1.055).powf(2.4)

@@ -109,7 +109,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Improved color system with additional semantic contexts
 - Enhanced animation presets (spring, smooth, fast) across all components
-- Updated component library to 17 production-ready widgets
+- Updated component library to 17 planned widgets *(historical overclaim, left as written — only 5 of 17 render as real GTK4 objects today; see [README](README.md))*
 - Restructured documentation for better organization
 - Improved motion engine performance
 
