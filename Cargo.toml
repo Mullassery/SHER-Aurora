@@ -15,6 +15,25 @@ members = [
 
 resolver = "2"
 
+# `aurora-core`, `aurora-qt`, and `aurora-web` are intentional,
+# clearly-labelled placeholder crates (see each crate's `lib.rs`) containing no
+# real implementation. They stay workspace members so `cargo build -p
+# aurora-qt` etc. still work, but are excluded from the *default* member set so
+# a bare `cargo build` / `cargo test` / `cargo clippy` at the workspace root
+# only compiles crates that actually implement something, instead of spending
+# CI time building no-op crates and implying they are finished. README's
+# "Project status" table documents all three as placeholder crates.
+default-members = [
+    "crates/aurora-tokens",
+    "crates/aurora-typography",
+    "crates/aurora-color",
+    "crates/aurora-motion",
+    "crates/aurora-icons",
+    "crates/aurora-sound",
+    "crates/aurora-a11y",
+    "crates/aurora-gtk",
+]
+
 [workspace.package]
 version = "1.3.0"
 edition = "2021"

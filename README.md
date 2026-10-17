@@ -3,7 +3,7 @@
 A GNOME design system for Rust: design tokens, typography, color, motion, sound, icons, and a growing set of real GTK4 widgets — backed by an automated WCAG accessibility audit.
 
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
-[![CI](https://github.com/Mullassery/SHER-Aurora/actions/workflows/ci.yml/badge.svg)](https://github.com/Mullassery/SHER-Aurora/actions/workflows/ci.yml)
+[![CI](https://github.com/Mullassery/aurora/actions/workflows/ci.yml/badge.svg)](https://github.com/Mullassery/aurora/actions/workflows/ci.yml)
 
 ## What it is
 
@@ -57,14 +57,14 @@ Aurora is one member of the SHER family and is the planned primary shell on top 
 
 ## Installation
 
-Aurora is not yet published to crates.io and has no tagged releases — use it as a Cargo git dependency pinned to a commit (pick a `<commit-sha>` from the [commit history](https://github.com/Mullassery/SHER-Aurora/commits/main); pinning to a commit rather than `branch = "main"` keeps your build from changing on an unrelated push):
+Aurora is not yet published to crates.io and has no tagged releases — use it as a Cargo git dependency pinned to a commit (pick a `<commit-sha>` from the [commit history](https://github.com/Mullassery/aurora/commits/main); pinning to a commit rather than `branch = "main"` keeps your build from changing on an unrelated push):
 
 ```toml
 [dependencies]
-aurora-gtk = { git = "https://github.com/Mullassery/SHER-Aurora", rev = "<commit-sha>" }
-aurora-color = { git = "https://github.com/Mullassery/SHER-Aurora", rev = "<commit-sha>" }
-aurora-tokens = { git = "https://github.com/Mullassery/SHER-Aurora", rev = "<commit-sha>" }
-aurora-motion = { git = "https://github.com/Mullassery/SHER-Aurora", rev = "<commit-sha>" }
+aurora-gtk = { git = "https://github.com/Mullassery/aurora", rev = "<commit-sha>" }
+aurora-color = { git = "https://github.com/Mullassery/aurora", rev = "<commit-sha>" }
+aurora-tokens = { git = "https://github.com/Mullassery/aurora", rev = "<commit-sha>" }
+aurora-motion = { git = "https://github.com/Mullassery/aurora", rev = "<commit-sha>" }
 gtk4 = { version = "0.11", features = ["v4_12"] }
 glib = "0.22"
 ```
@@ -88,8 +88,8 @@ sudo pacman -S gtk4 glib2 base-devel
 To build and hack on Aurora itself:
 
 ```bash
-git clone https://github.com/Mullassery/SHER-Aurora.git
-cd SHER-Aurora
+git clone https://github.com/Mullassery/aurora.git
+cd aurora
 cargo build --workspace
 cargo test --workspace
 ```
@@ -188,7 +188,7 @@ cargo fmt --check
 
 ## Contributing
 
-Found a bug, or a claim in these docs that does not match reality? Please [open an issue](https://github.com/Mullassery/SHER-Aurora/issues) — this project has a specific history of documentation overstating what was actually built, and keeping that honest going forward is a priority. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the workflow and [`ROADMAP_HONEST.md`](ROADMAP_HONEST.md) for the current open-issue list.
+Found a bug, or a claim in these docs that does not match reality? Please [open an issue](https://github.com/Mullassery/aurora/issues) — this project has a specific history of documentation overstating what was actually built, and keeping that honest going forward is a priority. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the workflow and [`ROADMAP_HONEST.md`](ROADMAP_HONEST.md) for the current open-issue list.
 
 ## Part of the SHER OS family
 
@@ -200,7 +200,7 @@ SHER-Aurora is part of the SHER OS family — an AI-native operating system buil
 | [SHER-Graphics](https://github.com/Mullassery/SHER-Graphics) | Graphics/GPU | GPU abstraction and rendering — software simulation plus a real, working Vulkan/MoltenVK backend. |
 | [SHER-Display](https://github.com/Mullassery/SHER-Display) | Display/compositor | Display server, compositor, and window management. |
 | [SHER-INPUT](https://github.com/Mullassery/SHER-INPUT) | Input | Canonical, backend-independent input event stream — real evdev on Linux, simulated backend for hardware-free testing. |
-| [SHER-Aurora](https://github.com/Mullassery/SHER-Aurora) | Design system | **This project** — GNOME-style design system: tokens, typography, motion, and an automated WCAG contrast audit. |
+| [SHER-Aurora](https://github.com/Mullassery/aurora) | Design system | **This project** — GNOME-style design system: tokens, typography, motion, and an automated WCAG contrast audit. |
 | [SHER-Process-Explorer](https://github.com/Mullassery/SHER-Process-Explorer) | Observability | Evidence-based Linux process investigation tool — /proc telemetry, bpftrace integration, daemon + CLI + desktop UI. |
 
 Each works standalone; they're complementary by design. [Browse all projects →](https://github.com/Mullassery?tab=repositories)
