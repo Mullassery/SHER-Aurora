@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CodeAtlas</title>
+<script src="https://unpkg.com/cytoscape@3.23.0/dist/cytoscape.min.js"></script>
+<script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
+<script src="https://unpkg.com/cytoscape-dagre@2.4.0/cytoscape-dagre.js"></script>
+<style>
+  body { margin: 0; font-family: -apple-system, sans-serif; }
+  #cy { width: 100vw; height: 100vh; }
+  header { padding: 12px 16px; border-bottom: 1px solid #eee; }
+</style>
+</head>
+<body>
+<header>
+  <strong>CodeAtlas</strong>
+  <p>Owns 0 symbols across 0 file(s).</p>
+</header>
+<div id="cy"></div>
+<script>
+const data = {"nodes": [{"data": {"id": "aurora_a11y", "label": "aurora-a11y", "description": "Owns 0 symbols across 1 file(s).", "linkUrl": "./aurora_a11y.html"}}, {"data": {"id": "aurora_color", "label": "aurora-color", "description": "Owns 0 symbols across 1 file(s).", "linkUrl": "./aurora_color.html"}}, {"data": {"id": "aurora_core", "label": "aurora-core", "description": "Owns 0 symbols across 1 file(s).", "linkUrl": "./aurora_core.html"}}, {"data": {"id": "aurora_gtk", "label": "aurora-gtk", "description": "Owns 0 symbols across 1 file(s).", "linkUrl": "./aurora_gtk.html"}}, {"data": {"id": "aurora_icons", "label": "aurora-icons", "description": "Owns 0 symbols across 1 file(s).", "linkUrl": "./aurora_icons.html"}}, {"data": {"id": "aurora_motion", "label": "aurora-motion", "description": "Owns 0 symbols across 1 file(s).", "linkUrl": "./aurora_motion.html"}}, {"data": {"id": "aurora_qt", "label": "aurora-qt", "description": "Owns 0 symbols across 1 file(s).", "linkUrl": "./aurora_qt.html"}}, {"data": {"id": "aurora_sound", "label": "aurora-sound", "description": "Owns 0 symbols across 1 file(s).", "linkUrl": "./aurora_sound.html"}}, {"data": {"id": "aurora_tokens", "label": "aurora-tokens", "description": "Owns 0 symbols across 1 file(s).", "linkUrl": "./aurora_tokens.html"}}, {"data": {"id": "aurora_typography", "label": "aurora-typography", "description": "Owns 0 symbols across 1 file(s).", "linkUrl": "./aurora_typography.html"}}, {"data": {"id": "aurora_web", "label": "aurora-web", "description": "Owns 0 symbols across 1 file(s).", "linkUrl": "./aurora_web.html"}}], "edges": [{"data": {"id": "edge_0", "source": "aurora_a11y", "target": "aurora_color", "label": "calls"}}]};
+const cy = cytoscape({
+  container: document.getElementById('cy'),
+  elements: data,
+  style: [
+    { selector: 'node', style: {
+      'label': 'data(label)',
+      'shape': 'round-rectangle',
+      'background-color': '#eef2ff',
+      'border-color': '#6366f1',
+      'border-width': 1,
+      'width': 'label',
+      'padding': '10px',
+      'text-valign': 'center',
+      'text-halign': 'center',
+      'font-size': '12px',
+    }},
+    { selector: 'edge', style: {
+      'label': 'data(label)',
+      'curve-style': 'bezier',
+      'target-arrow-shape': 'triangle',
+      'font-size': '10px',
+      'text-rotation': 'autorotate',
+    }}
+  ],
+  layout: { name: 'dagre', rankDir: 'LR' }
+});
+cy.on('tap', 'node', evt => {
+  const node = evt.target;
+  if (node.data('linkUrl')) { window.location.href = node.data('linkUrl'); }
+});
+</script>
+</body>
+</html>
