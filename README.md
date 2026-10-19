@@ -186,6 +186,16 @@ cargo fmt --check
 - [`docs/architecture/README.md`](docs/architecture/README.md) — architecture diagram
 - [`docs/archive/`](docs/archive/) — older docs kept for history
 
+## Known issues and deferred work
+
+**Blocked / failed:**
+- Remaining 12 GTK4 widgets; no downstream app.
+
+**Rejected / deferred:**
+- Widget expansion until a GTK app adopts it.
+
+Full shipped/blocked/rejected detail: [`QUEUE_STATUS.md`](QUEUE_STATUS.md).
+
 ## Queue status
 
 Shipped, blocked/failed, and rejected work for this repository is documented in
