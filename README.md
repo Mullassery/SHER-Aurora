@@ -31,7 +31,7 @@ Aurora is one member of the SHER family and is the planned primary shell on top 
 
 ## What it is not
 
-- **Not a full widget set yet.** Only 5 of 17 planned widgets construct real GTK4 objects. The other 12 (DataTable, Tabs, Menu, Dialog, List, Select, Sidebar, Badge, Breadcrumb, Radio, Tooltip, IconDock) have working Rust logic/tests but no `.build()` yet.
+- **Not a full widget set yet.** Only 8 of 17 planned widgets construct real GTK4 objects. The other 9 (DataTable, Tabs, Menu, List, Select, Sidebar, Breadcrumb, Radio, IconDock) have working Rust logic/tests but no `.build()` yet.
 - **Not an application or desktop distribution.** There is no installer, no theme daemon, and no GNOME Shell extension; it is a library workspace.
 - **Not libadwaita-based.** `libadwaita` is not a dependency of any crate — only `gtk4` and `glib`.
 - **No system integration.** Nothing calls into `dconf`, `gsettings`, D-Bus, or any GNOME daemon; `aurora-gtk`'s `gnome/` modules model what such integration would look like but perform no OS I/O.
@@ -48,7 +48,7 @@ Aurora is one member of the SHER family and is the planned primary shell on top 
 | Accessibility (`aurora-a11y`) | Real automated WCAG contrast audit over every theme's tokens |
 | Icons (`aurora-icons`) | 24 real hand-authored SVGs |
 | GTK4 widgets — Button, Input, Checkbox, Card, Switch | Render as real `gtk4` objects via `.build()` |
-| GTK4 widgets — DataTable, Tabs, Menu, Dialog, List, Select, Sidebar, Badge, Breadcrumb, Radio, Tooltip, IconDock | Styling/state logic only — no `.build()` yet |
+| GTK4 widgets — DataTable, Tabs, Menu, List, Select, Sidebar, Breadcrumb, Radio, IconDock | Styling/state logic only — no `.build()` yet |
 | `aurora-qt`, `aurora-web`, `aurora-core` | Not implemented — placeholder crates |
 
 - **Tests:** about 518 tests pass locally with zero clippy warnings and `cargo fmt --check` clean.
@@ -222,3 +222,11 @@ This project is licensed under the [Apache License 2.0](LICENSE).
 ---
 
 **Georgi Mammen Mullassery** — [github.com/Mullassery](https://github.com/Mullassery)
+
+## Widgets
+
+`Badge` now exposes a real `build() -> gtk4::Label`, joining Button, Input,
+Checkbox, Card and Switch as fully rendered GTK4 widgets. The remaining
+widgets are still logic-only descriptors; the docs list real rendering coverage
+explicitly rather than claiming all 17 are complete.
+

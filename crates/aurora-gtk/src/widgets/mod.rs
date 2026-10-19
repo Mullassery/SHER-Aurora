@@ -85,4 +85,4 @@ pub use select::{OptionState, Select, SelectMode, SelectOption};
 pub use sidebar::Sidebar;
 pub use switch::Switch;
 pub use tabs::{Tab, TabOrientation, TabPanel, TabStyle, Tabs};
-pub use tooltip::{remove_tooltip, set_tooltip};
+pub use tooltip::{remove_tooltip, set_tooltip, Tooltip};

@@ -66,6 +66,29 @@ impl Badge {
     pub fn css_classes(&self) -> &[String] {
         &self.css_classes
     }
+
+    /// Build a real `gtk4::Label` styled as an Aurora badge.
+    ///
+    /// GTK must already be initialized. The badge is a compact label with
+    /// `aurora-badge` plus a per-style class so the generated stylesheet can
+    /// select the correct foreground/background.
+    pub fn build(&self) -> gtk4::Label {
+        use gtk4::prelude::*;
+
+        let label = gtk4::Label::new(Some(&self.text));
+        label.set_xalign(0.5);
+        for class in &self.css_classes {
+            label.add_css_class(class);
+        }
+        match self.style {
+            BadgeStyle::Default => label.add_css_class("aurora-badge-default"),
+            BadgeStyle::Success => label.add_css_class("aurora-badge-success"),
+            BadgeStyle::Warning => label.add_css_class("aurora-badge-warning"),
+            BadgeStyle::Error => label.add_css_class("aurora-badge-error"),
+            BadgeStyle::Info => label.add_css_class("aurora-badge-info"),
+        }
+        label
+    }
 }
 
 impl Default for Badge {
@@ -106,6 +129,17 @@ mod tests {
     fn test_badge_css_class() {
         let badge = Badge::new("Test").add_css_class("custom");
         assert!(badge.css_classes().contains(&"custom".to_string()));
+    }
+
+    #[cfg(not(target_os = "macos"))]
+    #[gtk4::test]
+    fn test_badge_builds_real_gtk_label() {
+        use gtk4::prelude::*;
+
+        let _ = gtk4::init();
+        let label = Badge::new("Active").with_style(BadgeStyle::Success).build();
+        assert_eq!(label.label().to_string(), "Active");
+        assert!(label.has_css_class("aurora-badge-success"));
     }
 
     #[test]
