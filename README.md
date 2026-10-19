@@ -196,11 +196,6 @@ cargo fmt --check
 
 Full shipped/blocked/rejected detail: [`QUEUE_STATUS.md`](QUEUE_STATUS.md).
 
-## Queue status
-
-Shipped, blocked/failed, and rejected work for this repository is documented in
-[`QUEUE_STATUS.md`](QUEUE_STATUS.md).
-
 ## Contributing
 
 Found a bug, or a claim in these docs that does not match reality? Please [open an issue](https://github.com/Mullassery/aurora/issues) — this project has a specific history of documentation overstating what was actually built, and keeping that honest going forward is a priority. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the workflow and [`ROADMAP_HONEST.md`](ROADMAP_HONEST.md) for the current open-issue list.
