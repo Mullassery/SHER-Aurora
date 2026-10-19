@@ -242,13 +242,21 @@ impl CssProvider {
     /// tracked as follow-up work.
     pub fn install(&self, display: &gtk4::gdk::Display) -> gtk4::CssProvider {
         let provider = gtk4::CssProvider::new();
-        provider.load_from_string(&self.generate_css());
+        self.load_into(&provider);
         gtk4::style_context_add_provider_for_display(
             display,
             &provider,
             gtk4::STYLE_PROVIDER_PRIORITY_APPLICATION,
         );
         provider
+    }
+
+    /// Regenerate this provider's token-derived stylesheet into an existing
+    /// `gtk4::CssProvider`, leaving the provider installed on the display and
+    /// every widget untouched. Used by `ThemeListener` to react to OS theme
+    /// changes without rebuilding the widget tree.
+    pub fn load_into(&self, provider: &gtk4::CssProvider) {
+        provider.load_from_string(&self.generate_css());
     }
 }
 

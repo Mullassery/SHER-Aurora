@@ -171,6 +171,19 @@ commitment, and several items previously listed here (Figma export,
 "AI-powered component suggestions") were never started and had no actual
 plan behind them.
 
+### Added
+
+- `crates/aurora-gtk/src/theme_listener.rs`: reactive OS theme-preference
+  listener. Because `libadwaita` is not a dependency, it connects to the real
+  GTK settings signals `gtk-application-prefer-dark-theme` and
+  `gtk-theme-name` (detecting GNOME `HighContrast` themes) and regenerates the
+  existing installed `gtk4::CssProvider` from Aurora's color tokens via the new
+  `CssProvider::load_into`, leaving widgets untouched. Dropping the listener
+  disconnects its handlers. `ThemePreference` holds the pure Light/Dark/
+  high-contrast selection logic and is unit-tested without a display. Aurora
+  has no dedicated high-contrast token palette yet, so high contrast is tracked
+  and notified but does not by itself change the palette.
+
 ### Fixed
 
 - `crates/aurora-tokens/src/lib.rs`: `DesignTokens::to_json()` was a

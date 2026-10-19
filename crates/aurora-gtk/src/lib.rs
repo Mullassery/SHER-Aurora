@@ -16,11 +16,13 @@ pub mod icons;
 pub mod motion;
 pub mod storybook;
 pub mod theme;
+pub mod theme_listener;
 pub mod widgets;
 
 pub use css::CssProvider;
 pub use errors::{GtkError, GtkResult};
-pub use theme::Theme;
+pub use theme::{Theme, ThemePreference};
+pub use theme_listener::ThemeListener;
 pub use widgets::{
     remove_tooltip, set_tooltip, AuroraDialog, Badge, BadgeStyle, Button, ButtonState, ButtonStyle,
     Card, CardStyle, Checkbox, DialogResponse, Input, InputType, List, RadioButton, Sidebar,

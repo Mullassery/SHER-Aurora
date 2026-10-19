@@ -21,6 +21,7 @@ Aurora is one member of the SHER family and is the planned primary shell on top 
 - **Accessibility audit** — `aurora-a11y` computes real WCAG contrast ratios across every token pairing in every theme (7:1 / 4.5:1 / 3:1 thresholds), and its regression tests fail if a future palette change reintroduces a sub-threshold pairing.
 - **Icons** — 24 real, hand-authored 24×24 stroke-based SVGs across navigation, actions, status, media, and system (`aurora-icons`).
 - **GTK4 widgets** — 5 of 17 planned widgets render as real `gtk4` objects via `.build()` today: Button, Input, Checkbox, Card, Switch.
+- **Reactive OS theme preference** — `ThemeListener` connects to GTK's real `gtk-application-prefer-dark-theme` and `gtk-theme-name` notify signals and reloads the already-installed CSS provider from Aurora's color tokens, without rebuilding widgets. It does not depend on libadwaita.
 - **Runnable proofs** — `gtk4_harness` (assertion-driven, constructs real GTK4 objects and reads state back) and `showcase` (a real interactive window).
 
 ## Who it's for / Use cases
@@ -34,7 +35,7 @@ Aurora is one member of the SHER family and is the planned primary shell on top 
 - **Not a full widget set yet.** Only 8 of 17 planned widgets construct real GTK4 objects. The other 9 (DataTable, Tabs, Menu, List, Select, Sidebar, Breadcrumb, Radio, IconDock) have working Rust logic/tests but no `.build()` yet.
 - **Not an application or desktop distribution.** There is no installer, no theme daemon, and no GNOME Shell extension; it is a library workspace.
 - **Not libadwaita-based.** `libadwaita` is not a dependency of any crate — only `gtk4` and `glib`.
-- **No system integration.** Nothing calls into `dconf`, `gsettings`, D-Bus, or any GNOME daemon; `aurora-gtk`'s `gnome/` modules model what such integration would look like but perform no OS I/O.
+- **No system integration beyond the theme listener.** `ThemeListener` reads real GTK settings notify signals; nothing calls into `dconf`, `gsettings`, D-Bus, or any GNOME daemon, and `aurora-gtk`'s other `gnome/` modules still model integration without performing OS I/O.
 - **No runnable CLI.** `aurora-gtk/src/cli/` defines `Command`/`CommandType` data structures, but there is no `[[bin]]` target, no argument parser, and no `fn main` that reads `std::env::args()`.
 - **Not multi-backend yet.** `aurora-qt` (Qt/QML), `aurora-web` (WASM/web), and `aurora-core` (unified facade) are placeholder crates with no implementation.
 - **Not published to crates.io** and no tagged releases; use it as a pinned Cargo git dependency.
@@ -48,6 +49,7 @@ Aurora is one member of the SHER family and is the planned primary shell on top 
 | Accessibility (`aurora-a11y`) | Real automated WCAG contrast audit over every theme's tokens |
 | Icons (`aurora-icons`) | 24 real hand-authored SVGs |
 | GTK4 widgets — Button, Input, Checkbox, Card, Switch | Render as real `gtk4` objects via `.build()` |
+| OS theme preference (`ThemeListener`) | Real GTK settings notify signals; reloads the installed CSS provider in place |
 | GTK4 widgets — DataTable, Tabs, Menu, List, Select, Sidebar, Breadcrumb, Radio, IconDock | Styling/state logic only — no `.build()` yet |
 | `aurora-qt`, `aurora-web`, `aurora-core` | Not implemented — placeholder crates |
 
