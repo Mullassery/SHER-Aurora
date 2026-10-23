@@ -25,3 +25,11 @@ aurora-icons = { path = "../aurora-icons" }
 # (e.g. `brew install gtk4` on macOS, `apt install libgtk-4-dev` on Debian/Ubuntu).
 gtk4 = { version = "0.11", features = ["v4_12"] }
 glib = "0.22"
+
+# Optional integration with SHER-Input
+sher_input_core = { path = "../../../SHER-Input/crates/core", optional = true }
+
+[features]
+default = []
+sher-input = ["dep:sher_input_core"]
+glib = []

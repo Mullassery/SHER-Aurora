@@ -13,6 +13,7 @@ pub mod css;
 pub mod errors;
 pub mod gnome;
 pub mod icons;
+pub mod input;
 pub mod motion;
 pub mod storybook;
 pub mod theme;
@@ -21,6 +22,7 @@ pub mod widgets;
 
 pub use css::CssProvider;
 pub use errors::{GtkError, GtkResult};
+pub use input::{AuroraInputDispatcher, InputSink, InputSource, NoopSink, RawInputEvent};
 pub use theme::{Theme, ThemePreference};
 pub use theme_listener::ThemeListener;
 pub use widgets::{
