@@ -156,14 +156,18 @@ mod tests {
     #[cfg(not(target_os = "macos"))]
     #[gtk4::test]
     fn test_dialog_builds_real_window() {
+        use gtk4::prelude::*;
         let dialog = AuroraDialog::new("Confirm")
             .with_message("Are you sure?")
             .modal(true)
             .add_button("Yes", 1)
             .add_button("No", 0)
             .build();
-        assert_eq!(dialog.title().as_deref(), Some("Confirm"));
-        assert!(dialog.is_modal());
+        assert_eq!(
+            dialog.property::<Option<String>>("title").as_deref(),
+            Some("Confirm")
+        );
+        assert!(dialog.property::<bool>("modal"));
         assert!(dialog.child().is_some());
     }
 
