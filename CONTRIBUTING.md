@@ -66,7 +66,7 @@ cargo doc --no-deps --open
 
 There is no dconf/GSettings schema to install — `aurora-gtk` does not
 integrate with the real GNOME Settings system today (see `CLAUDE.md` and
-`ROADMAP_HONEST.md`). If you see a doc claiming otherwise, it's stale.
+`docs/internal/ROADMAP_HONEST.md`). If you see a doc claiming otherwise, it's stale.
 
 ---
 
@@ -130,7 +130,7 @@ Create an issue with screenshots or design mockups to discuss your ideas.
 - Test with screen readers (Orca on GNOME) — manually; there is no automated screen-reader test in CI today
 - Test keyboard navigation — manually; there is no automated keyboard-navigation test in CI today
 - Suggest high-contrast improvements
-- Contribute an automated test for any of the above — this is a real, open gap (see `ROADMAP_HONEST.md`)
+- Contribute an automated test for any of the above — this is a real, open gap (see `docs/internal/ROADMAP_HONEST.md`)
 
 ---
 

@@ -180,7 +180,7 @@ cargo fmt --check
 ## Documentation
 
 - [`CHANGELOG.md`](CHANGELOG.md) — corrected history of what has changed release over release
-- [`ROADMAP_HONEST.md`](ROADMAP_HONEST.md) — the single source of truth for open issues and technical debt
+- [`docs/internal/ROADMAP_HONEST.md`](docs/internal/ROADMAP_HONEST.md) — the single source of truth for open issues and technical debt
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) — the full contribution workflow
 - [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md)
 - [`SECURITY.md`](SECURITY.md) — how to report a vulnerability
@@ -196,11 +196,11 @@ cargo fmt --check
 **Rejected / deferred:**
 - Widget expansion until a GTK app adopts it.
 
-Full shipped/blocked/rejected detail: [`QUEUE_STATUS.md`](QUEUE_STATUS.md).
+Full shipped/blocked/rejected detail: [`docs/internal/QUEUE_STATUS.md`](docs/internal/QUEUE_STATUS.md).
 
 ## Contributing
 
-Found a bug, or a claim in these docs that does not match reality? Please [open an issue](https://github.com/Mullassery/aurora/issues) — this project has a specific history of documentation overstating what was actually built, and keeping that honest going forward is a priority. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the workflow and [`ROADMAP_HONEST.md`](ROADMAP_HONEST.md) for the current open-issue list.
+Found a bug, or a claim in these docs that does not match reality? Please [open an issue](https://github.com/Mullassery/aurora/issues) — this project has a specific history of documentation overstating what was actually built, and keeping that honest going forward is a priority. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the workflow and [`docs/internal/ROADMAP_HONEST.md`](docs/internal/ROADMAP_HONEST.md) for the current open-issue list.
 
 ## Part of the SHER OS family
 

@@ -33,7 +33,7 @@ When using Aurora in your applications:
 
 ## Dependencies
 
-`Cargo.lock` is committed (see `ROADMAP_HONEST.md` for why that wasn't
+`Cargo.lock` is committed (see `docs/internal/ROADMAP_HONEST.md` for why that wasn't
 always true) so builds are reproducible. Every push and pull request runs
 `rustsec/audit-check` against `Cargo.lock` in the `Security Audit` job of
 [`.github/workflows/ci.yml`](.github/workflows/ci.yml) — this is a real,

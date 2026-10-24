@@ -95,13 +95,13 @@ Build Status: [![CI](https://github.com/Mullassery/aurora/workflows/CI/badge.svg
 
 License: [![License: MIT OR Apache 2.0](https://img.shields.io/badge/License-MIT%20OR%20Apache%202.0-blue.svg)](https://github.com/Mullassery/aurora#license)
 
-Tests: [![Tests Passing](https://img.shields.io/badge/Tests-328%2F328%20passing-brightgreen)](CHANGELOG.md)
+Tests: [![Tests Passing](https://img.shields.io/badge/Tests-328%2F328%20passing-brightgreen)](../../CHANGELOG.md)
 
 WCAG: [![WCAG AAA](https://img.shields.io/badge/WCAG-AAA%20Compliant-brightgreen)](docs/ACCESSIBILITY_GUIDE.md)
 
 Components: [![Components](https://img.shields.io/badge/Components-17-blue)](README.md)
 
-Icons: [![Icons](https://img.shields.io/badge/Icons-210%2B-blue)](docs/ICON_DESIGN_SYSTEM.md)
+Icons: [![Icons](https://img.shields.io/badge/Icons-210%2B-blue)](ICON_DESIGN_SYSTEM.md)
 
 Rust: [![Rust](https://img.shields.io/badge/Rust-1.70%2B-orange)](https://www.rust-lang.org/)
 ```

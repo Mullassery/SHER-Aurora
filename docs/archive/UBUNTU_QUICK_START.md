@@ -66,9 +66,9 @@ cd aurora && cargo run --example aurora_settings
 
 ## Need Help?
 
-- **Installation issues?** → [Full Ubuntu Guide](docs/UBUNTU_INSTALLATION.md)
-- **How to use Aurora?** → [Integration Guide](docs/INTEGRATION_GUIDE.md)
-- **API documentation?** → [API Reference](docs/API_REFERENCE.md)
+- **Installation issues?** → [Full Ubuntu Guide](UBUNTU_INSTALLATION.md)
+- **How to use Aurora?** → [Integration Guide](INTEGRATION_GUIDE.md)
+- **API documentation?** → [API Reference](API_REFERENCE.md)
 - **Report bugs** → [GitHub Issues](https://github.com/Mullassery/aurora/issues)
 - **Questions?** → [GitHub Discussions](https://github.com/Mullassery/aurora/discussions)
 
@@ -128,7 +128,7 @@ echo "✅ Aurora Ready!" && cargo run --example aurora_settings
 
 1. ✅ Install (run one-liner above)
 2. 🚀 Try examples (`cargo run --example aurora_settings`)
-3. 📖 Read [Integration Guide](docs/INTEGRATION_GUIDE.md)
+3. 📖 Read [Integration Guide](INTEGRATION_GUIDE.md)
 4. 🛠️ Build your app (see guide)
 5. 🌟 Star the repo & share!
 
@@ -136,4 +136,4 @@ echo "✅ Aurora Ready!" && cargo run --example aurora_settings
 
 Made for Ubuntu. Made for GNOME. Made for Linux. 💚
 
-[Full Installation Guide](docs/UBUNTU_INSTALLATION.md) | [GitHub](https://github.com/Mullassery/aurora) | [API Docs](docs/API_REFERENCE.md)
+[Full Installation Guide](UBUNTU_INSTALLATION.md) | [GitHub](https://github.com/Mullassery/aurora) | [API Docs](API_REFERENCE.md)

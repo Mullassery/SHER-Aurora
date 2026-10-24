@@ -4,7 +4,7 @@ This describes the actual, current crate graph of this workspace — derived
 directly from each crate's `Cargo.toml` (`grep -oE '^aurora-[a-z0-9]+'
 crates/*/Cargo.toml`), not from a design document. For status (what's
 real vs. not implemented), see the root [README.md](../../README.md)'s
-"What's real today" table and [ROADMAP_HONEST.md](../../ROADMAP_HONEST.md).
+"What's real today" table and [../internal/ROADMAP_HONEST.md](../internal/ROADMAP_HONEST.md).
 
 ## Crate dependency graph
 
@@ -41,7 +41,7 @@ on `aurora-gtk`** — each is an independent, standalone crate that can be
 used without pulling in GTK4. `aurora-gtk` is the only crate that depends
 on the others, and only it depends on the system `gtk4`/`glib` crates.
 `aurora-core`, `aurora-qt`, and `aurora-web` are empty stub crates with no
-implementation and no dependencies — see `ROADMAP_HONEST.md`.
+implementation and no dependencies — see `../internal/ROADMAP_HONEST.md`.
 
 ## Inside `aurora-gtk`
 

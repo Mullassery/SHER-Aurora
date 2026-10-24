@@ -5,7 +5,7 @@ typography, color, motion, sound, accessibility auditing, and a growing
 set of real GTK4 widgets. This file is guidance for anyone (human or AI)
 working in this codebase. For current, verified project status, always
 defer to the root [`README.md`](README.md), [`CHANGELOG.md`](CHANGELOG.md),
-and [`ROADMAP_HONEST.md`](ROADMAP_HONEST.md) over anything below — this
+and [`docs/internal/ROADMAP_HONEST.md`](docs/internal/ROADMAP_HONEST.md) over anything below — this
 file describes design intent and conventions, not a status report.
 
 **Do not add marketing language to this repo's docs** ("production
@@ -28,7 +28,7 @@ reintroduce it.
   defines Rust data structures that *model* what such integration would
   look like (e.g. `DConfSchema::schema_xml()` returns a hardcoded XML
   string) — none of it performs real I/O against the OS. See
-  `ROADMAP_HONEST.md` before describing these modules as "integration."
+  `docs/internal/ROADMAP_HONEST.md` before describing these modules as "integration."
 - `crates/aurora-gtk/src/cli/` defines `Command`/`CommandType` data
   structures matching an imagined `aurora new/add/generate/theme/export/
   init` CLI. There is no `[[bin]]` target anywhere in this workspace, no

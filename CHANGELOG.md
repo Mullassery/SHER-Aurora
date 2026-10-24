@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > distance, so the entries are left as originally written below rather
 > than silently rewritten, but do not treat anything in `[1.0.0]` or
 > `[1.1.0]` as a reliable description of what shipped. See
-> `ROADMAP_HONEST.md` for the current, verified state.
+> `docs/internal/ROADMAP_HONEST.md` for the current, verified state.
 
 ## [1.3.0] - 2026-08-26
 
@@ -166,7 +166,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 For what's not built and has no committed timeline (a Qt or web renderer,
 a larger widget library, etc.), see the "Not built" bucket in
-`ROADMAP_HONEST.md` rather than this section — nothing below is a
+`docs/internal/ROADMAP_HONEST.md` rather than this section — nothing below is a
 commitment, and several items previously listed here (Figma export,
 "AI-powered component suggestions") were never started and had no actual
 plan behind them.

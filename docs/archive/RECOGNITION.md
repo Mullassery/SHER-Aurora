@@ -31,7 +31,7 @@ Aurora welcomes contributions in these areas:
 - **Testing** - Test coverage, bug reports, quality assurance
 - **Community** - Support, discussions, mentoring
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+See [CONTRIBUTING.md](../../CONTRIBUTING.md) for detailed guidelines.
 
 ## Design Inspiration
 
@@ -66,7 +66,7 @@ Special recognition to:
 
 Everyone is welcome to contribute to Aurora. Here's how to get started:
 
-1. Read [CONTRIBUTING.md](CONTRIBUTING.md)
+1. Read [CONTRIBUTING.md](../../CONTRIBUTING.md)
 2. Check [Issues](https://github.com/Mullassery/aurora/issues) for opportunities
 3. Join [Discussions](https://github.com/Mullassery/aurora/discussions) to ask questions
 4. Submit a pull request with your changes
@@ -86,7 +86,7 @@ If you find Aurora useful, please consider:
 
 ## Code of Conduct
 
-All contributors and participants are expected to follow our [Code of Conduct](CODE_OF_CONDUCT.md).
+All contributors and participants are expected to follow our [Code of Conduct](../../CODE_OF_CONDUCT.md).
 
 ---
 

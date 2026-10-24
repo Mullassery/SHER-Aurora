@@ -35,5 +35,5 @@ none of it has been validated against a real `dpkg-buildpackage`/`lintian`
 run).
 
 See [`../README.md`](../README.md) for the rest of the archive, and the
-root [`ROADMAP_HONEST.md`](../../../ROADMAP_HONEST.md) for this project's
+root [`../../internal/ROADMAP_HONEST.md`](../../internal/ROADMAP_HONEST.md) for this project's
 actual, current status.

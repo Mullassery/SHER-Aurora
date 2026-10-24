@@ -5,7 +5,7 @@ for reference only per this org's "archive, don't delete" convention.
 **None of these are current.** For the actual, current, verified status
 of this project, see the root [`README.md`](../../README.md),
 [`CHANGELOG.md`](../../CHANGELOG.md), and
-[`ROADMAP_HONEST.md`](../../ROADMAP_HONEST.md).
+[`../internal/ROADMAP_HONEST.md`](../internal/ROADMAP_HONEST.md).
 
 ## Phase/session reports (12 files, archived first)
 
@@ -36,7 +36,7 @@ product than what actually ships. Concretely, across these files:
   described as built or in-progress (`ARCHITECTURE.md`,
   `IMPLEMENTATION_ROADMAP.md`) — no crate in this workspace depends on
   `gio`, `zbus`, or any D-Bus/dconf library; see
-  `ROADMAP_HONEST.md` for what `aurora-gtk::gnome::*` actually contains
+  `../internal/ROADMAP_HONEST.md` for what `aurora-gtk::gnome::*` actually contains
   (data structures only, no real system calls).
 - **"PRODUCTION READY" / "Production Ready"** status claims
   (`PROJECT_COMPLETE.md`, `RELEASE_NOTES_V1.1.md`, `RELEASE_v1_0_0.md`)
@@ -47,7 +47,7 @@ product than what actually ships. Concretely, across these files:
   the `CHANGELOG.md` `[1.1.0]` entry claim a release date of
   **2027-03-31**, later than the real, git-committed `[1.2.0]` (2026-08-16)
   and `[1.3.0]` (2026-08-26) entries. This is a real inconsistency — see
-  `ROADMAP_HONEST.md` — left uncorrected in `CHANGELOG.md` itself because
+  `../internal/ROADMAP_HONEST.md` — left uncorrected in `CHANGELOG.md` itself because
   the true original date can't be reconstructed, but disclosed rather than
   silently re-dated.
 - A wholesale **different product**: `APT_DISTRIBUTION_ARCHITECTURE.md`,
