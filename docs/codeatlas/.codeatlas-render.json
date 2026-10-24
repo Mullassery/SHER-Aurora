@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "outputs": {
+    "md": [
+      "archive.2.2.md",
+      "aurora_a11y.1.1.md",
+      "aurora_color.1.2.md",
+      "aurora_core.1.3.md",
+      "aurora_gtk.1.4.md",
+      "aurora_icons.1.5.md",
+      "aurora_motion.1.6.md",
+      "aurora_qt.1.7.md",
+      "aurora_sound.1.8.md",
+      "aurora_tokens.1.9.md",
+      "aurora_typography.1.10.md",
+      "aurora_web.1.11.md",
+      "crates.1.md",
+      "docs.2.md",
+      "overview.md",
+      "tools.3.md"
+    ],
+    "html": [
+      "archive.2.2.html",
+      "aurora_a11y.1.1.html",
+      "aurora_color.1.2.html",
+      "aurora_core.1.3.html",
+      "aurora_gtk.1.4.html",
+      "aurora_icons.1.5.html",
+      "aurora_motion.1.6.html",
+      "aurora_qt.1.7.html",
+      "aurora_sound.1.8.html",
+      "aurora_tokens.1.9.html",
+      "aurora_typography.1.10.html",
+      "aurora_web.1.11.html",
+      "crates.1.html",
+      "docs.2.html",
+      "overview.html",
+      "tools.3.html"
+    ]
+  }
+}
