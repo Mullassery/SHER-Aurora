@@ -67,8 +67,8 @@ Special recognition to:
 Everyone is welcome to contribute to Aurora. Here's how to get started:
 
 1. Read [CONTRIBUTING.md](../../CONTRIBUTING.md)
-2. Check [Issues](https://github.com/Mullassery/aurora/issues) for opportunities
-3. Join [Discussions](https://github.com/Mullassery/aurora/discussions) to ask questions
+2. Check [Issues](../aurora/issues) for opportunities
+3. Join [Discussions](../aurora/discussions) to ask questions
 4. Submit a pull request with your changes
 
 All contributions, no matter how small, are valuable and appreciated.

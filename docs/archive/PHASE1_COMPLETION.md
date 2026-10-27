@@ -293,7 +293,7 @@ aurora/
 
 ## Repository Status
 
-**GitHub**: https://github.com/Mullassery/aurora  
+**GitHub**: ../aurora  
 **License**: MIT OR Apache 2.0 (dual)  
 **Commits**:
 - `26d4bfc` — Aurora Desktop Design System: Initial Project Scaffolding

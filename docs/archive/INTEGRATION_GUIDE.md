@@ -632,8 +632,8 @@ See `examples/aurora_files.rs` in the Aurora repository.
 
 ## Support
 
-- **Documentation**: https://github.com/Mullassery/aurora/tree/main/docs
-- **Issues**: https://github.com/Mullassery/aurora/issues
+- **Documentation**: ../aurora/tree/main/docs
+- **Issues**: ../aurora/issues
 - **Discussions**: GNOME Discourse + GitHub Discussions
 - **Email**: mullassery@gmail.com
 

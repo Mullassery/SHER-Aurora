@@ -209,6 +209,6 @@ plan behind them.
 
 ## Support
 
-- For issues, visit: https://github.com/Mullassery/aurora/issues
-- For discussions, visit: https://github.com/Mullassery/aurora/discussions
+- For issues, visit: ../aurora/issues
+- For discussions, visit: ../aurora/discussions
 - For security concerns, see `SECURITY.md`

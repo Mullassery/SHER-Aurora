@@ -11,7 +11,7 @@ Copy and paste this one command:
 ```bash
 # Install everything Aurora needs
 sudo apt update && sudo apt install -y libgtk-4-dev libadwaita-1-dev libglib2.0-dev build-essential pkg-config rustc cargo && \
-git clone https://github.com/Mullassery/aurora.git && \
+git clone ../aurora && \
 cd aurora && \
 sudo cp crates/aurora-gtk/schemas/org.gnome.desktop.interface.aurora.gschema.xml /usr/share/glib-2.0/schemas/ && \
 sudo glib-compile-schemas /usr/share/glib-2.0/schemas/ && \
@@ -83,7 +83,7 @@ sudo apt install -y \
 ### Step 3: Download Aurora
 
 ```bash
-git clone https://github.com/Mullassery/aurora.git
+git clone ../aurora
 cd aurora
 ```
 
@@ -534,8 +534,8 @@ Ask on:
 ### Aurora Issues
 
 Ask on:
-- **GitHub Issues:** https://github.com/Mullassery/aurora/issues
-- **GitHub Discussions:** https://github.com/Mullassery/aurora/discussions
+- **GitHub Issues:** ../aurora/issues
+- **GitHub Discussions:** ../aurora/discussions
 - **Email:** mullassery@gmail.com
 
 ### Include This Info
@@ -563,8 +563,8 @@ cargo --version
 
 Want to help Aurora adoption on Ubuntu?
 
-1. **Report bugs:** https://github.com/Mullassery/aurora/issues
-2. **Suggest features:** https://github.com/Mullassery/aurora/discussions
+1. **Report bugs:** ../aurora/issues
+2. **Suggest features:** ../aurora/discussions
 3. **Write tutorials:** Blog posts, YouTube videos
 4. **Create Ubuntu packages:** Help distribute via snap/deb
 5. **Port GNOME apps:** Use Aurora in Files, Settings, etc.
@@ -575,7 +575,7 @@ Want to help Aurora adoption on Ubuntu?
 
 Now that you have Aurora installed:
 
-1. **Read the docs:** https://github.com/Mullassery/aurora/blob/main/docs/INTEGRATION_GUIDE.md
+1. **Read the docs:** ../aurora/blob/main/docs/INTEGRATION_GUIDE.md
 2. **Explore examples:** `cargo run --example aurora_settings`
 3. **Create your app:** Build something amazing!
 4. **Join community:** Star the repo, share your projects
@@ -584,7 +584,7 @@ Now that you have Aurora installed:
 
 ## Resources
 
-- **GitHub:** https://github.com/Mullassery/aurora
+- **GitHub:** ../aurora
 - **API Reference:** `docs/API_REFERENCE.md`
 - **Integration Guide:** `docs/INTEGRATION_GUIDE.md`
 - **Architecture:** `docs/ARCHITECTURE_V2.md`

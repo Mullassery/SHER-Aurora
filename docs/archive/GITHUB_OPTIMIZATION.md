@@ -91,9 +91,9 @@ Add to GitHub featured (visible on profile):
 Consider adding to README for visibility (without emojis):
 
 ```markdown
-Build Status: [![CI](https://github.com/Mullassery/aurora/workflows/CI/badge.svg)](https://github.com/Mullassery/aurora/actions)
+Build Status: [![CI](../aurora/workflows/CI/badge.svg)](../aurora/actions)
 
-License: [![License: MIT OR Apache 2.0](https://img.shields.io/badge/License-MIT%20OR%20Apache%202.0-blue.svg)](https://github.com/Mullassery/aurora#license)
+License: [![License: MIT OR Apache 2.0](https://img.shields.io/badge/License-MIT%20OR%20Apache%202.0-blue.svg)](../aurora#license)
 
 Tests: [![Tests Passing](https://img.shields.io/badge/Tests-328%2F328%20passing-brightgreen)](../../CHANGELOG.md)
 
@@ -110,7 +110,7 @@ Rust: [![Rust](https://img.shields.io/badge/Rust-1.70%2B-orange)](https://www.ru
 
 Show CI status with:
 ```
-![CI](https://github.com/Mullassery/aurora/workflows/Continuous%20Integration/badge.svg)
+![CI](../aurora/workflows/Continuous%20Integration/badge.svg)
 ```
 
 ## Repository Pinned Items

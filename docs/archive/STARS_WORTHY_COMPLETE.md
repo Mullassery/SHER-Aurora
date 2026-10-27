@@ -105,7 +105,7 @@ Repository: github.com/Mullassery/aurora
 To fully activate the stars-worthy setup, complete these in GitHub:
 
 ### 1. Update About Section
-Go to: https://github.com/Mullassery/aurora/edit
+Go to: ../aurora/edit
 
 **Description:**
 ```
@@ -119,7 +119,7 @@ https://aurora.rs
 ```
 
 ### 2. Add Repository Topics (Tags)
-Go to: https://github.com/Mullassery/aurora/settings → Edit details
+Go to: ../aurora/settings → Edit details
 
 **Add these 16 topics:**
 ```
@@ -285,7 +285,7 @@ production-ready well-documented accessible
 ## Next Actions
 
 ### Immediate (5 minutes)
-1. Go to https://github.com/Mullassery/aurora/edit
+1. Go to ../aurora/edit
 2. Update About section with description
 3. Set website: https://aurora.rs
 4. Add 16 repository topics

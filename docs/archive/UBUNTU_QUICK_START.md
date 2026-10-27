@@ -3,7 +3,7 @@
 **TL;DR - Copy & Paste One Command**
 
 ```bash
-sudo apt update && sudo apt install -y libgtk-4-dev libadwaita-1-dev libglib2.0-dev build-essential pkg-config rustc cargo && git clone https://github.com/Mullassery/aurora.git && cd aurora && sudo cp crates/aurora-gtk/schemas/org.gnome.desktop.interface.aurora.gschema.xml /usr/share/glib-2.0/schemas/ && sudo glib-compile-schemas /usr/share/glib-2.0/schemas/ && echo "✅ Aurora Ready!" && cargo run --example aurora_settings
+sudo apt update && sudo apt install -y libgtk-4-dev libadwaita-1-dev libglib2.0-dev build-essential pkg-config rustc cargo && git clone ../aurora && cd aurora && sudo cp crates/aurora-gtk/schemas/org.gnome.desktop.interface.aurora.gschema.xml /usr/share/glib-2.0/schemas/ && sudo glib-compile-schemas /usr/share/glib-2.0/schemas/ && echo "✅ Aurora Ready!" && cargo run --example aurora_settings
 ```
 
 ---
@@ -69,8 +69,8 @@ cd aurora && cargo run --example aurora_settings
 - **Installation issues?** → [Full Ubuntu Guide](UBUNTU_INSTALLATION.md)
 - **How to use Aurora?** → [Integration Guide](INTEGRATION_GUIDE.md)
 - **API documentation?** → [API Reference](API_REFERENCE.md)
-- **Report bugs** → [GitHub Issues](https://github.com/Mullassery/aurora/issues)
-- **Questions?** → [GitHub Discussions](https://github.com/Mullassery/aurora/discussions)
+- **Report bugs** → [GitHub Issues](../aurora/issues)
+- **Questions?** → [GitHub Discussions](../aurora/discussions)
 
 ---
 
@@ -84,7 +84,7 @@ sudo apt update
 sudo apt install -y libgtk-4-dev libadwaita-1-dev libglib2.0-dev build-essential pkg-config rustc cargo
 
 # 3. Download Aurora
-git clone https://github.com/Mullassery/aurora.git
+git clone ../aurora
 
 # 4. Enter directory
 cd aurora
@@ -136,4 +136,4 @@ echo "✅ Aurora Ready!" && cargo run --example aurora_settings
 
 Made for Ubuntu. Made for GNOME. Made for Linux. 💚
 
-[Full Installation Guide](UBUNTU_INSTALLATION.md) | [GitHub](https://github.com/Mullassery/aurora) | [API Docs](API_REFERENCE.md)
+[Full Installation Guide](UBUNTU_INSTALLATION.md) | [GitHub](../aurora) | [API Docs](API_REFERENCE.md)

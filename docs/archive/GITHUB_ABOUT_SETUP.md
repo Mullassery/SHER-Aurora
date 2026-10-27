@@ -4,7 +4,7 @@ This document provides instructions for completing the GitHub repository configu
 
 ## About Section Setup (Manual via GitHub Web Interface)
 
-Go to https://github.com/Mullassery/aurora/settings and update:
+Go to ../aurora/settings and update:
 
 ### Repository Description
 ```
@@ -18,7 +18,7 @@ https://aurora.rs
 
 Or if aurora.rs is not yet configured:
 ```
-https://github.com/Mullassery/aurora
+../aurora
 ```
 
 ## Topics (Tags) - Copy & Add These
@@ -174,10 +174,10 @@ Add these optional badges without emojis:
 
 ```markdown
 Build Status:
-[![CI](https://github.com/Mullassery/aurora/workflows/Continuous%20Integration/badge.svg)](https://github.com/Mullassery/aurora/actions)
+[![CI](../aurora/workflows/Continuous%20Integration/badge.svg)](../aurora/actions)
 
 License:
-[![License: MIT OR Apache 2.0](https://img.shields.io/badge/License-MIT%20OR%20Apache%202.0-blue.svg)](https://github.com/Mullassery/aurora#license)
+[![License: MIT OR Apache 2.0](https://img.shields.io/badge/License-MIT%20OR%20Apache%202.0-blue.svg)](../aurora#license)
 
 Tests:
 [![Tests](https://img.shields.io/badge/Tests-328%2F328%20passing-brightgreen)](../../CHANGELOG.md)

@@ -327,8 +327,8 @@ Have an idea for Aurora? We'd love to hear it:
 
 ## Questions & Support
 
-- GitHub Discussions: https://github.com/Mullassery/aurora/discussions
-- Issues: https://github.com/Mullassery/aurora/issues
+- GitHub Discussions: ../aurora/discussions
+- Issues: ../aurora/issues
 
 ---
 

@@ -215,7 +215,7 @@ Aurora v1.1 represents significant effort across:
 
 ## 📞 Support & Feedback
 
-- **GitHub:** [Aurora Repository](https://github.com/Mullassery/aurora)
+- **GitHub:** [Aurora Repository](../aurora)
 - **Issues:** Report bugs and request features
 - **Discussions:** Join the community
 - **Documentation:** Complete guides and examples

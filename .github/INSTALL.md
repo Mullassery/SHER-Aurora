@@ -44,7 +44,7 @@ glib = "0.22"
 ## Build and test this repository
 
 ```bash
-git clone https://github.com/Mullassery/aurora.git
+git clone ../aurora
 cd aurora
 cargo build --workspace
 cargo test --workspace
